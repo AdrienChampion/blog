@@ -1,6 +1,6 @@
 # Welcome
 
-This blog discusses various topics, mostly about [tezos] smart contracts, software safety
+This blog discusses various topics, mostly about [tezos] smart contracts, and software safety
 (verification). You can find a list of the latest posts [here][latest].
 
 Articles (should) be sorted by the topics they discuss:

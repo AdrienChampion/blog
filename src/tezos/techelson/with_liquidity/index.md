@@ -27,13 +27,15 @@ test script in [Liquidity Extensions]. Then test our setup on a [Basic Example].
 how to write a test for an external, non-trivial contract in [External Contract Example], using
 more advanced techelson commands. Finally, there's [The End] at the end.
 
-There is a listing of all the files used in this post in the [File Listing] section.
+There is a listing of all the files used in this post in the [File Listing] section. Also, they are
+available [here][demo dir].
 
 [Techelson]: https://github.com/OCamlPro/techelson (Techelson's github repository)
 [Michelson]: https://tezos.gitlab.io/master/whitedoc/michelson.html (Michelson's documentation)
 [liquidity]: http://www.liquidity-lang.org/ (Liquidity's official page)
 [OCamlPro]: https://www.ocamlpro.com/ (OCamlPro's official page)
 [declare extensions to the language]: http://www.liquidity-lang.org/doc/reference/liquidity.html#extended-primitives (Liquidity's extensions)
+[demo dir]: https://github.com/AdrienChampion/AdrienChampion.github.io/tree/master/blog/tezos/techelson/with_liquidity/rsc (All files used in this post)
 
 [Liquidity Extensions]: extensions.md (Liquidity extension section)
 [Basic Example]: basic.md (Basic example section)
