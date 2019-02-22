@@ -1,0 +1,142 @@
+[%%version 0.531]
+type storage_ =
+  {
+  admins: (string, address) map ;
+  users: (string, (address * (tez * UnitContract.instance))) map }
+type storage = storage_
+let admin_check (storage : storage_) =
+  ((fun (closure_env : (string * storage_))  ->
+      ((fun (closure_env : (address * (string * storage_)))  ->
+          let storage = (closure_env.(1p)).(1p)  in
+          let name = (closure_env.(1p)).(0p)  in
+          match Map.find name storage.admins with
+          | None  -> failwith "only admins can perform administrative tasks"
+          | Some address ->
+              let a = closure_env.(0p)  in
+              if address <> a then failwith "illegal access to admin account"),
+        closure_env)), storage)
+  
+let data_of (storage : storage_) =
+  ((fun (closure_env : (string * storage_))  ->
+      ((fun (closure_env : (address * (string * storage_)))  ->
+          let storage = (closure_env.(1p)).(1p)  in
+          let name = (closure_env.(1p)).(0p)  in
+          match Map.find name storage.users with
+          | None  -> failwith "unknown user"
+          | Some var58 ->
+              let address62 = var58.(0p)  in
+              let user = closure_env.(0p)  in
+              if user <> address62
+              then failwith "illegal access to account"
+              else
+                (let c = (var58.(1p)).(1p)  in
+                 let tez = (var58.(1p)).(0p)  in (tez, c))), closure_env)),
+    storage)
+  
+[%%entry
+  let add_admin
+    (_admin_name_nu_admin_name_nu_admin_address :
+      (string * (string * address)))
+    (storage : storage) =
+    let exec95 = admin_check storage  in
+    let admin_name96 = _admin_name_nu_admin_name_nu_admin_address.(0p)  in
+    let exec100 = (exec95.(0p)) (admin_name96, (exec95.(1p)))  in
+    (exec100.(0p)) ((Current.sender ()), (exec100.(1p)));
+    (let nu_admin_address =
+       (_admin_name_nu_admin_name_nu_admin_address.(1p)).(1p)  in
+     let nu_admin_name =
+       (_admin_name_nu_admin_name_nu_admin_address.(1p)).(0p)  in
+     let storage114 =
+       {
+         admins = (Map.add nu_admin_name nu_admin_address storage.admins);
+         users = (storage.users)
+       }  in
+     (([] : operation list), storage114))
+    ]
+[%%entry
+  let rm_admin (_admin_name_user_name : (string * string))
+    (storage : storage) =
+    let exec122 = admin_check storage  in
+    let admin_name123 = _admin_name_user_name.(0p)  in
+    let exec127 = (exec122.(0p)) (admin_name123, (exec122.(1p)))  in
+    (exec127.(0p)) ((Current.sender ()), (exec127.(1p)));
+    (let user_name136 = _admin_name_user_name.(1p)  in
+     let storage138 =
+       {
+         admins = (Map.remove user_name136 storage.admins);
+         users = (storage.users)
+       }  in
+     (([] : operation list), storage138))
+    ]
+[%%entry
+  let add_user
+    (_admin_name_user_name_user_c :
+      (string * (string * (address * UnitContract.instance))))
+    (storage : storage) =
+    let user_name = (_admin_name_user_name_user_c.(1p)).(0p)  in
+    let exec148 = admin_check storage  in
+    let admin_name = _admin_name_user_name_user_c.(0p)  in
+    let exec153 = (exec148.(0p)) (admin_name, (exec148.(1p)))  in
+    (exec153.(0p)) ((Current.sender ()), (exec153.(1p)));
+    if Map.mem user_name storage.users then failwith "username already taken";
+    (let c174 = ((_admin_name_user_name_user_c.(1p)).(1p)).(1p)  in
+     let user179 = ((_admin_name_user_name_user_c.(1p)).(1p)).(0p)  in
+     let storage183 =
+       {
+         admins = (storage.admins);
+         users = (Map.add user_name (user179, (0tz, c174)) storage.users)
+       }  in
+     (([] : operation list), storage183))
+    ]
+[%%entry
+  let deposit (name : string) (storage : storage) =
+    let user191 = Current.sender ()  in
+    let exec192 = data_of storage  in
+    let exec196 = (exec192.(0p)) (name, (exec192.(1p)))  in
+    let _money_c200 = (exec196.(0p)) (user191, (exec196.(1p)))  in
+    let c203 = _money_c200.(1p)  in
+    let amount204 = Current.amount ()  in
+    let money205 = _money_c200.(0p)  in
+    let pair208 = (user191, ((money205 + amount204), c203))  in
+    let _ = Some pair208  in
+    (([] : operation list),
+      {
+        admins = (storage.admins);
+        users = (Map.add name pair208 storage.users)
+      })
+    ]
+[%%entry
+  let withdraw (_name_amount : (string * tez)) (storage : storage) =
+    let name = _name_amount.(0p)  in
+    let amount = _name_amount.(1p)  in
+    let user221 = Current.sender ()  in
+    let exec222 = data_of storage  in
+    let exec226 = (exec222.(0p)) (name, (exec222.(1p)))  in
+    let _money_c230 = (exec226.(0p)) (user221, (exec226.(1p)))  in
+    let money231 = _money_c230.(0p)  in
+    let _ = compare amount money231  in
+    if amount > money231
+    then failwith "insufficient balance"
+    else
+      (let c241 = _money_c230.(1p)  in
+       let pair244 = (user221, ((money231 - amount), c241))  in
+       let _ = Some pair244  in
+       (([] : operation list),
+         {
+           admins = (storage.admins);
+           users = (Map.add name pair244 storage.users)
+         }))
+    ]
+[%%entry
+  let drain (name : string) (storage : storage) =
+    let exec253 = data_of storage  in
+    let exec257 = (exec253.(0p)) (name, (exec253.(1p)))  in
+    let user = Current.sender ()  in
+    let _money_c = (exec257.(0p)) (user, (exec257.(1p)))  in
+    let storage =
+      { admins = (storage.admins); users = (Map.remove name storage.users) }
+       in
+    let c269 = _money_c.(1p)  in
+    let money = _money_c.(0p)  in
+    let exp272 = Contract.call ~dest:c269 ~amount:money ~parameter:()  in
+    let ops = [exp272]  in (ops, storage) ]

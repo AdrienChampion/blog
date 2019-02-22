@@ -1,0 +1,14 @@
+$ ./test.sh tests/empty.liq
+Compiling tests/empty.liq...
+
+Contract Multi
+Main contract Empty
+File "tests/empty.liq.techel" generated
+If tezos is compiled, you may want to typecheck with:
+  tezos-client typecheck script tests/empty.liq.techel
+
+Running test tests/empty.liq.techel
+
+Running test `Empty`
+Running test script...
+Done running test `Empty`

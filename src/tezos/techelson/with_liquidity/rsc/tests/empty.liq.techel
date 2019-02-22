@@ -1,0 +1,11 @@
+parameter unit;
+storage unit;
+code { DUP ;
+       DIP { CDR @_storage_slash_1 } ;
+       CAR @_param_slash_2 ;
+       UNIT ;
+       NIL operation ;
+       PAIR @nothing ;
+       DUP @nothing ;
+       DIP { DROP } ;
+       DIP { DROP ; DROP } };

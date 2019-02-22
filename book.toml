@@ -1,0 +1,11 @@
+[book]
+authors = ["Adrien Champion <adrien.champion@email.com>"]
+multilingual = false
+src = "src"
+title = "Blog"
+
+[output.html]
+
+[output.linkcheck]
+follow-web-links = true
+traverse-parent-directories = true

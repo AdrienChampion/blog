@@ -1,0 +1,32 @@
+$ ./test.sh tests/test1_err.liq
+Compiling tests/test1.liq...
+
+Contract Multi
+Main contract Test1
+File "tests/test1_err.liq.techel" generated
+If tezos is compiled, you may want to typecheck with:
+  tezos-client typecheck script tests/test1.liq.techel
+
+Running test tests/test1.liq.techel
+
+Running test `Test1`
+Running test script...
+
+Applying Operations...
+Running test script...
+
+Applying Operations...
+Running test script...
+
+Applying Operations...
+
+Contract Transfer...
+
+Applying Operations...
+Test `Test1` failed:
+    Error
+        operation TRANSFER[uid:3] address[0]@Test1 -> address[2] 0utz (Right (Right (Left ("root", ("lucy", (address[3], address[3])))))) was expected to succeed
+        but failed on operation TRANSFER[uid:3] address[0]@Test1 -> address[2] 0utz (Right (Right (Left ("root", ("lucy", (address[3], address[3]))))))
+        operation failed on "illegal access to admin account" : string
+Error
+    1 of the 1 testcase failed

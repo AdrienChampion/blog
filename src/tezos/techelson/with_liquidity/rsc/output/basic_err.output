@@ -1,0 +1,28 @@
+$ ./test.sh tests/basic_err.liq
+Compiling tests/basic_err.liq...
+
+Contract Multi
+Main contract Basic_err
+File "tests/basic_err.liq.techel" generated
+If tezos is compiled, you may want to typecheck with:
+  tezos-client typecheck script tests/basic_err.liq.techel
+
+Running test tests/basic_err.liq.techel
+
+Running test `Basic_err`
+Running test script...
+
+Applying Operations...
+Running test script...
+
+Applying Operations...
+
+Contract Transfer...
+
+Applying Operations...
+Running test script...
+Test `Basic_err` failed:
+    Tezos protocol error
+        Failure on value "balance should be 12tz" : string
+Error
+    1 of the 1 testcase failed
