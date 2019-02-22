@@ -8,7 +8,7 @@ to write our extensions into:
 ```
 
 It is not crucial to understand these rules precisely, only the power they give us. And that power
-is the following functions.
+is the following functions. What they do precisely will become clear when we use them later on.
 
 - `get_balance address`: takes an address as parameter, and returns the balance of the contract at
   that address
