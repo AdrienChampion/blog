@@ -6,7 +6,7 @@ list of operation and the new value of the storage. It is not relevant for the t
 run and perform tests. Let's have a `nothing` helper which is the pair of the empty list of
 operations and `unit`.
 
-So the simplest test `tests/empty.liq` we can write is:
+So the simplest test [tests/empty.liq] we can write is:
 
 ```ocaml
 {{#include rsc/tests/empty.liq}}
@@ -18,7 +18,7 @@ Which we can compile, and run with the `test.sh` script from the previous sectio
 {{#include rsc/output/empty.output}}
 ```
 
-That was boring. Let's write something slightly more interesting. This new test `tests/basic.liq`
+That was boring. Let's write something slightly more interesting. This new test [tests/basic.liq]
 will
 - create an account with `13` tez,
 - check that its balance after deployment is `13` tez,
@@ -36,14 +36,18 @@ and run it
 ```
 
 Let's make sure we are actually testing something. Let's change the final check of
-`tests/basic.liq` to
+[tests/basic.liq] to
 
 ```ocaml
 {{#include rsc/tests/basic_err.liq:32:35:}}
 ```
 
-in `tests/basic_err.liq`. The test fails indeed:
+in [tests/basic_err.liq]. The test fails indeed:
 
 ```
 {{#include rsc/output/basic_err.output}}
 ```
+
+[tests/empty.liq]: listing.md#testsemptyliq (Empty test file)
+[tests/basic.liq]: listing.md#testsbasicliq (Basic test file)
+[tests/basic_err.liq]: listing.md#testsbasic_errliq (Basic_err test file)

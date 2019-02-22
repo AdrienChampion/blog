@@ -5,6 +5,7 @@ src = "src"
 title = "Blog"
 
 [output.html]
+default-theme = "navy"
 
 [output.linkcheck]
 follow-web-links = true

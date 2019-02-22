@@ -1,11 +1,11 @@
 ## External Contract Example
 
 Let's give ourselves an external contract that we can write a test for. We will use
-[contracts/multi.liq]. It's whole code is available [below](#full-example), but for writing a test
+[contracts/multi.liq]. It's whole code is available in the [listing], but for writing a test
 we only need a high-level understanding of what it does.
 
-`Multi` offers its clients to store tokens for them. It has some administrators, which are the only
-one able to add new clients. First, the contract's storage is
+`Multi`, in [contracts/multi.liq], offers its clients to store tokens for them. It has some
+administrators, which are the only one able to add new clients. First, the contract's storage is
 
 ```ocaml
 {{#include rsc/contracts/multi.liq:1:4:}}
@@ -44,7 +44,7 @@ Let's first write a test which creates an instance of `Multi` with an admin name
 {{#include rsc/tests/test1_err.liq}}
 ```
 
-Let's run this test. It will fail though, as it should. So we will call it `tests/test1_err.liq`.
+Let's run this test. It will fail though, as it should. So we will call it [tests/test1_err.liq].
 The relevant part of the output is
 
 ```
@@ -59,7 +59,7 @@ root when we create the operation.
 
 But this test is not worthless. It shows that an outsider cannot add new clients even by using the
 name of an existing outsider. What we should do is say that this transfer must fail. This is what
-`tests/test1.liq` does. Only the `apply_operations` changes:
+[tests/test1.liq] does. Only the `apply_operations` changes:
 
 ```ocaml
 {{#include rsc/tests/test1.liq:84:85:}}
@@ -69,7 +69,7 @@ name of an existing outsider. What we should do is say that this transfer must f
 
 Let's now make the transfer work by pretending to be `root`. The current solution for this is not
 very satisfactory, but it will do the job until techelson is more tightly integrated in liquidity.
-The result is `tests/test2.liq`, where we add:
+The result is [tests/test2.liq], where we add:
 
 ```ocaml
 {{#include rsc/tests/test2.liq:79:85:}}
@@ -86,7 +86,7 @@ which should leave her with `5tz` (remember she was created with `15tz`). She wi
 account, which will trigger Multi to send her all of her money, at which point she should have
 `15tz`.
 
-The additional code, in `tests/test3.liq`, is
+The additional code, in [tests/test3.liq], is
 
 ```ocaml
 {{#include rsc/tests/test3.liq:97:121:}}
@@ -99,7 +99,7 @@ which is successful:
 ```
 
 Last, let's again make sure we're actually testing something by checking that, at the end, lucy's
-balance is `2tz` (it's not) in `tests/test3_err.liq`:
+balance is `2tz` (it's not) in [tests/test3_err.liq]:
 
 ```ocaml
 {{#include rsc/tests/test3_err.liq:117:121:}}
@@ -111,4 +111,10 @@ This fails:
 {{#include rsc/output/test3_err.output}}
 ```
 
-[contracts/multi.liq]: rsc/contracts/multi.liq (Multi contract)
+[listing]: listing.md (File Listing)
+[contracts/multi.liq]: listing.md#contractsmultiliq (Multi contract file)
+[tests/test1_err.liq]: listing.md#teststest1_errliq (Test1_err test file)
+[tests/test1.liq]: listing.md#teststest1liq (Test1 test file)
+[tests/test2.liq]: listing.md#teststest2liq (Test2 test file)
+[tests/test3.liq]: listing.md#teststest3liq (Test3 test file)
+[tests/test3_err.liq]: listing.md#teststest3_errliq (Test3_err test file)

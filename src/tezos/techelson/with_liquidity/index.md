@@ -23,34 +23,20 @@ this:
 ```
 
 The first step is to teach liquidity to generate techelson special instruction and setup a tiny
-test script in [Liquidity Extensions](#liquidity-extensions). Then test our setup on a [Basic
-Example](#basic-example). After I will show how to write a test for an external, non-trivial
-contract in [External Contract Example](#external-contract-example), using more advanced techelson
-commands. (The full code for this example is available [below this post](#full-example)). Finally,
-there's [The End](#the-end) at the end.
+test script in [Liquidity Extensions]. Then test our setup on a [Basic Example]. After I will show
+how to write a test for an external, non-trivial contract in [External Contract Example], using
+more advanced techelson commands. Finally, there's [The End] at the end.
 
-{{#include extensions.md}}
-
-{{#include basic.md}}
-
-{{#include external.md}}
-
-## The End
-
-That's it. I believe this is enough to get some liquidity enthusiasts interested in techelson and
-its future integration in the liquidity ecosystem. The process will be much more streamlined soon and will most likely remove the need for defining liquidity extensions.
-
-## Full Example
-
-File `contracts/multi.liq`:
-
-```ocaml
-{{#include rsc/contracts/multi.liq}}
-```
+There is a listing of all the files used in this post in the [File Listing] section.
 
 [Techelson]: https://github.com/OCamlPro/techelson (Techelson's github repository)
 [Michelson]: https://tezos.gitlab.io/master/whitedoc/michelson.html (Michelson's documentation)
 [liquidity]: http://www.liquidity-lang.org/ (Liquidity's official page)
 [OCamlPro]: https://www.ocamlpro.com/ (OCamlPro's official page)
 [declare extensions to the language]: http://www.liquidity-lang.org/doc/reference/liquidity.html#extended-primitives (Liquidity's extensions)
-[liquidity extensions]: http://www.liquidity-lang.org/doc/reference/liquidity.html#extended-primitives (Liquidity's extensions)
+
+[Liquidity Extensions]: extensions.md (Liquidity extension section)
+[Basic Example]: basic.md (Basic example section)
+[External Contract Example]: external.md (External contract example section)
+[The End]: end.md (The end section)
+[File Listing]: listing.md (File Listing section)

@@ -1,6 +1,6 @@
 ## Liquidity Extensions
 
-The first step is to declare the [liquidity extensions] we need. Let's create a `tests/techel.liq`
+The first step is to declare the [liquidity extensions] we need. Let's create a [tests/techel.liq]
 to write our extensions into:
 
 ```ocaml
@@ -35,3 +35,7 @@ the extensions we just defined.
 ```bash
 {{#include rsc/test.sh}}
 ```
+
+[liquidity extensions]: http://www.liquidity-lang.org/doc/reference/liquidity.html#extended-primitives (Liquidity's extensions)
+
+[tests/techel.liq]: listing.md#teststechelliq (Techelson extensions for liquidity)
