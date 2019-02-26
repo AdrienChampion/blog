@@ -510,7 +510,7 @@ code { DUP ;
        RIGHT (pair string (pair string address)) ;
        TRANSFER_TOKENS ;
        DUP ;
-       NONE string ; MUST_FAIL string ;
+       { NONE string ; MUST_FAIL string } ;
        NIL operation ;
        DUUP ;
        CONS ;

@@ -68,7 +68,7 @@ name of an existing outsider. What we should do is say that this transfer must f
 ### Testing Multi
 
 Let's now make the transfer work by pretending to be `root`. The current solution for this is not
-very satisfactory, but it will do the job until techelson is more tightly integrated in liquidity.
+very satisfactory, but it will do the job until techelson is more tightly integrated in Liquidity.
 The result is [tests/test2.liq], where we add:
 
 ```ocaml
