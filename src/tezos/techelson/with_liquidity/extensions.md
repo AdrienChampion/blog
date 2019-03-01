@@ -4,7 +4,7 @@ The first step is to declare the [Liquidity extensions] we need. Let's create a 
 to write our extensions into:
 
 ```ocaml
-{{#include rsc/tests/techel.liq}}
+{{#include rsc/tests/techel.liq:1:18:}}
 ```
 
 It is not crucial to understand these rules precisely, only the power they give us. And that power

@@ -50,7 +50,7 @@ The relevant part of the output is
 ```
 {{#include rsc/output/test1_err.output:1:1:}}
 [....]
-{{#include rsc/output/test1_err.output:25:30:}}
+{{#include rsc/output/test1_err.output:48:52:}}
 ```
 
 The reason this test failed is because only administrator can add clients. So here, only `root` can

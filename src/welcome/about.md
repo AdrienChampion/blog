@@ -19,7 +19,7 @@ I am interested in software safety and strongly-typed high-level languages such 
 [Cesare Tinelli]: http://homepage.cs.uiowa.edu/~tinelli/ (Cesare Tinelli's homepage)
 [Kind 2]: http://kind2-mc.github.io/kind2/ (Kind 2 github.io page)
 [University of Tokyo]: https://www.u-tokyo.ac.jp/en/index.html (University of Tokyo official page)
-[Naoki Kobayashi]: http://www-kb.is.s.u-tokyo.ac.jp/~koba/ (Naoki Kobayashi's homepage)
+[Naoki Kobayashi]: https://www.s.u-tokyo.ac.jp/en/people/kobayashi_naoki (Naoki Kobayashi's homepage)
 [hoice]: https://github.com/hopv/hoice (Hoice's github repository)
 [OCamlPro]: https://www.ocamlpro.com/ (OCamlPro's official page)
 [tezos]: https://tezos.com/ (Tezos official page)

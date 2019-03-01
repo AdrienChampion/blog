@@ -1,27 +1,53 @@
 $ ./test.sh tests/test1.liq
 Compiling tests/test1.liq...
 
-Contract Multi
-Main contract Test1
-File "tests/test1.liq.techel" generated
-If tezos is compiled, you may want to typecheck with:
-  tezos-client typecheck script tests/test1.liq.techel
 
 Running test tests/test1.liq.techel
 
 Running test `Test1`
-Running test script...
 
-Applying Operations...
-Running test script...
+running test script...
 
-Applying Operations...
-Running test script...
+applying operation CREATE[uid:0] (@address[1], "tz1YLtLqD1fWHthSVHPD116oYvsd4PTAHUoc", None, true, true, 0utz) 
+                       {
+                           storage unit ;
+                           parameter unit ;
+                           code ...;
+                       }
+   live contracts: none
+=> live contracts: <anonymous> (0utz) address[2]
+                   <anonymous> (0utz) address[1]
 
-Applying Operations...
+running test script...
 
-Contract Transfer...
+applying operation CREATE[uid:2] (@address[3], "tz1YLtLqD1fWHthSVHPD116oYvsd4PTAHUoc", None, true, true, 15000000utz) 
+                       {
+                           storage unit ;
+                           parameter unit ;
+                           code ...;
+                       }
+   live contracts: <anonymous> (0utz) address[2]
+                   <anonymous> (0utz) address[1]
+=> live contracts: <anonymous> (0utz) address[2]
+                   <anonymous> (15000000utz) address[3]
+                   <anonymous> (0utz) address[1]
 
-Applying Operations...
-Running test script...
+running test script...
+
+applying operation MUST_FAIL[uid:4] _ (TRANSFER[uid:3] address[0]@Test1 -> address[2] 0utz (Right (Right (Left ("root", ("lucy", (address[3], address[3])))))))
+   live contracts: <anonymous> (0utz) address[2]
+                   <anonymous> (15000000utz) address[3]
+                   <anonymous> (0utz) address[1]
+
+running TRANSFER[uid:3] address[0]@Test1 -> address[2] 0utz (Right (Right (Left ("root", ("lucy", (address[3], address[3]))))))
+=> live contracts: <anonymous> (0utz) address[2]
+                   <anonymous> (15000000utz) address[3]
+                   <anonymous> (0utz) address[1]
+
+failure confirmed on test operation
+  MUST_FAIL[uid:4] _ (TRANSFER[uid:3] address[0]@Test1 -> address[2] 0utz (Right (Right (Left ("root", ("lucy", (address[3], address[3])))))))
+while running operation TRANSFER[uid:3] address[0]@Test1 -> address[2] 0utz (Right (Right (Left ("root", ("lucy", (address[3], address[3]))))))
+failed with value "illegal access to admin account" : string
+
+running test script...
 Done running test `Test1`

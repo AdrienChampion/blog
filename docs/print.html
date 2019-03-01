@@ -1,0 +1,1733 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Blog</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body class="navy">
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = "navy";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            document.body.className = theme;
+            document.querySelector('html').className = theme + ' js';
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <ol class="chapter"><li><a href="welcome/index.html"><strong aria-hidden="true">1.</strong> Welcome</a></li><li><ol class="section"><li><a href="welcome/latest.html"><strong aria-hidden="true">1.1.</strong> Latest</a></li><li><a href="welcome/about.html"><strong aria-hidden="true">1.2.</strong> About Me</a></li></ol></li><li><a href="tezos/index.html"><strong aria-hidden="true">2.</strong> Michelson/Liquidity</a></li><li><ol class="section"><li><a href="tezos/techelson/with_liquidity/index.html"><strong aria-hidden="true">2.1.</strong> Using Techelson With Liquidity</a></li><li><ol class="section"><li><a href="tezos/techelson/with_liquidity/extensions.html"><strong aria-hidden="true">2.1.1.</strong> Liquidity Extensions</a></li><li><a href="tezos/techelson/with_liquidity/basic.html"><strong aria-hidden="true">2.1.2.</strong> Basic Example</a></li><li><a href="tezos/techelson/with_liquidity/external.html"><strong aria-hidden="true">2.1.3.</strong> External Contract Example</a></li><li><a href="tezos/techelson/with_liquidity/end.html"><strong aria-hidden="true">2.1.4.</strong> The End</a></li><li><a href="tezos/techelson/with_liquidity/listing.html"><strong aria-hidden="true">2.1.5.</strong> File Listing</a></li></ol></li></ol></li><li><a href="safety/index.html"><strong aria-hidden="true">3.</strong> Software Safety</a></li></ol>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div id="menu-bar-sticky-container">
+                        <div class="left-buttons">
+                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                                <i class="fa fa-paint-brush"></i>
+                            </button>
+                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy (default)</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            </ul>
+                            
+                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            
+                        </div>
+
+                        <h1 class="menu-title">Blog</h1> 
+
+                        <div class="right-buttons">
+                            <a href="print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
+                            </a>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <a class="header" href="#welcome" id="welcome"><h1>Welcome</h1></a>
+<p>This blog discusses various topics, mostly about <a href="https://tezos.com/" title="Tezos official page">tezos</a> smart contracts, and software safety
+(verification). You can find a list of the latest posts <a href="welcome/latest.html" title="This blog's latest posts">here</a>.</p>
+<p>Articles (should) be sorted by the topics they discuss:</p>
+<ul>
+<li><a href="welcome/../tezos/index.html" title="Tezos and Liquidity posts">Tezos and Liquidity</a></li>
+<li><a href="welcome/../safety/index.html" title="Software safety posts">Software Safety</a></li>
+</ul>
+<a class="header" href="#latest" id="latest"><h1>Latest</h1></a>
+<ul>
+<li>2019
+<ul>
+<li>February
+<ul>
+<li><a href="welcome/../tezos/techelson/with_liquidity/index.html">Using Techelson With Liquidity</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<a class="header" href="#about-me" id="about-me"><h1>About Me</h1></a>
+<p>Hi. I'm <a href="https://github.com/AdrienChampion" title="Adrien Champion github page">Adrien Champion</a>. I have a PhD in software safety and worked on critical embedded systems
+(systems controlling planes, nuclear plants, cars, <em>etc.</em>) during both my PhD and my first postdoc
+at the <a href="https://uiowa.edu" title="University of Iowa official page">University of Iowa</a> with <a href="http://homepage.cs.uiowa.edu/%7Etinelli/" title="Cesare Tinelli's homepage">Cesare Tinelli</a>, where I worked on the <a href="http://kind2-mc.github.io/kind2/" title="Kind 2 github.io page">Kind 2</a> model checker. I
+did my second postdoc at the <a href="https://www.u-tokyo.ac.jp/en/index.html" title="University of Tokyo official page">University of Tokyo</a> with <a href="https://www.s.u-tokyo.ac.jp/en/people/kobayashi_naoki" title="Naoki Kobayashi's homepage">Naoki Kobayashi</a>. I worked on higher-order
+model-checking: I developed the <a href="https://github.com/hopv/hoice" title="Hoice's github repository">hoice</a> Horn Clause solver which proved quite efficient for
+problems stemming from higher-order program verification.</p>
+<p>I now work at <a href="https://www.ocamlpro.com/" title="OCamlPro's official page">OCamlPro</a>. Currently, most of my work there targets <a href="https://tezos.com/" title="Tezos official page">tezos</a> smart contracts,
+<a href="https://tezos.gitlab.io/master/whitedoc/michelson.html" title="Michelson documentation">Michelson</a> which is tezos' language for smart contracts, and <a href="http://www.liquidity-lang.org/" title="Liquidity official page">Liquidity</a>, an OCaml-like
+(relatively) high-level language which (de)compiles to/from michelson.</p>
+<p>I am interested in software safety and strongly-typed high-level languages such as <a href="https://www.rust-lang.org/" title="Rust official page">Rust</a> and
+<a href="http://www.ocaml.org/" title="OCaml official page">OCaml</a>. I still occasionally work on (critical) embedded system verification.</p>
+<a class="header" href="#michelsonliquidity" id="michelsonliquidity"><h1>Michelson/Liquidity</h1></a>
+<ul>
+<li><a href="tezos/techelson/with_liquidity/index.html">Using Techelson With Liquidity</a></li>
+</ul>
+<a class="header" href="#using-techelson-with-liquidity" id="using-techelson-with-liquidity"><h1>Using Techelson With Liquidity</h1></a>
+<p><a href="https://github.com/OCamlPro/techelson" title="Techelson's github repository">Techelson</a> is a Test Execution Engine for <a href="https://tezos.gitlab.io/master/whitedoc/michelson.html" title="Michelson's documentation">Michelson</a> smart contracts developed by myself at
+<a href="https://www.ocamlpro.com/" title="OCamlPro's official page">OCamlPro</a>. With the (upcoming) release of Techelson, here is a relatively simple (although a bit
+dirty) setup to combine it with <a href="http://www.liquidity-lang.org/" title="Liquidity's official page">Liquidity</a> locally, command-line style. Very little knowledge
+about Techelson is required. This post only assumes some familiarity with Liquidity.</p>
+<blockquote>
+<p><strong>NB</strong>: if you want to learn more about Techelson, make sure to read its <a href="https://ocamlpro.github.io/techelson/user_doc" title="Techelson's documentation.">user documentation</a>.</p>
+</blockquote>
+<p>Liquidity has a nice feature allowing to <a href="http://www.liquidity-lang.org/doc/reference/liquidity.html#extended-primitives" title="Liquidity's extensions">declare extensions to the language</a>. Turns out they are
+powerful enough to generate Techelson's special instructions: you can write your tests directly in
+Liquidity, and tiny script run the tests for you.</p>
+<p>First, make sure you have Liquidity and Techelson in your path. I'll assume they are called
+<code>liquidity</code> and <code>techelson</code>. Let's structure things a bit and have the working directory look like
+this:</p>
+<pre><code>.
+├── test.sh
+├── contracts
+│   └── &quot;contracts go here&quot;
+└── tests
+    └── &quot;tests go here&quot;
+</code></pre>
+<p>The first step is to teach Liquidity to generate Techelson special instruction and setup a tiny
+test script in <a href="tezos/techelson/with_liquidity/extensions.html" title="Liquidity extension section">Liquidity Extensions</a>. Then test our setup on a <a href="tezos/techelson/with_liquidity/basic.html" title="Basic example section">Basic Example</a>. After I will show
+how to write a test for an external, non-trivial contract in <a href="tezos/techelson/with_liquidity/external.html" title="External contract example section">External Contract Example</a>, using
+more advanced Techelson commands. Finally, there's <a href="tezos/techelson/with_liquidity/end.html" title="The end section">The End</a> at the end.</p>
+<p>There is a listing of all the files used in this post in the <a href="tezos/techelson/with_liquidity/listing.html" title="File Listing section">File Listing</a> section. Also, they are
+available <a href="https://github.com/AdrienChampion/AdrienChampion.github.io/tree/master/blog/tezos/techelson/with_liquidity/rsc" title="All files used in this post">here</a>.</p>
+<a class="header" href="#liquidity-extensions" id="liquidity-extensions"><h2>Liquidity Extensions</h2></a>
+<p>The first step is to declare the <a href="http://www.liquidity-lang.org/doc/reference/liquidity.html#extended-primitives" title="Liquidity's extensions">Liquidity extensions</a> we need. Let's create a <a href="tezos/techelson/with_liquidity/listing.html#teststechelliq" title="Techelson extensions for liquidity">tests/techel.liq</a>
+to write our extensions into:</p>
+<pre><code class="language-ocaml">external get_balance :
+    [%stack: address] -&gt; [%stack: tez]
+    = &quot;GET_BALANCE&quot;
+external get_storage :
+    [%type: 'a] -&gt; [%stack: address] -&gt; [%stack: 'a option]
+    = &quot;GET_STORAGE&quot;
+external apply_operations :
+    [%stack: operation list] -&gt; unit
+    = &quot;APPLY_OPERATIONS&quot;
+external start_set_source :
+    [%stack: address] -&gt; unit
+    = &quot;SET_SOURCE { #&quot;
+external end_set_source :
+    unit -&gt; unit
+    = &quot;}&quot;
+external must_fail :
+    [%stack: operation] -&gt; [%stack: operation]
+    = &quot;{ NONE string ; MUST_FAIL string }&quot;
+</code></pre>
+<p>It is not crucial to understand these rules precisely, only the power they give us. And that power
+is the following functions. What they do precisely will become clear when we use them later on.</p>
+<ul>
+<li><code>get_balance address</code>: takes an address as parameter, and returns the balance of the contract at
+that address</li>
+<li><code>get_storage [%type: 'g] address</code>: takes a type and an address as parameter, and returns
+<ul>
+<li><code>Some</code> of the storage of the contract at that address, if it has type <code>'g</code></li>
+<li><code>None</code> otherwise</li>
+</ul>
+</li>
+<li><code>apply_operations ops</code>: takes a list of operations and applies them right away</li>
+<li><code>start_set_source address</code> and <code>end_set_source ()</code>: a very, very dirty hack to define a <em>scope</em>
+where all operations created appear to have been created by whatever is at <code>address</code></li>
+<li><code>must_fail op</code>: tells techelson that the operation <code>op</code> must fail</li>
+</ul>
+<p>Thanks to Liquidity's file import mechanism, we can use these functions in any Liquidity file
+<code>test.liq</code> with <code>Techel.get_balance</code>, <code>Techel.get_storage</code> <em>etc.</em> by simply calling Liquidity as
+follows:</p>
+<pre><code>$ liquidity tests/techel.liq test.liq
+</code></pre>
+<blockquote>
+<p><strong>NB</strong>: you only need to write <code>tests/techel.liq</code> once, and make sure you pass it to Liquidity
+when compiling your testcases, as in <code>test.sh</code> below.</p>
+</blockquote>
+<p>So let's fill in the <code>test.sh</code> file so that it runs our tests. It takes the path to our (future)
+Liquidity test file(s) as argument, and compiles it/them along with all the contracts in
+<code>contracts/</code> and the extensions we just defined. So, given some file <code>tests/test.liq</code>, the script</p>
+<ul>
+<li>generates <code>tests/test.liq.techel</code>: contains the testcase and the contract(s) to test, and</li>
+<li>runs techelson on <code>tests/test.liq.techel</code>.</li>
+</ul>
+<pre><code class="language-bash">#! /bin/bash
+
+set -e
+
+test_file=&quot;$1&quot;
+
+# List of all the contracts.
+contracts=&quot;&quot;
+for file in `find contracts -iname &quot;*.liq&quot;` ; do
+    contracts=&quot;$contracts $file&quot;
+done
+
+# File liquidity will compile to.
+target=&quot;$test_file.techel&quot;
+
+echo &quot;Compiling $test_file...&quot;
+echo
+liquidity --no-annot --no-simplify --no-peephole tests/techel.liq$contracts -o $target $test_file
+echo
+
+# Running techelson on the target.
+echo &quot;Running test $target&quot;
+echo
+techelson $target
+
+</code></pre>
+<blockquote>
+<p><strong>Warning</strong>: function <code>start_set_source</code> uses a dirty hack so that it works as a Liquidity
+extension (similar to a SQL injection). This is a temporary solution, eventually this hack will
+not be necessary.</p>
+</blockquote>
+<a class="header" href="#basic-example" id="basic-example"><h2>Basic Example</h2></a>
+<p>Our test is going to be a contract with a <code>unit</code> (empty) storage. Its (only) entry point will take
+a parameter of type <code>unit</code> and inside that entry point will be our test. Entry points must return a
+list of operation and the new value of the storage. It is not relevant for the test: it will just
+run and perform tests. Let's have a <code>nothing</code> helper which is the pair of the empty list of
+operations and <code>unit</code>.</p>
+<p>So the simplest test <a href="tezos/techelson/with_liquidity/listing.html#testsemptyliq" title="Empty test file">tests/empty.liq</a> we can write is:</p>
+<pre><code class="language-ocaml">type storage = unit
+
+let nothing : operation list * unit = [], ()
+
+let%entry test (_param : unit) (_storage : unit) =
+    nothing
+</code></pre>
+<p>Which we can compile, and run with the <code>test.sh</code> script from the previous section.</p>
+<pre><code>$ ./test.sh tests/empty.liq
+Compiling tests/empty.liq...
+
+
+Running test tests/empty.liq.techel
+
+Running test `Empty`
+
+running test script...
+Done running test `Empty`
+
+</code></pre>
+<p>That was boring. Let's write something slightly more interesting. This new test <a href="tezos/techelson/with_liquidity/listing.html#testsbasicliq" title="Basic test file">tests/basic.liq</a>
+will</p>
+<ul>
+<li>create an account with <code>13</code> tez,</li>
+<li>check that its balance after deployment is <code>13</code> tez,</li>
+<li>make a transfer of <code>29</code> tez,</li>
+<li>check that the new balance is <code>42</code> tez.</li>
+</ul>
+<pre><code class="language-ocaml">type storage = unit
+
+let nothing : operation list * unit = [], ()
+
+let%entry test (_param : unit) (_storage : unit) =
+    let delegate : key_hash option = None in
+    let operation, address =
+        Account.create
+            ~manager:tz1YLtLqD1fWHthSVHPD116oYvsd4PTAHUoc
+            ~delegate
+            ~delegatable:true
+            ~amount:13tz
+    in
+    (* Apply the operation so that we can interact with the account. *)
+    Techel.apply_operations [operation];
+
+    (* Contract is now live. *)
+    let balance = Techel.get_balance address in
+    if balance &lt;&gt; 13tz then (
+        failwith &quot;balance should be 13tz&quot;
+    );
+
+    let account_contract =
+        match UnitContract.at address with
+        | None -&gt; failwith &quot;could not retrieve account&quot;
+        | Some c -&gt; c
+    in
+
+    let operation = Contract.call ~dest:account_contract ~amount:29tz ~parameter:() in
+    Techel.apply_operations [operation];
+
+    let balance = Techel.get_balance address in
+    if balance &lt;&gt; 42tz then (
+        failwith &quot;balance should be 42tz&quot;
+    );
+
+    nothing
+</code></pre>
+<p>and run it</p>
+<pre><code>$ ./test.sh tests/basic.liq
+Compiling tests/basic.liq...
+
+
+Running test tests/basic.liq.techel
+
+Running test `Basic`
+
+running test script...
+
+applying operation CREATE[uid:0] (@address[1], &quot;tz1YLtLqD1fWHthSVHPD116oYvsd4PTAHUoc&quot;, None, true, true, 13000000utz) 
+                       {
+                           storage unit ;
+                           parameter unit ;
+                           code ...;
+                       }
+   live contracts: none
+=&gt; live contracts: &lt;anonymous&gt; (13000000utz) address[1]
+
+running test script...
+
+applying operation TRANSFER[uid:1] address[0]@Basic -&gt; address[1] 29000000utz Unit
+   live contracts: &lt;anonymous&gt; (13000000utz) address[1]
+
+running TRANSFER[uid:1] address[0]@Basic -&gt; address[1] 29000000utz Unit
+=&gt; live contracts: &lt;anonymous&gt; (42000000utz) address[1]
+
+
+running test script...
+Done running test `Basic`
+
+</code></pre>
+<p>Let's make sure we are actually testing something. Let's change the final check of
+<a href="tezos/techelson/with_liquidity/listing.html#testsbasicliq" title="Basic test file">tests/basic.liq</a> to</p>
+<pre><code class="language-ocaml">    let balance = Techel.get_balance address in
+    if balance &lt;&gt; 12tz then (
+        failwith &quot;balance should be 12tz&quot;
+    );
+</code></pre>
+<p>in <a href="tezos/techelson/with_liquidity/listing.html#testsbasic_errliq" title="Basic_err test file">tests/basic_err.liq</a>. The test fails indeed:</p>
+<pre><code>$ ./test.sh tests/basic_err.liq
+Compiling tests/basic_err.liq...
+
+
+Running test tests/basic_err.liq.techel
+
+Running test `Basic_err`
+
+running test script...
+
+applying operation CREATE[uid:0] (@address[1], &quot;tz1YLtLqD1fWHthSVHPD116oYvsd4PTAHUoc&quot;, None, true, true, 13000000utz) 
+                       {
+                           storage unit ;
+                           parameter unit ;
+                           code ...;
+                       }
+   live contracts: none
+=&gt; live contracts: &lt;anonymous&gt; (13000000utz) address[1]
+
+running test script...
+
+applying operation TRANSFER[uid:1] address[0]@Basic_err -&gt; address[1] 29000000utz Unit
+   live contracts: &lt;anonymous&gt; (13000000utz) address[1]
+
+running TRANSFER[uid:1] address[0]@Basic_err -&gt; address[1] 29000000utz Unit
+=&gt; live contracts: &lt;anonymous&gt; (42000000utz) address[1]
+
+
+running test script...
+
+Test `Basic_err` failed:
+    Tezos protocol error
+        Failure on value &quot;balance should be 12tz&quot; : string
+
+Error
+    1 of the 1 testcase failed
+
+</code></pre>
+<a class="header" href="#external-contract-example" id="external-contract-example"><h2>External Contract Example</h2></a>
+<p>Let's give ourselves an external contract that we can write a test for. We will use
+<a href="tezos/techelson/with_liquidity/listing.html#contractsmultiliq" title="Multi contract file">contracts/multi.liq</a>. It's whole code is available in the <a href="tezos/techelson/with_liquidity/listing.html" title="File Listing">listing</a>, but for writing a test
+we only need a high-level understanding of what it does.</p>
+<p><code>Multi</code>, in <a href="tezos/techelson/with_liquidity/listing.html#contractsmultiliq" title="Multi contract file">contracts/multi.liq</a>, offers its clients to store tokens for them. It has some
+administrators, which are the only one able to add new clients. First, the contract's storage is</p>
+<pre><code class="language-ocaml">type storage = {
+    admins : (string, address) map ;
+    users : (string, (address * tez * UnitContract.instance)) map ;
+}
+</code></pre>
+<p><code>Multi</code> stores some named administrators in a map <code>admins</code> from names to administrator addresses.
+It also stores some named clients in a map <code>clients</code>. It maps the name of a client to</p>
+<ul>
+<li>its address</li>
+<li>the amount of money it has stored on this contract</li>
+<li>an account which will receive all the money the client has if the client asks to drains it.</li>
+</ul>
+<a class="header" href="#entry-points" id="entry-points"><h3>Entry Points</h3></a>
+<p>The entry points of <code>Multi</code> we are interested in are</p>
+<pre><code class="language-ocaml">let%entry add_client (
+    (admin_name, user_name, user,     c) :
+     string *    string *   address * UnitContract.instance
+) (storage : storage) =
+    ...
+</code></pre>
+<p>Adds a new user. Only administrators can do this.</p>
+<pre><code class="language-ocaml">let%entry drain (name : string) (storage : storage) =
+    ...
+</code></pre>
+<p>Transfers all the money of a user to the account provided on creation. Only the client can call
+this entry point (with the right name).</p>
+<a class="header" href="#testing-multi-and-failing-to-do-so" id="testing-multi-and-failing-to-do-so"><h3>Testing Multi (and failing to do so)</h3></a>
+<p>Let's first write a test which creates an instance of <code>Multi</code> with an admin named <code>root</code>. It then adds a new administrator:</p>
+<pre><code class="language-ocaml">let nothing : operation list * unit = [], ()
+
+(* Creates a storage for Multi with one administrator. *)
+let one_admin (root : string) (address : address) : Multi.storage = {
+    Multi.admins =
+        Map.add root address (Map : (string, address) map) ;
+    Multi.users =
+        (Map : (string, (address * tez * UnitContract.instance)) map) ;
+}
+
+(* Deploys an account with an arbitrary manager. *)
+let deploy_account_op (amount: tez) : operation * address =
+    let delegate : key_hash option = None in
+    Account.create
+        ~manager:tz1YLtLqD1fWHthSVHPD116oYvsd4PTAHUoc
+        ~delegate
+        ~delegatable:true
+        ~amount
+
+(* Deploys an instance of multi with an arbitrary manager. *)
+let deploy_contract_op (storage : Multi.storage) : operation * address =
+    let delegate : key_hash option = None in
+    Contract.create
+        ~manager:tz1YLtLqD1fWHthSVHPD116oYvsd4PTAHUoc
+        ~delegate
+        ~delegatable:true
+        ~spendable:false
+        ~amount:0tz
+        ~storage
+        ~code:(contract Multi)
+
+(* Storage of the test is irrelevant. *)
+type storage = unit
+
+(* Actual test. *)
+let%entry test (_param : unit) (_storage : unit) =
+    let root_op, root = deploy_account_op 0tz in
+    let storage = one_admin &quot;root&quot; root in
+    let main_op, main = deploy_contract_op storage in
+    (* ask techelson to apply these operations. *)
+    Techel.apply_operations [ root_op ; main_op ];
+    (* root and main are live now *)
+
+    (* let's check root is an admin, and that the address is correct *)
+    let storage =
+        match Techel.get_storage [%type: Multi.storage] main with
+        | Some storage -&gt; storage
+        | None -&gt; failwith &quot;can't retrieve contract's storage&quot;
+    in
+    (
+        match Map.find &quot;root&quot; storage.Multi.admins with
+        | None -&gt; failwith &quot;no root in storage&quot;
+        | Some address -&gt; (
+            if address &lt;&gt; root then (
+                failwith &quot;wrong address for root&quot;
+            )
+        )
+    );
+
+    let client_op, client = deploy_account_op 15tz in
+    (* deploy the client *)
+    Techel.apply_operations [ client_op ];
+    (* client is live now *)
+
+    (* retrieve client instance for registration *)
+    let client_instance =
+        match (Contract.at client : UnitContract.instance option) with
+        | None -&gt; failwith &quot;could not retrieve main contract&quot;
+        | Some instance -&gt; instance
+    in
+    (* retrieve multi's instance to call it *)
+    let main_instance =
+        match Multi.at main with
+        | None -&gt; failwith &quot;could not retrieve main contract&quot;
+        | Some instance -&gt; instance
+    in
+
+    (* let's add a client *)
+    let add_client =
+        Contract.call ~dest:main_instance ~amount:0tz ~entry:add_client ~parameter:(
+            &quot;root&quot;, &quot;lucy&quot;, client, client_instance
+        )
+    in
+    Techel.apply_operations [ add_client ];
+
+    nothing
+
+</code></pre>
+<p>Let's run this test. It will fail though, as it should. So we will call it <a href="tezos/techelson/with_liquidity/listing.html#teststest1_errliq" title="Test1_err test file">tests/test1_err.liq</a>.
+The relevant part of the output is</p>
+<pre><code>$ ./test.sh tests/test1_err.liq
+[....]
+Test `Test1_err` failed:
+    Error
+        operation TRANSFER[uid:3] address[0]@Test1_err -&gt; address[2] 0utz (Right (Right (Left (&quot;root&quot;, (&quot;lucy&quot;, (address[3], address[3])))))) was expected to succeed
+        but failed on operation TRANSFER[uid:3] address[0]@Test1_err -&gt; address[2] 0utz (Right (Right (Left (&quot;root&quot;, (&quot;lucy&quot;, (address[3], address[3]))))))
+        operation failed on &quot;illegal access to admin account&quot; : string
+</code></pre>
+<p>The reason this test failed is because only administrator can add clients. So here, only <code>root</code> can
+add a new client. Hence, we need to pretend to be <code>root</code>. More precisely, we need to pretend to be
+root when we create the operation.</p>
+<p>But this test is not worthless. It shows that an outsider cannot add new clients even by using the
+name of an existing outsider. What we should do is say that this transfer must fail. This is what
+<a href="tezos/techelson/with_liquidity/listing.html#teststest1liq" title="Test1 test file">tests/test1.liq</a> does. Only the <code>apply_operations</code> changes:</p>
+<pre><code class="language-ocaml">    let must_fail = Techel.must_fail bad_add_client in
+    Techel.apply_operations [ must_fail ];
+</code></pre>
+<a class="header" href="#testing-multi" id="testing-multi"><h3>Testing Multi</h3></a>
+<p>Let's now make the transfer work by pretending to be <code>root</code>. The current solution for this is not
+very satisfactory, but it will do the job until techelson is more tightly integrated in Liquidity.
+The result is <a href="tezos/techelson/with_liquidity/listing.html#teststest2liq" title="Test2 test file">tests/test2.liq</a>, where we add:</p>
+<pre><code class="language-ocaml">    let bad_add_client =
+        Contract.call ~dest:main_instance ~amount:0tz ~entry:add_client ~parameter:(
+            &quot;root&quot;, &quot;lucy&quot;, client, client_instance
+        )
+    in
+    let must_fail = Techel.must_fail bad_add_client in
+    (* let's really add a client now *)
+</code></pre>
+<p>The test is now successful:</p>
+<pre><code>$ ./test.sh tests/test1.liq
+Compiling tests/test1.liq...
+
+
+Running test tests/test1.liq.techel
+
+Running test `Test1`
+
+running test script...
+
+applying operation CREATE[uid:0] (@address[1], &quot;tz1YLtLqD1fWHthSVHPD116oYvsd4PTAHUoc&quot;, None, true, true, 0utz) 
+                       {
+                           storage unit ;
+                           parameter unit ;
+                           code ...;
+                       }
+   live contracts: none
+=&gt; live contracts: &lt;anonymous&gt; (0utz) address[2]
+                   &lt;anonymous&gt; (0utz) address[1]
+
+running test script...
+
+applying operation CREATE[uid:2] (@address[3], &quot;tz1YLtLqD1fWHthSVHPD116oYvsd4PTAHUoc&quot;, None, true, true, 15000000utz) 
+                       {
+                           storage unit ;
+                           parameter unit ;
+                           code ...;
+                       }
+   live contracts: &lt;anonymous&gt; (0utz) address[2]
+                   &lt;anonymous&gt; (0utz) address[1]
+=&gt; live contracts: &lt;anonymous&gt; (0utz) address[2]
+                   &lt;anonymous&gt; (15000000utz) address[3]
+                   &lt;anonymous&gt; (0utz) address[1]
+
+running test script...
+
+applying operation MUST_FAIL[uid:4] _ (TRANSFER[uid:3] address[0]@Test1 -&gt; address[2] 0utz (Right (Right (Left (&quot;root&quot;, (&quot;lucy&quot;, (address[3], address[3])))))))
+   live contracts: &lt;anonymous&gt; (0utz) address[2]
+                   &lt;anonymous&gt; (15000000utz) address[3]
+                   &lt;anonymous&gt; (0utz) address[1]
+
+running TRANSFER[uid:3] address[0]@Test1 -&gt; address[2] 0utz (Right (Right (Left (&quot;root&quot;, (&quot;lucy&quot;, (address[3], address[3]))))))
+=&gt; live contracts: &lt;anonymous&gt; (0utz) address[2]
+                   &lt;anonymous&gt; (15000000utz) address[3]
+                   &lt;anonymous&gt; (0utz) address[1]
+
+failure confirmed on test operation
+  MUST_FAIL[uid:4] _ (TRANSFER[uid:3] address[0]@Test1 -&gt; address[2] 0utz (Right (Right (Left (&quot;root&quot;, (&quot;lucy&quot;, (address[3], address[3])))))))
+while running operation TRANSFER[uid:3] address[0]@Test1 -&gt; address[2] 0utz (Right (Right (Left (&quot;root&quot;, (&quot;lucy&quot;, (address[3], address[3]))))))
+failed with value &quot;illegal access to admin account&quot; : string
+
+running test script...
+Done running test `Test1`
+
+</code></pre>
+<p>Finally, let's add more tests. We will have the client (<code>&quot;lucy&quot;</code>) deposit <code>10tz</code> on her account,
+which should leave her with <code>5tz</code> (remember she was created with <code>15tz</code>). She will then drain her
+account, which will trigger Multi to send her all of her money, at which point she should have
+<code>15tz</code>.</p>
+<p>The additional code, in <a href="tezos/techelson/with_liquidity/listing.html#teststest3liq" title="Test3 test file">tests/test3.liq</a>, is</p>
+<pre><code class="language-ocaml">    (* lucy deposits `10tz` *)
+    Techel.start_set_source client ;
+        let deposit_money =
+            Contract.call ~dest:main_instance ~amount:10tz ~entry:deposit ~parameter:&quot;lucy&quot;
+        in
+    Techel.end_set_source () ;
+    Techel.apply_operations [ deposit_money ];
+    let balance_lucy = Techel.get_balance client in
+    if balance_lucy &lt;&gt; 5tz then (
+        failwith &quot;lucy should have 5tz now&quot;
+    );
+
+    (* lucy walks out of the whole thing *)
+    Techel.start_set_source client ;
+        let drain =
+            Contract.call ~dest:main_instance ~amount:0tz ~entry:drain ~parameter:&quot;lucy&quot;
+        in
+    Techel.end_set_source () ;
+    Techel.apply_operations [ drain ] ;
+
+    (* lucy should have her money back *)
+    let balance_lucy = Techel.get_balance client in
+    if balance_lucy &lt;&gt; 15tz then (
+        failwith &quot;lucy should have 15tz now&quot;
+    );
+</code></pre>
+<p>which is successful:</p>
+<pre><code>$ ./test.sh tests/test3.liq
+Compiling tests/test3.liq...
+
+
+Running test tests/test3.liq.techel
+
+Running test `Test3`
+
+running test script...
+
+applying operation CREATE[uid:0] (@address[1], &quot;tz1YLtLqD1fWHthSVHPD116oYvsd4PTAHUoc&quot;, None, true, true, 0utz) 
+                       {
+                           storage unit ;
+                           parameter unit ;
+                           code ...;
+                       }
+   live contracts: none
+=&gt; live contracts: &lt;anonymous&gt; (0utz) address[2]
+                   &lt;anonymous&gt; (0utz) address[1]
+
+running test script...
+
+applying operation CREATE[uid:2] (@address[3], &quot;tz1YLtLqD1fWHthSVHPD116oYvsd4PTAHUoc&quot;, None, true, true, 15000000utz) 
+                       {
+                           storage unit ;
+                           parameter unit ;
+                           code ...;
+                       }
+   live contracts: &lt;anonymous&gt; (0utz) address[2]
+                   &lt;anonymous&gt; (0utz) address[1]
+=&gt; live contracts: &lt;anonymous&gt; (0utz) address[2]
+                   &lt;anonymous&gt; (15000000utz) address[3]
+                   &lt;anonymous&gt; (0utz) address[1]
+
+running test script...
+
+applying operation MUST_FAIL[uid:4] _ (TRANSFER[uid:3] address[0]@Test3 -&gt; address[2] 0utz (Right (Right (Left (&quot;root&quot;, (&quot;lucy&quot;, (address[3], address[3])))))))
+   live contracts: &lt;anonymous&gt; (0utz) address[2]
+                   &lt;anonymous&gt; (15000000utz) address[3]
+                   &lt;anonymous&gt; (0utz) address[1]
+
+running TRANSFER[uid:3] address[0]@Test3 -&gt; address[2] 0utz (Right (Right (Left (&quot;root&quot;, (&quot;lucy&quot;, (address[3], address[3]))))))
+=&gt; live contracts: &lt;anonymous&gt; (0utz) address[2]
+                   &lt;anonymous&gt; (15000000utz) address[3]
+                   &lt;anonymous&gt; (0utz) address[1]
+
+applying operation TRANSFER[uid:5] address[1] -&gt; address[2] 0utz (Right (Right (Left (&quot;root&quot;, (&quot;lucy&quot;, (address[3], address[3]))))))
+   live contracts: &lt;anonymous&gt; (0utz) address[2]
+                   &lt;anonymous&gt; (15000000utz) address[3]
+                   &lt;anonymous&gt; (0utz) address[1]
+failure confirmed on test operation
+  MUST_FAIL[uid:4] _ (TRANSFER[uid:3] address[0]@Test3 -&gt; address[2] 0utz (Right (Right (Left (&quot;root&quot;, (&quot;lucy&quot;, (address[3], address[3])))))))
+while running operation TRANSFER[uid:3] address[0]@Test3 -&gt; address[2] 0utz (Right (Right (Left (&quot;root&quot;, (&quot;lucy&quot;, (address[3], address[3]))))))
+failed with value &quot;illegal access to admin account&quot; : string
+
+running TRANSFER[uid:5] address[1] -&gt; address[2] 0utz (Right (Right (Left (&quot;root&quot;, (&quot;lucy&quot;, (address[3], address[3]))))))
+=&gt; live contracts: &lt;anonymous&gt; (0utz) address[2]
+                   &lt;anonymous&gt; (15000000utz) address[3]
+                   &lt;anonymous&gt; (0utz) address[1]
+
+
+running test script...
+
+applying operation TRANSFER[uid:6] address[3] -&gt; address[2] 10000000utz (Right (Right (Right (Left &quot;lucy&quot;))))
+   live contracts: &lt;anonymous&gt; (0utz) address[2]
+                   &lt;anonymous&gt; (15000000utz) address[3]
+                   &lt;anonymous&gt; (0utz) address[1]
+
+running TRANSFER[uid:6] address[3] -&gt; address[2] 10000000utz (Right (Right (Right (Left &quot;lucy&quot;))))
+=&gt; live contracts: &lt;anonymous&gt; (10000000utz) address[2]
+                   &lt;anonymous&gt; (5000000utz) address[3]
+                   &lt;anonymous&gt; (0utz) address[1]
+
+
+running test script...
+
+applying operation TRANSFER[uid:7] address[3] -&gt; address[2] 0utz (Right (Right (Right (Right (Right &quot;lucy&quot;)))))
+   live contracts: &lt;anonymous&gt; (10000000utz) address[2]
+                   &lt;anonymous&gt; (5000000utz) address[3]
+                   &lt;anonymous&gt; (0utz) address[1]
+
+running TRANSFER[uid:7] address[3] -&gt; address[2] 0utz (Right (Right (Right (Right (Right &quot;lucy&quot;)))))
+=&gt; live contracts: &lt;anonymous&gt; (10000000utz) address[2]
+                   &lt;anonymous&gt; (5000000utz) address[3]
+                   &lt;anonymous&gt; (0utz) address[1]
+
+applying operation TRANSFER[uid:8] address[2] -&gt; address[3] 10000000utz Unit
+   live contracts: &lt;anonymous&gt; (10000000utz) address[2]
+                   &lt;anonymous&gt; (5000000utz) address[3]
+                   &lt;anonymous&gt; (0utz) address[1]
+
+running TRANSFER[uid:8] address[2] -&gt; address[3] 10000000utz Unit
+=&gt; live contracts: &lt;anonymous&gt; (0utz) address[2]
+                   &lt;anonymous&gt; (15000000utz) address[3]
+                   &lt;anonymous&gt; (0utz) address[1]
+
+
+running test script...
+Done running test `Test3`
+
+</code></pre>
+<p>Last, let's again make sure we're actually testing something by checking that, at the end, lucy's
+balance is <code>2tz</code> (it's not) in <a href="tezos/techelson/with_liquidity/listing.html#teststest3_errliq" title="Test3_err test file">tests/test3_err.liq</a>:</p>
+<pre><code class="language-ocaml">    (* lucy should have her money back *)
+    let balance_lucy = Techel.get_balance client in
+    if balance_lucy &lt;&gt; 2tz then (
+        failwith &quot;lucy should have 2tz now&quot;
+    );
+</code></pre>
+<p>This fails:</p>
+<pre><code>$ ./test.sh tests/test3_err.liq
+Compiling tests/test3_err.liq...
+
+
+Running test tests/test3_err.liq.techel
+
+Running test `Test3_err`
+
+running test script...
+
+applying operation CREATE[uid:0] (@address[1], &quot;tz1YLtLqD1fWHthSVHPD116oYvsd4PTAHUoc&quot;, None, true, true, 0utz) 
+                       {
+                           storage unit ;
+                           parameter unit ;
+                           code ...;
+                       }
+   live contracts: none
+=&gt; live contracts: &lt;anonymous&gt; (0utz) address[2]
+                   &lt;anonymous&gt; (0utz) address[1]
+
+running test script...
+
+applying operation CREATE[uid:2] (@address[3], &quot;tz1YLtLqD1fWHthSVHPD116oYvsd4PTAHUoc&quot;, None, true, true, 15000000utz) 
+                       {
+                           storage unit ;
+                           parameter unit ;
+                           code ...;
+                       }
+   live contracts: &lt;anonymous&gt; (0utz) address[2]
+                   &lt;anonymous&gt; (0utz) address[1]
+=&gt; live contracts: &lt;anonymous&gt; (0utz) address[2]
+                   &lt;anonymous&gt; (15000000utz) address[3]
+                   &lt;anonymous&gt; (0utz) address[1]
+
+running test script...
+
+applying operation MUST_FAIL[uid:4] _ (TRANSFER[uid:3] address[0]@Test3_err -&gt; address[2] 0utz (Right (Right (Left (&quot;root&quot;, (&quot;lucy&quot;, (address[3], address[3])))))))
+   live contracts: &lt;anonymous&gt; (0utz) address[2]
+                   &lt;anonymous&gt; (15000000utz) address[3]
+                   &lt;anonymous&gt; (0utz) address[1]
+
+running TRANSFER[uid:3] address[0]@Test3_err -&gt; address[2] 0utz (Right (Right (Left (&quot;root&quot;, (&quot;lucy&quot;, (address[3], address[3]))))))
+=&gt; live contracts: &lt;anonymous&gt; (0utz) address[2]
+                   &lt;anonymous&gt; (15000000utz) address[3]
+                   &lt;anonymous&gt; (0utz) address[1]
+
+applying operation TRANSFER[uid:5] address[1] -&gt; address[2] 0utz (Right (Right (Left (&quot;root&quot;, (&quot;lucy&quot;, (address[3], address[3]))))))
+   live contracts: &lt;anonymous&gt; (0utz) address[2]
+                   &lt;anonymous&gt; (15000000utz) address[3]
+                   &lt;anonymous&gt; (0utz) address[1]
+failure confirmed on test operation
+  MUST_FAIL[uid:4] _ (TRANSFER[uid:3] address[0]@Test3_err -&gt; address[2] 0utz (Right (Right (Left (&quot;root&quot;, (&quot;lucy&quot;, (address[3], address[3])))))))
+while running operation TRANSFER[uid:3] address[0]@Test3_err -&gt; address[2] 0utz (Right (Right (Left (&quot;root&quot;, (&quot;lucy&quot;, (address[3], address[3]))))))
+failed with value &quot;illegal access to admin account&quot; : string
+
+running TRANSFER[uid:5] address[1] -&gt; address[2] 0utz (Right (Right (Left (&quot;root&quot;, (&quot;lucy&quot;, (address[3], address[3]))))))
+=&gt; live contracts: &lt;anonymous&gt; (0utz) address[2]
+                   &lt;anonymous&gt; (15000000utz) address[3]
+                   &lt;anonymous&gt; (0utz) address[1]
+
+
+running test script...
+
+applying operation TRANSFER[uid:6] address[3] -&gt; address[2] 10000000utz (Right (Right (Right (Left &quot;lucy&quot;))))
+   live contracts: &lt;anonymous&gt; (0utz) address[2]
+                   &lt;anonymous&gt; (15000000utz) address[3]
+                   &lt;anonymous&gt; (0utz) address[1]
+
+running TRANSFER[uid:6] address[3] -&gt; address[2] 10000000utz (Right (Right (Right (Left &quot;lucy&quot;))))
+=&gt; live contracts: &lt;anonymous&gt; (10000000utz) address[2]
+                   &lt;anonymous&gt; (5000000utz) address[3]
+                   &lt;anonymous&gt; (0utz) address[1]
+
+
+running test script...
+
+applying operation TRANSFER[uid:7] address[3] -&gt; address[2] 0utz (Right (Right (Right (Right (Right &quot;lucy&quot;)))))
+   live contracts: &lt;anonymous&gt; (10000000utz) address[2]
+                   &lt;anonymous&gt; (5000000utz) address[3]
+                   &lt;anonymous&gt; (0utz) address[1]
+
+running TRANSFER[uid:7] address[3] -&gt; address[2] 0utz (Right (Right (Right (Right (Right &quot;lucy&quot;)))))
+=&gt; live contracts: &lt;anonymous&gt; (10000000utz) address[2]
+                   &lt;anonymous&gt; (5000000utz) address[3]
+                   &lt;anonymous&gt; (0utz) address[1]
+
+applying operation TRANSFER[uid:8] address[2] -&gt; address[3] 10000000utz Unit
+   live contracts: &lt;anonymous&gt; (10000000utz) address[2]
+                   &lt;anonymous&gt; (5000000utz) address[3]
+                   &lt;anonymous&gt; (0utz) address[1]
+
+running TRANSFER[uid:8] address[2] -&gt; address[3] 10000000utz Unit
+=&gt; live contracts: &lt;anonymous&gt; (0utz) address[2]
+                   &lt;anonymous&gt; (15000000utz) address[3]
+                   &lt;anonymous&gt; (0utz) address[1]
+
+
+running test script...
+
+Test `Test3_err` failed:
+    Tezos protocol error
+        Failure on value &quot;lucy should have 2tz now&quot; : string
+
+Error
+    1 of the 1 testcase failed
+
+</code></pre>
+<a class="header" href="#the-end" id="the-end"><h1>The End</h1></a>
+<p>That's it. I believe this is enough to get some Liquidity enthusiasts interested in techelson and
+its future integration in the Liquidity ecosystem. The process will be much more streamlined soon and will most likely remove the need for defining Liquidity extensions.</p>
+<p>The next section is a listing of all the scripts, contracts and test files used in this post.</p>
+<a class="header" href="#file-listing" id="file-listing"><h1>File Listing</h1></a>
+<p>Including all files mentioned in this post, the layout should look like this</p>
+<ul>
+<li><a href="#testsh">test.sh</a></li>
+<li><a href="#contracts">contracts/</a>
+<ul>
+<li><a href="#contractsmultiliq">multi.liq</a></li>
+</ul>
+</li>
+<li><a href="#tests">tests/</a>
+<ul>
+<li><a href="#testsbasicliq">basic.liq</a></li>
+<li><a href="#testsbasic_errliq">basic_err.liq</a></li>
+<li><a href="#testsemptyliq">empty.liq</a></li>
+<li><a href="#teststechelliq">techel.liq</a></li>
+<li><a href="#teststest1liq">test1.liq</a></li>
+<li><a href="#teststest1_errliq">test1_err.liq</a></li>
+<li><a href="#teststest2liq">test2.liq</a></li>
+<li><a href="#teststest3liq">test3.liq</a></li>
+<li><a href="#teststest3_errliq">test3_err.liq</a></li>
+</ul>
+</li>
+</ul>
+<a class="header" href="#testsh" id="testsh"><h2>test.sh</h2></a>
+<pre><code class="language-bash">#! /bin/bash
+
+set -e
+
+test_file=&quot;$1&quot;
+
+# List of all the contracts.
+contracts=&quot;&quot;
+for file in `find contracts -iname &quot;*.liq&quot;` ; do
+    contracts=&quot;$contracts $file&quot;
+done
+
+# File liquidity will compile to.
+target=&quot;$test_file.techel&quot;
+
+echo &quot;Compiling $test_file...&quot;
+echo
+liquidity --no-annot --no-simplify --no-peephole tests/techel.liq$contracts -o $target $test_file
+echo
+
+# Running techelson on the target.
+echo &quot;Running test $target&quot;
+echo
+techelson $target
+
+</code></pre>
+<a class="header" href="#tests" id="tests"><h2>tests/</h2></a>
+<a class="header" href="#testsbasicliq" id="testsbasicliq"><h3>tests/basic.liq</h3></a>
+<pre><code class="language-ocaml">type storage = unit
+
+let nothing : operation list * unit = [], ()
+
+let%entry test (_param : unit) (_storage : unit) =
+    let delegate : key_hash option = None in
+    let operation, address =
+        Account.create
+            ~manager:tz1YLtLqD1fWHthSVHPD116oYvsd4PTAHUoc
+            ~delegate
+            ~delegatable:true
+            ~amount:13tz
+    in
+    (* Apply the operation so that we can interact with the account. *)
+    Techel.apply_operations [operation];
+
+    (* Contract is now live. *)
+    let balance = Techel.get_balance address in
+    if balance &lt;&gt; 13tz then (
+        failwith &quot;balance should be 13tz&quot;
+    );
+
+    let account_contract =
+        match UnitContract.at address with
+        | None -&gt; failwith &quot;could not retrieve account&quot;
+        | Some c -&gt; c
+    in
+
+    let operation = Contract.call ~dest:account_contract ~amount:29tz ~parameter:() in
+    Techel.apply_operations [operation];
+
+    let balance = Techel.get_balance address in
+    if balance &lt;&gt; 42tz then (
+        failwith &quot;balance should be 42tz&quot;
+    );
+
+    nothing
+</code></pre>
+<a class="header" href="#testsbasic_errliq" id="testsbasic_errliq"><h3>tests/basic_err.liq</h3></a>
+<pre><code class="language-ocaml">type storage = unit
+
+let nothing : operation list * unit = [], ()
+
+let%entry test (_param : unit) (_storage : unit) =
+    let delegate : key_hash option = None in
+    let operation, address =
+        Account.create
+            ~manager:tz1YLtLqD1fWHthSVHPD116oYvsd4PTAHUoc
+            ~delegate
+            ~delegatable:true
+            ~amount:13tz
+    in
+    (* Apply the operation so that we can interact with the account. *)
+    Techel.apply_operations [operation];
+
+    (* Contract is now live. *)
+    let balance = Techel.get_balance address in
+    if balance &lt;&gt; 13tz then (
+        failwith &quot;balance should be 13tz&quot;
+    );
+
+    let account_contract =
+        match UnitContract.at address with
+        | None -&gt; failwith &quot;could not retrieve account&quot;
+        | Some c -&gt; c
+    in
+
+    let operation = Contract.call ~dest:account_contract ~amount:29tz ~parameter:() in
+    Techel.apply_operations [operation];
+
+    let balance = Techel.get_balance address in
+    if balance &lt;&gt; 12tz then (
+        failwith &quot;balance should be 12tz&quot;
+    );
+
+    nothing
+</code></pre>
+<a class="header" href="#testsemptyliq" id="testsemptyliq"><h3>tests/empty.liq</h3></a>
+<pre><code class="language-ocaml">type storage = unit
+
+let nothing : operation list * unit = [], ()
+
+let%entry test (_param : unit) (_storage : unit) =
+    nothing
+</code></pre>
+<a class="header" href="#teststechelliq" id="teststechelliq"><h3>tests/techel.liq</h3></a>
+<pre><code class="language-ocaml">external get_balance :
+    [%stack: address] -&gt; [%stack: tez]
+    = &quot;GET_BALANCE&quot;
+external get_storage :
+    [%type: 'a] -&gt; [%stack: address] -&gt; [%stack: 'a option]
+    = &quot;GET_STORAGE&quot;
+external apply_operations :
+    [%stack: operation list] -&gt; unit
+    = &quot;APPLY_OPERATIONS&quot;
+external start_set_source :
+    [%stack: address] -&gt; unit
+    = &quot;SET_SOURCE { #&quot;
+external end_set_source :
+    unit -&gt; unit
+    = &quot;}&quot;
+external must_fail :
+    [%stack: operation] -&gt; [%stack: operation]
+    = &quot;{ NONE string ; MUST_FAIL string }&quot;
+external print_stack :
+    unit -&gt; unit
+    = &quot;PRINT_STACK&quot;
+external step :
+    unit -&gt; unit
+    = &quot;STEP&quot;
+</code></pre>
+<a class="header" href="#teststest1liq" id="teststest1liq"><h3>tests/test1.liq</h3></a>
+<pre><code class="language-ocaml">let nothing : operation list * unit = [], ()
+
+(* Creates a storage for Multi with one administrator. *)
+let one_admin (root : string) (address : address) : Multi.storage = {
+    Multi.admins =
+        Map.add root address (Map : (string, address) map) ;
+    Multi.users =
+        (Map : (string, (address * tez * UnitContract.instance)) map) ;
+}
+
+(* Deploys an account with an arbitrary manager. *)
+let deploy_account_op (amount: tez) : operation * address =
+    let delegate : key_hash option = None in
+    Account.create
+        ~manager:tz1YLtLqD1fWHthSVHPD116oYvsd4PTAHUoc
+        ~delegate
+        ~delegatable:true
+        ~amount
+
+(* Deploys an instance of multi with an arbitrary manager. *)
+let deploy_contract_op (storage : Multi.storage) : operation * address =
+    let delegate : key_hash option = None in
+    Contract.create
+        ~manager:tz1YLtLqD1fWHthSVHPD116oYvsd4PTAHUoc
+        ~delegate
+        ~delegatable:true
+        ~spendable:false
+        ~amount:0tz
+        ~storage
+        ~code:(contract Multi)
+
+(* Storage of the test is irrelevant. *)
+type storage = unit
+
+(* Actual test. *)
+let%entry test (_param : unit) (_storage : unit) =
+    let root_op, root = deploy_account_op 0tz in
+    let storage = one_admin &quot;root&quot; root in
+    let main_op, main = deploy_contract_op storage in
+    (* ask techelson to apply these operations. *)
+    Techel.apply_operations [ root_op ; main_op ];
+    (* root and main are live now *)
+
+    (* let's check root is an admin, and that the address is correct *)
+    let storage =
+        match Techel.get_storage [%type: Multi.storage] main with
+        | Some storage -&gt; storage
+        | None -&gt; failwith &quot;can't retrieve contract's storage&quot;
+    in
+    (
+        match Map.find &quot;root&quot; storage.Multi.admins with
+        | None -&gt; failwith &quot;no root in storage&quot;
+        | Some address -&gt; (
+            if address &lt;&gt; root then (
+                failwith &quot;wrong address for root&quot;
+            )
+        )
+    );
+
+    let client_op, client = deploy_account_op 15tz in
+    (* deploy the client *)
+    Techel.apply_operations [ client_op ];
+    (* client is live now *)
+
+    (* retrieve client instance for registration *)
+    let client_instance =
+        match (Contract.at client : UnitContract.instance option) with
+        | None -&gt; failwith &quot;could not retrieve main contract&quot;
+        | Some instance -&gt; instance
+    in
+    (* retrieve multi's instance to call it *)
+    let main_instance =
+        match Multi.at main with
+        | None -&gt; failwith &quot;could not retrieve main contract&quot;
+        | Some instance -&gt; instance
+    in
+
+    (* let's add a client *)
+    let bad_add_client =
+        Contract.call ~dest:main_instance ~amount:0tz ~entry:add_client ~parameter:(
+            &quot;root&quot;, &quot;lucy&quot;, client, client_instance
+        )
+    in
+    let must_fail = Techel.must_fail bad_add_client in
+    Techel.apply_operations [ must_fail ];
+
+    nothing
+
+</code></pre>
+<a class="header" href="#teststest1_errliq" id="teststest1_errliq"><h3>tests/test1_err.liq</h3></a>
+<pre><code class="language-ocaml">let nothing : operation list * unit = [], ()
+
+(* Creates a storage for Multi with one administrator. *)
+let one_admin (root : string) (address : address) : Multi.storage = {
+    Multi.admins =
+        Map.add root address (Map : (string, address) map) ;
+    Multi.users =
+        (Map : (string, (address * tez * UnitContract.instance)) map) ;
+}
+
+(* Deploys an account with an arbitrary manager. *)
+let deploy_account_op (amount: tez) : operation * address =
+    let delegate : key_hash option = None in
+    Account.create
+        ~manager:tz1YLtLqD1fWHthSVHPD116oYvsd4PTAHUoc
+        ~delegate
+        ~delegatable:true
+        ~amount
+
+(* Deploys an instance of multi with an arbitrary manager. *)
+let deploy_contract_op (storage : Multi.storage) : operation * address =
+    let delegate : key_hash option = None in
+    Contract.create
+        ~manager:tz1YLtLqD1fWHthSVHPD116oYvsd4PTAHUoc
+        ~delegate
+        ~delegatable:true
+        ~spendable:false
+        ~amount:0tz
+        ~storage
+        ~code:(contract Multi)
+
+(* Storage of the test is irrelevant. *)
+type storage = unit
+
+(* Actual test. *)
+let%entry test (_param : unit) (_storage : unit) =
+    let root_op, root = deploy_account_op 0tz in
+    let storage = one_admin &quot;root&quot; root in
+    let main_op, main = deploy_contract_op storage in
+    (* ask techelson to apply these operations. *)
+    Techel.apply_operations [ root_op ; main_op ];
+    (* root and main are live now *)
+
+    (* let's check root is an admin, and that the address is correct *)
+    let storage =
+        match Techel.get_storage [%type: Multi.storage] main with
+        | Some storage -&gt; storage
+        | None -&gt; failwith &quot;can't retrieve contract's storage&quot;
+    in
+    (
+        match Map.find &quot;root&quot; storage.Multi.admins with
+        | None -&gt; failwith &quot;no root in storage&quot;
+        | Some address -&gt; (
+            if address &lt;&gt; root then (
+                failwith &quot;wrong address for root&quot;
+            )
+        )
+    );
+
+    let client_op, client = deploy_account_op 15tz in
+    (* deploy the client *)
+    Techel.apply_operations [ client_op ];
+    (* client is live now *)
+
+    (* retrieve client instance for registration *)
+    let client_instance =
+        match (Contract.at client : UnitContract.instance option) with
+        | None -&gt; failwith &quot;could not retrieve main contract&quot;
+        | Some instance -&gt; instance
+    in
+    (* retrieve multi's instance to call it *)
+    let main_instance =
+        match Multi.at main with
+        | None -&gt; failwith &quot;could not retrieve main contract&quot;
+        | Some instance -&gt; instance
+    in
+
+    (* let's add a client *)
+    let add_client =
+        Contract.call ~dest:main_instance ~amount:0tz ~entry:add_client ~parameter:(
+            &quot;root&quot;, &quot;lucy&quot;, client, client_instance
+        )
+    in
+    Techel.apply_operations [ add_client ];
+
+    nothing
+
+</code></pre>
+<a class="header" href="#teststest2liq" id="teststest2liq"><h3>tests/test2.liq</h3></a>
+<pre><code class="language-ocaml">let nothing : operation list * unit = [], ()
+
+(* Creates a storage for Multi with one administrator. *)
+let one_admin (root : string) (address : address) : Multi.storage = {
+    Multi.admins =
+        Map.add root address (Map : (string, address) map) ;
+    Multi.users =
+        (Map : (string, (address * tez * UnitContract.instance)) map) ;
+}
+
+(* Deploys an account with an arbitrary manager. *)
+let deploy_account_op (amount: tez) : operation * address =
+    let delegate : key_hash option = None in
+    Account.create
+        ~manager:tz1YLtLqD1fWHthSVHPD116oYvsd4PTAHUoc
+        ~delegate
+        ~delegatable:true
+        ~amount
+
+(* Deploys an instance of multi with an arbitrary manager. *)
+let deploy_contract_op (storage : Multi.storage) : operation * address =
+    let delegate : key_hash option = None in
+    Contract.create
+        ~manager:tz1YLtLqD1fWHthSVHPD116oYvsd4PTAHUoc
+        ~delegate
+        ~delegatable:true
+        ~spendable:false
+        ~amount:0tz
+        ~storage
+        ~code:(contract Multi)
+
+(* Storage of the test is irrelevant. *)
+type storage = unit
+
+(* Actual test. *)
+let%entry test (_param : unit) (_storage : unit) =
+    let root_op, root = deploy_account_op 0tz in
+    let storage = one_admin &quot;root&quot; root in
+    let main_op, main = deploy_contract_op storage in
+    (* ask techelson to apply these operations. *)
+    Techel.apply_operations [ root_op ; main_op ];
+    (* root and main are live now *)
+
+    (* let's check root is an admin, and that the address is correct *)
+    let storage =
+        match Techel.get_storage [%type: Multi.storage] main with
+        | Some storage -&gt; storage
+        | None -&gt; failwith &quot;can't retrieve contract's storage&quot;
+    in
+    (
+        match Map.find &quot;root&quot; storage.Multi.admins with
+        | None -&gt; failwith &quot;no root in storage&quot;
+        | Some address -&gt; (
+            if address &lt;&gt; root then (
+                failwith &quot;wrong address for root&quot;
+            )
+        )
+    );
+
+    let client_op, client = deploy_account_op 15tz in
+    (* deploy the client *)
+    Techel.apply_operations [ client_op ];
+    (* client is live now *)
+
+    (* retrieve client instance for registration *)
+    let client_instance =
+        match (Contract.at client : UnitContract.instance option) with
+        | None -&gt; failwith &quot;could not retrieve main contract&quot;
+        | Some instance -&gt; instance
+    in
+    (* retrieve multi's instance to call it *)
+    let main_instance =
+        match Multi.at main with
+        | None -&gt; failwith &quot;could not retrieve main contract&quot;
+        | Some instance -&gt; instance
+    in
+
+    (* let's add a client and fail *)
+    let bad_add_client =
+        Contract.call ~dest:main_instance ~amount:0tz ~entry:add_client ~parameter:(
+            &quot;root&quot;, &quot;lucy&quot;, client, client_instance
+        )
+    in
+    let must_fail = Techel.must_fail bad_add_client in
+    (* let's really add a client now *)
+    Techel.start_set_source root ;
+        (* all operations created in here will appear to have been created by `root` *)
+        let add_client =
+            Contract.call ~dest:main_instance ~amount:0tz ~entry:add_client ~parameter:(
+                &quot;root&quot;, &quot;lucy&quot;, client, client_instance
+            )
+        in
+    Techel.end_set_source () ;
+
+    Techel.apply_operations [ must_fail ; add_client ];
+
+    nothing
+
+</code></pre>
+<a class="header" href="#teststest3liq" id="teststest3liq"><h3>tests/test3.liq</h3></a>
+<pre><code class="language-ocaml">let nothing : operation list * unit = [], ()
+
+(* Creates a storage for Multi with one administrator. *)
+let one_admin (root : string) (address : address) : Multi.storage = {
+    Multi.admins =
+        Map.add root address (Map : (string, address) map) ;
+    Multi.users =
+        (Map : (string, (address * tez * UnitContract.instance)) map) ;
+}
+
+(* Deploys an account with an arbitrary manager. *)
+let deploy_account_op (amount: tez) : operation * address =
+    let delegate : key_hash option = None in
+    Account.create
+        ~manager:tz1YLtLqD1fWHthSVHPD116oYvsd4PTAHUoc
+        ~delegate
+        ~delegatable:true
+        ~amount
+
+(* Deploys an instance of multi with an arbitrary manager. *)
+let deploy_contract_op (storage : Multi.storage) : operation * address =
+    let delegate : key_hash option = None in
+    Contract.create
+        ~manager:tz1YLtLqD1fWHthSVHPD116oYvsd4PTAHUoc
+        ~delegate
+        ~delegatable:true
+        ~spendable:false
+        ~amount:0tz
+        ~storage
+        ~code:(contract Multi)
+
+(* Storage of the test is irrelevant. *)
+type storage = unit
+
+(* Actual test. *)
+let%entry test (_param : unit) (_storage : unit) =
+    let root_op, root = deploy_account_op 0tz in
+    let storage = one_admin &quot;root&quot; root in
+    let main_op, main = deploy_contract_op storage in
+    (* ask techelson to apply these operations. *)
+    Techel.apply_operations [ root_op ; main_op ];
+    (* root and main are live now *)
+
+    (* let's check root is an admin, and that the address is correct *)
+    let storage =
+        match Techel.get_storage [%type: Multi.storage] main with
+        | Some storage -&gt; storage
+        | None -&gt; failwith &quot;can't retrieve contract's storage&quot;
+    in
+    (
+        match Map.find &quot;root&quot; storage.Multi.admins with
+        | None -&gt; failwith &quot;no root in storage&quot;
+        | Some address -&gt; (
+            if address &lt;&gt; root then (
+                failwith &quot;wrong address for root&quot;
+            )
+        )
+    );
+
+    let client_op, client = deploy_account_op 15tz in
+    (* deploy the client *)
+    Techel.apply_operations [ client_op ];
+    (* client is live now *)
+
+    (* retrieve client instance for registration *)
+    let client_instance =
+        match (Contract.at client : UnitContract.instance option) with
+        | None -&gt; failwith &quot;could not retrieve main contract&quot;
+        | Some instance -&gt; instance
+    in
+    (* retrieve multi's instance to call it *)
+    let main_instance =
+        match Multi.at main with
+        | None -&gt; failwith &quot;could not retrieve main contract&quot;
+        | Some instance -&gt; instance
+    in
+
+    (* let's add a client and fail *)
+    let bad_add_client =
+        Contract.call ~dest:main_instance ~amount:0tz ~entry:add_client ~parameter:(
+            &quot;root&quot;, &quot;lucy&quot;, client, client_instance
+        )
+    in
+    let must_fail = Techel.must_fail bad_add_client in
+    (* let's really add a client now *)
+    Techel.start_set_source root ;
+        (* all operations created in here will appear to have been created by `root` *)
+        let add_client =
+            Contract.call ~dest:main_instance ~amount:0tz ~entry:add_client ~parameter:(
+                &quot;root&quot;, &quot;lucy&quot;, client, client_instance
+            )
+        in
+    Techel.end_set_source () ;
+
+    Techel.apply_operations [ must_fail ; add_client ];
+
+    (* lucy deposits `10tz` *)
+    Techel.start_set_source client ;
+        let deposit_money =
+            Contract.call ~dest:main_instance ~amount:10tz ~entry:deposit ~parameter:&quot;lucy&quot;
+        in
+    Techel.end_set_source () ;
+    Techel.apply_operations [ deposit_money ];
+    let balance_lucy = Techel.get_balance client in
+    if balance_lucy &lt;&gt; 5tz then (
+        failwith &quot;lucy should have 5tz now&quot;
+    );
+
+    (* lucy walks out of the whole thing *)
+    Techel.start_set_source client ;
+        let drain =
+            Contract.call ~dest:main_instance ~amount:0tz ~entry:drain ~parameter:&quot;lucy&quot;
+        in
+    Techel.end_set_source () ;
+    Techel.apply_operations [ drain ] ;
+
+    (* lucy should have her money back *)
+    let balance_lucy = Techel.get_balance client in
+    if balance_lucy &lt;&gt; 15tz then (
+        failwith &quot;lucy should have 15tz now&quot;
+    );
+
+    nothing
+
+</code></pre>
+<a class="header" href="#teststest3_errliq" id="teststest3_errliq"><h3>tests/test3_err.liq</h3></a>
+<pre><code class="language-ocaml">let nothing : operation list * unit = [], ()
+
+(* Creates a storage for Multi with one administrator. *)
+let one_admin (root : string) (address : address) : Multi.storage = {
+    Multi.admins =
+        Map.add root address (Map : (string, address) map) ;
+    Multi.users =
+        (Map : (string, (address * tez * UnitContract.instance)) map) ;
+}
+
+(* Deploys an account with an arbitrary manager. *)
+let deploy_account_op (amount: tez) : operation * address =
+    let delegate : key_hash option = None in
+    Account.create
+        ~manager:tz1YLtLqD1fWHthSVHPD116oYvsd4PTAHUoc
+        ~delegate
+        ~delegatable:true
+        ~amount
+
+(* Deploys an instance of multi with an arbitrary manager. *)
+let deploy_contract_op (storage : Multi.storage) : operation * address =
+    let delegate : key_hash option = None in
+    Contract.create
+        ~manager:tz1YLtLqD1fWHthSVHPD116oYvsd4PTAHUoc
+        ~delegate
+        ~delegatable:true
+        ~spendable:false
+        ~amount:0tz
+        ~storage
+        ~code:(contract Multi)
+
+(* Storage of the test is irrelevant. *)
+type storage = unit
+
+(* Actual test. *)
+let%entry test (_param : unit) (_storage : unit) =
+    let root_op, root = deploy_account_op 0tz in
+    let storage = one_admin &quot;root&quot; root in
+    let main_op, main = deploy_contract_op storage in
+    (* ask techelson to apply these operations. *)
+    Techel.apply_operations [ root_op ; main_op ];
+    (* root and main are live now *)
+
+    (* let's check root is an admin, and that the address is correct *)
+    let storage =
+        match Techel.get_storage [%type: Multi.storage] main with
+        | Some storage -&gt; storage
+        | None -&gt; failwith &quot;can't retrieve contract's storage&quot;
+    in
+    (
+        match Map.find &quot;root&quot; storage.Multi.admins with
+        | None -&gt; failwith &quot;no root in storage&quot;
+        | Some address -&gt; (
+            if address &lt;&gt; root then (
+                failwith &quot;wrong address for root&quot;
+            )
+        )
+    );
+
+    let client_op, client = deploy_account_op 15tz in
+    (* deploy the client *)
+    Techel.apply_operations [ client_op ];
+    (* client is live now *)
+
+    (* retrieve client instance for registration *)
+    let client_instance =
+        match (Contract.at client : UnitContract.instance option) with
+        | None -&gt; failwith &quot;could not retrieve main contract&quot;
+        | Some instance -&gt; instance
+    in
+    (* retrieve multi's instance to call it *)
+    let main_instance =
+        match Multi.at main with
+        | None -&gt; failwith &quot;could not retrieve main contract&quot;
+        | Some instance -&gt; instance
+    in
+
+    (* let's add a client and fail *)
+    let bad_add_client =
+        Contract.call ~dest:main_instance ~amount:0tz ~entry:add_client ~parameter:(
+            &quot;root&quot;, &quot;lucy&quot;, client, client_instance
+        )
+    in
+    let must_fail = Techel.must_fail bad_add_client in
+    (* let's really add a client now *)
+    Techel.start_set_source root ;
+        (* all operations created in here will appear to have been created by `root` *)
+        let add_client =
+            Contract.call ~dest:main_instance ~amount:0tz ~entry:add_client ~parameter:(
+                &quot;root&quot;, &quot;lucy&quot;, client, client_instance
+            )
+        in
+    Techel.end_set_source () ;
+
+    Techel.apply_operations [ must_fail ; add_client ];
+
+    (* lucy deposits `10tz` *)
+    Techel.start_set_source client ;
+        let deposit_money =
+            Contract.call ~dest:main_instance ~amount:10tz ~entry:deposit ~parameter:&quot;lucy&quot;
+        in
+    Techel.end_set_source () ;
+    Techel.apply_operations [ deposit_money ];
+    let balance_lucy = Techel.get_balance client in
+    if balance_lucy &lt;&gt; 5tz then (
+        failwith &quot;lucy should have 5tz now&quot;
+    );
+
+    (* lucy walks out of the whole thing *)
+    Techel.start_set_source client ;
+        let drain =
+            Contract.call ~dest:main_instance ~amount:0tz ~entry:drain ~parameter:&quot;lucy&quot;
+        in
+    Techel.end_set_source () ;
+    Techel.apply_operations [ drain ] ;
+
+    (* lucy should have her money back *)
+    let balance_lucy = Techel.get_balance client in
+    if balance_lucy &lt;&gt; 2tz then (
+        failwith &quot;lucy should have 2tz now&quot;
+    );
+
+    nothing
+
+</code></pre>
+<a class="header" href="#contracts" id="contracts"><h2>contracts/</h2></a>
+<a class="header" href="#contractsmultiliq" id="contractsmultiliq"><h3>contracts/multi.liq</h3></a>
+<pre><code class="language-ocaml">type storage = {
+    admins : (string, address) map ;
+    users : (string, (address * tez * UnitContract.instance)) map ;
+}
+
+let admin_check (storage : storage) (name : string) (a : address) : unit =
+    match Map.find name storage.admins with
+    | None -&gt; failwith &quot;only admins can perform administrative tasks&quot;
+    | Some address -&gt;
+        if address &lt;&gt; a then
+            failwith &quot;illegal access to admin account&quot;
+
+let%entry add_admin
+    (
+        (admin_name, nu_admin_name, nu_admin_address) :
+         string *    string *       address
+    ) (
+        storage : storage
+    )
+  : operation list * storage 
+=
+    admin_check storage admin_name (Current.sender ()); 
+    let storage =
+        storage.admins &lt;- Map.update nu_admin_name (Some nu_admin_address) storage.admins
+    in
+    [], storage
+  
+let%entry rm_admin (admin_name, user_name : string * string) (storage : storage) =
+    admin_check storage admin_name (Current.sender ());
+    let storage = storage.admins &lt;- Map.update user_name None storage.admins in
+    [], storage
+    
+let%entry add_client (
+    (admin_name, user_name, user,     c) :
+     string *    string *   address * UnitContract.instance
+) (storage : storage) =
+    admin_check storage admin_name (Current.sender ());
+    if Map.mem user_name storage.users then (
+        failwith &quot;username already taken&quot;
+    );
+    let data = Some (user, 0tz, c) in
+    let storage = storage.users &lt;- Map.update user_name data storage.users in
+    [], storage
+  
+let data_of (storage : storage) (name : string) (user : address) : tez * UnitContract.instance =
+    match Map.find name storage.users with
+    | None -&gt; failwith &quot;unknown user&quot;
+    | Some (address, tez, c) -&gt;
+        if user &lt;&gt; address then
+            failwith &quot;illegal access to account&quot;
+        else (tez, c)
+
+let%entry deposit (name : string) (storage : storage) =
+    let user = Current.sender () in
+    let money, c = data_of storage name user in
+    let amount = Current.amount () in
+    let nu_data = Some (user, money + amount, c) in
+    [], storage.users &lt;- Map.update name nu_data storage.users 
+          
+          
+let%entry withdraw (name, amount : string * tez) (storage : storage) =
+    let user = Current.sender () in
+    let money, c = data_of storage name user in
+    if amount &gt; money then
+        failwith &quot;insufficient balance&quot;
+    else (
+        let nu_data = Some (user, money - amount, c) in
+        [], storage.users &lt;- Map.update name nu_data storage.users
+    )
+        
+let%entry drain (name : string) (storage : storage) =
+    let user = Current.sender () in
+    let money, c = data_of storage name user in
+    let storage = storage.users &lt;- Map.update name None storage.users in
+    let ops = [Contract.call ~dest:c ~amount:money ~parameter:()] in
+    ops, storage
+
+</code></pre>
+<a class="header" href="#software-safety" id="software-safety"><h1>Software Safety</h1></a>
+<p>There is no post in this category yet.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+        
+        <script type="text/javascript">
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+        
+        
+
+    </body>
+</html>

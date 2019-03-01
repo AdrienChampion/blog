@@ -38,7 +38,7 @@ available [here][demo dir].
 [OCamlPro]: https://www.ocamlpro.com/ (OCamlPro's official page)
 [declare extensions to the language]: http://www.liquidity-lang.org/doc/reference/liquidity.html#extended-primitives (Liquidity's extensions)
 [demo dir]: https://github.com/AdrienChampion/AdrienChampion.github.io/tree/master/blog/tezos/techelson/with_liquidity/rsc (All files used in this post)
-[user documentation]: http://www.liquidity-lang.org/techelson/doc/ (Techelson's documentation.)
+[user documentation]: https://ocamlpro.github.io/techelson/user_doc (Techelson's documentation.)
 
 [Liquidity Extensions]: extensions.md (Liquidity extension section)
 [Basic Example]: basic.md (Basic example section)
