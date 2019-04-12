@@ -155,15 +155,23 @@ let%entry test (_param : unit) (_storage : unit) =
     nothing
 </code></pre>
 <p>Which we can compile, and run with the <code>test.sh</code> script from the previous section.</p>
-<pre><code>$ ./test.sh tests/empty.liq
-Compiling tests/empty.liq...
+<pre><code>$ ./../test.sh ../tests/empty.liq
+Compiling ../tests/empty.liq...
 
+Module Techel
+Contract Multi
+Main contract Empty
+File &quot;../tests/empty.liq.techel&quot; generated
+If tezos is compiled, you may want to typecheck with:
+  tezos-client typecheck script ../tests/empty.liq.techel
 
-Running test tests/empty.liq.techel
+Running test ../tests/empty.liq.techel
 
 Running test `Empty`
 
 running test script...
+   timestamp: 1970-01-01 00:00:00 +00:00
+
 Done running test `Empty`
 
 </code></pre>
@@ -214,15 +222,22 @@ let%entry test (_param : unit) (_storage : unit) =
     nothing
 </code></pre>
 <p>and run it</p>
-<pre><code>$ ./test.sh tests/basic.liq
-Compiling tests/basic.liq...
+<pre><code>$ ./../test.sh ../tests/basic.liq
+Compiling ../tests/basic.liq...
 
+Module Techel
+Contract Multi
+Main contract Basic
+File &quot;../tests/basic.liq.techel&quot; generated
+If tezos is compiled, you may want to typecheck with:
+  tezos-client typecheck script ../tests/basic.liq.techel
 
-Running test tests/basic.liq.techel
+Running test ../tests/basic.liq.techel
 
 Running test `Basic`
 
 running test script...
+   timestamp: 1970-01-01 00:00:00 +00:00
 
 applying operation CREATE[uid:0] (@address[1], &quot;tz1YLtLqD1fWHthSVHPD116oYvsd4PTAHUoc&quot;, None, true, true, 13000000utz) 
                        {
@@ -230,19 +245,24 @@ applying operation CREATE[uid:0] (@address[1], &quot;tz1YLtLqD1fWHthSVHPD116oYvs
                            parameter unit ;
                            code ...;
                        }
+   timestamp: 1970-01-01 00:00:00 +00:00
    live contracts: none
 =&gt; live contracts: &lt;anonymous&gt; (13000000utz) address[1]
 
 running test script...
+   timestamp: 1970-01-01 00:00:00 +00:00
 
 applying operation TRANSFER[uid:1] address[0]@Basic -&gt; address[1] 29000000utz Unit
+   timestamp: 1970-01-01 00:00:00 +00:00
    live contracts: &lt;anonymous&gt; (13000000utz) address[1]
 
 running TRANSFER[uid:1] address[0]@Basic -&gt; address[1] 29000000utz Unit
+   timestamp: 1970-01-01 00:00:00 +00:00
 =&gt; live contracts: &lt;anonymous&gt; (42000000utz) address[1]
 
-
 running test script...
+   timestamp: 1970-01-01 00:00:00 +00:00
+
 Done running test `Basic`
 
 </code></pre>
@@ -254,15 +274,22 @@ Done running test `Basic`
     );
 </code></pre>
 <p>in <a href="listing.html#testsbasic_errliq" title="Basic_err test file">tests/basic_err.liq</a>. The test fails indeed:</p>
-<pre><code>$ ./test.sh tests/basic_err.liq
-Compiling tests/basic_err.liq...
+<pre><code>$ ./../test.sh ../tests/basic_err.liq
+Compiling ../tests/basic_err.liq...
 
+Module Techel
+Contract Multi
+Main contract Basic_err
+File &quot;../tests/basic_err.liq.techel&quot; generated
+If tezos is compiled, you may want to typecheck with:
+  tezos-client typecheck script ../tests/basic_err.liq.techel
 
-Running test tests/basic_err.liq.techel
+Running test ../tests/basic_err.liq.techel
 
 Running test `Basic_err`
 
 running test script...
+   timestamp: 1970-01-01 00:00:00 +00:00
 
 applying operation CREATE[uid:0] (@address[1], &quot;tz1YLtLqD1fWHthSVHPD116oYvsd4PTAHUoc&quot;, None, true, true, 13000000utz) 
                        {
@@ -270,19 +297,23 @@ applying operation CREATE[uid:0] (@address[1], &quot;tz1YLtLqD1fWHthSVHPD116oYvs
                            parameter unit ;
                            code ...;
                        }
+   timestamp: 1970-01-01 00:00:00 +00:00
    live contracts: none
 =&gt; live contracts: &lt;anonymous&gt; (13000000utz) address[1]
 
 running test script...
+   timestamp: 1970-01-01 00:00:00 +00:00
 
 applying operation TRANSFER[uid:1] address[0]@Basic_err -&gt; address[1] 29000000utz Unit
+   timestamp: 1970-01-01 00:00:00 +00:00
    live contracts: &lt;anonymous&gt; (13000000utz) address[1]
 
 running TRANSFER[uid:1] address[0]@Basic_err -&gt; address[1] 29000000utz Unit
+   timestamp: 1970-01-01 00:00:00 +00:00
 =&gt; live contracts: &lt;anonymous&gt; (42000000utz) address[1]
 
-
 running test script...
+   timestamp: 1970-01-01 00:00:00 +00:00
 
 Test `Basic_err` failed:
     Tezos protocol error

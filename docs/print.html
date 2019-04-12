@@ -152,6 +152,11 @@
 <ul>
 <li>2019
 <ul>
+<li>April
+<ul>
+<li><a href="welcome/../tezos/techelson/with_liquidity/index.html">Using Techelson With Liquidity</a> <strong>updated</strong></li>
+</ul>
+</li>
 <li>February
 <ul>
 <li><a href="welcome/../tezos/techelson/with_liquidity/index.html">Using Techelson With Liquidity</a></li>
@@ -202,7 +207,7 @@ test script in <a href="tezos/techelson/with_liquidity/extensions.html" title="L
 how to write a test for an external, non-trivial contract in <a href="tezos/techelson/with_liquidity/external.html" title="External contract example section">External Contract Example</a>, using
 more advanced Techelson commands. Finally, there's <a href="tezos/techelson/with_liquidity/end.html" title="The end section">The End</a> at the end.</p>
 <p>There is a listing of all the files used in this post in the <a href="tezos/techelson/with_liquidity/listing.html" title="File Listing section">File Listing</a> section. Also, they are
-available <a href="https://github.com/AdrienChampion/AdrienChampion.github.io/tree/master/blog/tezos/techelson/with_liquidity/rsc" title="All files used in this post">here</a>.</p>
+available <a href="https://github.com/AdrienChampion/blog/tree/master/src/tezos/techelson/with_liquidity/rsc" title="All files used in this post">here</a>.</p>
 <a class="header" href="#liquidity-extensions" id="liquidity-extensions"><h2>Liquidity Extensions</h2></a>
 <p>The first step is to declare the <a href="http://www.liquidity-lang.org/doc/reference/liquidity.html#extended-primitives" title="Liquidity's extensions">Liquidity extensions</a> we need. Let's create a <a href="tezos/techelson/with_liquidity/listing.html#teststechelliq" title="Techelson extensions for liquidity">tests/techel.liq</a>
 to write our extensions into:</p>
@@ -263,9 +268,12 @@ set -e
 
 test_file=&quot;$1&quot;
 
+this_script_dir=&quot;$( cd &quot;$( dirname &quot;${BASH_SOURCE[0]}&quot; )&quot; &gt;/dev/null 2&gt;&amp;1 &amp;&amp; pwd )&quot;
+techel_lib=&quot;$this_script_dir/tests/techel.liq&quot;
+
 # List of all the contracts.
 contracts=&quot;&quot;
-for file in `find contracts -iname &quot;*.liq&quot;` ; do
+for file in `find &quot;$this_script_dir/contracts&quot; -iname &quot;*.liq&quot;` ; do
     contracts=&quot;$contracts $file&quot;
 done
 
@@ -274,7 +282,7 @@ target=&quot;$test_file.techel&quot;
 
 echo &quot;Compiling $test_file...&quot;
 echo
-liquidity --no-annot --no-simplify --no-peephole tests/techel.liq$contracts -o $target $test_file
+liquidity --no-annot --no-simplify --no-peephole $techel_lib $contracts -o $target $test_file
 echo
 
 # Running techelson on the target.
@@ -303,15 +311,23 @@ let%entry test (_param : unit) (_storage : unit) =
     nothing
 </code></pre>
 <p>Which we can compile, and run with the <code>test.sh</code> script from the previous section.</p>
-<pre><code>$ ./test.sh tests/empty.liq
-Compiling tests/empty.liq...
+<pre><code>$ ./../test.sh ../tests/empty.liq
+Compiling ../tests/empty.liq...
 
+Module Techel
+Contract Multi
+Main contract Empty
+File &quot;../tests/empty.liq.techel&quot; generated
+If tezos is compiled, you may want to typecheck with:
+  tezos-client typecheck script ../tests/empty.liq.techel
 
-Running test tests/empty.liq.techel
+Running test ../tests/empty.liq.techel
 
 Running test `Empty`
 
 running test script...
+   timestamp: 1970-01-01 00:00:00 +00:00
+
 Done running test `Empty`
 
 </code></pre>
@@ -362,15 +378,22 @@ let%entry test (_param : unit) (_storage : unit) =
     nothing
 </code></pre>
 <p>and run it</p>
-<pre><code>$ ./test.sh tests/basic.liq
-Compiling tests/basic.liq...
+<pre><code>$ ./../test.sh ../tests/basic.liq
+Compiling ../tests/basic.liq...
 
+Module Techel
+Contract Multi
+Main contract Basic
+File &quot;../tests/basic.liq.techel&quot; generated
+If tezos is compiled, you may want to typecheck with:
+  tezos-client typecheck script ../tests/basic.liq.techel
 
-Running test tests/basic.liq.techel
+Running test ../tests/basic.liq.techel
 
 Running test `Basic`
 
 running test script...
+   timestamp: 1970-01-01 00:00:00 +00:00
 
 applying operation CREATE[uid:0] (@address[1], &quot;tz1YLtLqD1fWHthSVHPD116oYvsd4PTAHUoc&quot;, None, true, true, 13000000utz) 
                        {
@@ -378,19 +401,24 @@ applying operation CREATE[uid:0] (@address[1], &quot;tz1YLtLqD1fWHthSVHPD116oYvs
                            parameter unit ;
                            code ...;
                        }
+   timestamp: 1970-01-01 00:00:00 +00:00
    live contracts: none
 =&gt; live contracts: &lt;anonymous&gt; (13000000utz) address[1]
 
 running test script...
+   timestamp: 1970-01-01 00:00:00 +00:00
 
 applying operation TRANSFER[uid:1] address[0]@Basic -&gt; address[1] 29000000utz Unit
+   timestamp: 1970-01-01 00:00:00 +00:00
    live contracts: &lt;anonymous&gt; (13000000utz) address[1]
 
 running TRANSFER[uid:1] address[0]@Basic -&gt; address[1] 29000000utz Unit
+   timestamp: 1970-01-01 00:00:00 +00:00
 =&gt; live contracts: &lt;anonymous&gt; (42000000utz) address[1]
 
-
 running test script...
+   timestamp: 1970-01-01 00:00:00 +00:00
+
 Done running test `Basic`
 
 </code></pre>
@@ -402,15 +430,22 @@ Done running test `Basic`
     );
 </code></pre>
 <p>in <a href="tezos/techelson/with_liquidity/listing.html#testsbasic_errliq" title="Basic_err test file">tests/basic_err.liq</a>. The test fails indeed:</p>
-<pre><code>$ ./test.sh tests/basic_err.liq
-Compiling tests/basic_err.liq...
+<pre><code>$ ./../test.sh ../tests/basic_err.liq
+Compiling ../tests/basic_err.liq...
 
+Module Techel
+Contract Multi
+Main contract Basic_err
+File &quot;../tests/basic_err.liq.techel&quot; generated
+If tezos is compiled, you may want to typecheck with:
+  tezos-client typecheck script ../tests/basic_err.liq.techel
 
-Running test tests/basic_err.liq.techel
+Running test ../tests/basic_err.liq.techel
 
 Running test `Basic_err`
 
 running test script...
+   timestamp: 1970-01-01 00:00:00 +00:00
 
 applying operation CREATE[uid:0] (@address[1], &quot;tz1YLtLqD1fWHthSVHPD116oYvsd4PTAHUoc&quot;, None, true, true, 13000000utz) 
                        {
@@ -418,19 +453,23 @@ applying operation CREATE[uid:0] (@address[1], &quot;tz1YLtLqD1fWHthSVHPD116oYvs
                            parameter unit ;
                            code ...;
                        }
+   timestamp: 1970-01-01 00:00:00 +00:00
    live contracts: none
 =&gt; live contracts: &lt;anonymous&gt; (13000000utz) address[1]
 
 running test script...
+   timestamp: 1970-01-01 00:00:00 +00:00
 
 applying operation TRANSFER[uid:1] address[0]@Basic_err -&gt; address[1] 29000000utz Unit
+   timestamp: 1970-01-01 00:00:00 +00:00
    live contracts: &lt;anonymous&gt; (13000000utz) address[1]
 
 running TRANSFER[uid:1] address[0]@Basic_err -&gt; address[1] 29000000utz Unit
+   timestamp: 1970-01-01 00:00:00 +00:00
 =&gt; live contracts: &lt;anonymous&gt; (42000000utz) address[1]
 
-
 running test script...
+   timestamp: 1970-01-01 00:00:00 +00:00
 
 Test `Basic_err` failed:
     Tezos protocol error
@@ -564,7 +603,7 @@ let%entry test (_param : unit) (_storage : unit) =
 </code></pre>
 <p>Let's run this test. It will fail though, as it should. So we will call it <a href="tezos/techelson/with_liquidity/listing.html#teststest1_errliq" title="Test1_err test file">tests/test1_err.liq</a>.
 The relevant part of the output is</p>
-<pre><code>$ ./test.sh tests/test1_err.liq
+<pre><code>$ ./../test.sh ../tests/test1_err.liq
 [....]
 Test `Test1_err` failed:
     Error
@@ -594,15 +633,22 @@ The result is <a href="tezos/techelson/with_liquidity/listing.html#teststest2liq
     (* let's really add a client now *)
 </code></pre>
 <p>The test is now successful:</p>
-<pre><code>$ ./test.sh tests/test1.liq
-Compiling tests/test1.liq...
+<pre><code>$ ./../test.sh ../tests/test1.liq
+Compiling ../tests/test1.liq...
 
+Module Techel
+Contract Multi
+Main contract Test1
+File &quot;../tests/test1.liq.techel&quot; generated
+If tezos is compiled, you may want to typecheck with:
+  tezos-client typecheck script ../tests/test1.liq.techel
 
-Running test tests/test1.liq.techel
+Running test ../tests/test1.liq.techel
 
 Running test `Test1`
 
 running test script...
+   timestamp: 1970-01-01 00:00:00 +00:00
 
 applying operation CREATE[uid:0] (@address[1], &quot;tz1YLtLqD1fWHthSVHPD116oYvsd4PTAHUoc&quot;, None, true, true, 0utz) 
                        {
@@ -610,11 +656,13 @@ applying operation CREATE[uid:0] (@address[1], &quot;tz1YLtLqD1fWHthSVHPD116oYvs
                            parameter unit ;
                            code ...;
                        }
+   timestamp: 1970-01-01 00:00:00 +00:00
    live contracts: none
 =&gt; live contracts: &lt;anonymous&gt; (0utz) address[2]
                    &lt;anonymous&gt; (0utz) address[1]
 
 running test script...
+   timestamp: 1970-01-01 00:00:00 +00:00
 
 applying operation CREATE[uid:2] (@address[3], &quot;tz1YLtLqD1fWHthSVHPD116oYvsd4PTAHUoc&quot;, None, true, true, 15000000utz) 
                        {
@@ -622,6 +670,7 @@ applying operation CREATE[uid:2] (@address[3], &quot;tz1YLtLqD1fWHthSVHPD116oYvs
                            parameter unit ;
                            code ...;
                        }
+   timestamp: 1970-01-01 00:00:00 +00:00
    live contracts: &lt;anonymous&gt; (0utz) address[2]
                    &lt;anonymous&gt; (0utz) address[1]
 =&gt; live contracts: &lt;anonymous&gt; (0utz) address[2]
@@ -629,23 +678,27 @@ applying operation CREATE[uid:2] (@address[3], &quot;tz1YLtLqD1fWHthSVHPD116oYvs
                    &lt;anonymous&gt; (0utz) address[1]
 
 running test script...
+   timestamp: 1970-01-01 00:00:00 +00:00
 
 applying operation MUST_FAIL[uid:4] _ (TRANSFER[uid:3] address[0]@Test1 -&gt; address[2] 0utz (Right (Right (Left (&quot;root&quot;, (&quot;lucy&quot;, (address[3], address[3])))))))
+   timestamp: 1970-01-01 00:00:00 +00:00
    live contracts: &lt;anonymous&gt; (0utz) address[2]
                    &lt;anonymous&gt; (15000000utz) address[3]
                    &lt;anonymous&gt; (0utz) address[1]
 
 running TRANSFER[uid:3] address[0]@Test1 -&gt; address[2] 0utz (Right (Right (Left (&quot;root&quot;, (&quot;lucy&quot;, (address[3], address[3]))))))
+   timestamp: 1970-01-01 00:00:00 +00:00
 =&gt; live contracts: &lt;anonymous&gt; (0utz) address[2]
                    &lt;anonymous&gt; (15000000utz) address[3]
                    &lt;anonymous&gt; (0utz) address[1]
-
 failure confirmed on test operation
   MUST_FAIL[uid:4] _ (TRANSFER[uid:3] address[0]@Test1 -&gt; address[2] 0utz (Right (Right (Left (&quot;root&quot;, (&quot;lucy&quot;, (address[3], address[3])))))))
 while running operation TRANSFER[uid:3] address[0]@Test1 -&gt; address[2] 0utz (Right (Right (Left (&quot;root&quot;, (&quot;lucy&quot;, (address[3], address[3]))))))
 failed with value &quot;illegal access to admin account&quot; : string
 
 running test script...
+   timestamp: 1970-01-01 00:00:00 +00:00
+
 Done running test `Test1`
 
 </code></pre>
@@ -681,15 +734,22 @@ account, which will trigger Multi to send her all of her money, at which point s
     );
 </code></pre>
 <p>which is successful:</p>
-<pre><code>$ ./test.sh tests/test3.liq
-Compiling tests/test3.liq...
+<pre><code>$ ./../test.sh ./../tests/test3.liq
+Compiling ./../tests/test3.liq...
 
+Module Techel
+Contract Multi
+Main contract Test3
+File &quot;./../tests/test3.liq.techel&quot; generated
+If tezos is compiled, you may want to typecheck with:
+  tezos-client typecheck script ./../tests/test3.liq.techel
 
-Running test tests/test3.liq.techel
+Running test ./../tests/test3.liq.techel
 
 Running test `Test3`
 
 running test script...
+   timestamp: 1970-01-01 00:00:00 +00:00
 
 applying operation CREATE[uid:0] (@address[1], &quot;tz1YLtLqD1fWHthSVHPD116oYvsd4PTAHUoc&quot;, None, true, true, 0utz) 
                        {
@@ -697,11 +757,13 @@ applying operation CREATE[uid:0] (@address[1], &quot;tz1YLtLqD1fWHthSVHPD116oYvs
                            parameter unit ;
                            code ...;
                        }
+   timestamp: 1970-01-01 00:00:00 +00:00
    live contracts: none
 =&gt; live contracts: &lt;anonymous&gt; (0utz) address[2]
                    &lt;anonymous&gt; (0utz) address[1]
 
 running test script...
+   timestamp: 1970-01-01 00:00:00 +00:00
 
 applying operation CREATE[uid:2] (@address[3], &quot;tz1YLtLqD1fWHthSVHPD116oYvsd4PTAHUoc&quot;, None, true, true, 15000000utz) 
                        {
@@ -709,6 +771,7 @@ applying operation CREATE[uid:2] (@address[3], &quot;tz1YLtLqD1fWHthSVHPD116oYvs
                            parameter unit ;
                            code ...;
                        }
+   timestamp: 1970-01-01 00:00:00 +00:00
    live contracts: &lt;anonymous&gt; (0utz) address[2]
                    &lt;anonymous&gt; (0utz) address[1]
 =&gt; live contracts: &lt;anonymous&gt; (0utz) address[2]
@@ -716,18 +779,22 @@ applying operation CREATE[uid:2] (@address[3], &quot;tz1YLtLqD1fWHthSVHPD116oYvs
                    &lt;anonymous&gt; (0utz) address[1]
 
 running test script...
+   timestamp: 1970-01-01 00:00:00 +00:00
 
 applying operation MUST_FAIL[uid:4] _ (TRANSFER[uid:3] address[0]@Test3 -&gt; address[2] 0utz (Right (Right (Left (&quot;root&quot;, (&quot;lucy&quot;, (address[3], address[3])))))))
+   timestamp: 1970-01-01 00:00:00 +00:00
    live contracts: &lt;anonymous&gt; (0utz) address[2]
                    &lt;anonymous&gt; (15000000utz) address[3]
                    &lt;anonymous&gt; (0utz) address[1]
 
 running TRANSFER[uid:3] address[0]@Test3 -&gt; address[2] 0utz (Right (Right (Left (&quot;root&quot;, (&quot;lucy&quot;, (address[3], address[3]))))))
+   timestamp: 1970-01-01 00:00:00 +00:00
 =&gt; live contracts: &lt;anonymous&gt; (0utz) address[2]
                    &lt;anonymous&gt; (15000000utz) address[3]
                    &lt;anonymous&gt; (0utz) address[1]
 
 applying operation TRANSFER[uid:5] address[1] -&gt; address[2] 0utz (Right (Right (Left (&quot;root&quot;, (&quot;lucy&quot;, (address[3], address[3]))))))
+   timestamp: 1970-01-01 00:00:00 +00:00
    live contracts: &lt;anonymous&gt; (0utz) address[2]
                    &lt;anonymous&gt; (15000000utz) address[3]
                    &lt;anonymous&gt; (0utz) address[1]
@@ -737,48 +804,56 @@ while running operation TRANSFER[uid:3] address[0]@Test3 -&gt; address[2] 0utz (
 failed with value &quot;illegal access to admin account&quot; : string
 
 running TRANSFER[uid:5] address[1] -&gt; address[2] 0utz (Right (Right (Left (&quot;root&quot;, (&quot;lucy&quot;, (address[3], address[3]))))))
+   timestamp: 1970-01-01 00:00:00 +00:00
 =&gt; live contracts: &lt;anonymous&gt; (0utz) address[2]
                    &lt;anonymous&gt; (15000000utz) address[3]
                    &lt;anonymous&gt; (0utz) address[1]
 
-
 running test script...
+   timestamp: 1970-01-01 00:00:00 +00:00
 
 applying operation TRANSFER[uid:6] address[3] -&gt; address[2] 10000000utz (Right (Right (Right (Left &quot;lucy&quot;))))
+   timestamp: 1970-01-01 00:00:00 +00:00
    live contracts: &lt;anonymous&gt; (0utz) address[2]
                    &lt;anonymous&gt; (15000000utz) address[3]
                    &lt;anonymous&gt; (0utz) address[1]
 
 running TRANSFER[uid:6] address[3] -&gt; address[2] 10000000utz (Right (Right (Right (Left &quot;lucy&quot;))))
+   timestamp: 1970-01-01 00:00:00 +00:00
 =&gt; live contracts: &lt;anonymous&gt; (10000000utz) address[2]
                    &lt;anonymous&gt; (5000000utz) address[3]
                    &lt;anonymous&gt; (0utz) address[1]
 
-
 running test script...
+   timestamp: 1970-01-01 00:00:00 +00:00
 
 applying operation TRANSFER[uid:7] address[3] -&gt; address[2] 0utz (Right (Right (Right (Right (Right &quot;lucy&quot;)))))
+   timestamp: 1970-01-01 00:00:00 +00:00
    live contracts: &lt;anonymous&gt; (10000000utz) address[2]
                    &lt;anonymous&gt; (5000000utz) address[3]
                    &lt;anonymous&gt; (0utz) address[1]
 
 running TRANSFER[uid:7] address[3] -&gt; address[2] 0utz (Right (Right (Right (Right (Right &quot;lucy&quot;)))))
+   timestamp: 1970-01-01 00:00:00 +00:00
 =&gt; live contracts: &lt;anonymous&gt; (10000000utz) address[2]
                    &lt;anonymous&gt; (5000000utz) address[3]
                    &lt;anonymous&gt; (0utz) address[1]
 
 applying operation TRANSFER[uid:8] address[2] -&gt; address[3] 10000000utz Unit
+   timestamp: 1970-01-01 00:00:00 +00:00
    live contracts: &lt;anonymous&gt; (10000000utz) address[2]
                    &lt;anonymous&gt; (5000000utz) address[3]
                    &lt;anonymous&gt; (0utz) address[1]
 
 running TRANSFER[uid:8] address[2] -&gt; address[3] 10000000utz Unit
+   timestamp: 1970-01-01 00:00:00 +00:00
 =&gt; live contracts: &lt;anonymous&gt; (0utz) address[2]
                    &lt;anonymous&gt; (15000000utz) address[3]
                    &lt;anonymous&gt; (0utz) address[1]
 
-
 running test script...
+   timestamp: 1970-01-01 00:00:00 +00:00
+
 Done running test `Test3`
 
 </code></pre>
@@ -791,15 +866,22 @@ balance is <code>2tz</code> (it's not) in <a href="tezos/techelson/with_liquidit
     );
 </code></pre>
 <p>This fails:</p>
-<pre><code>$ ./test.sh tests/test3_err.liq
-Compiling tests/test3_err.liq...
+<pre><code>$ ./../test.sh ../tests/test3_err.liq
+Compiling ../tests/test3_err.liq...
 
+Module Techel
+Contract Multi
+Main contract Test3_err
+File &quot;../tests/test3_err.liq.techel&quot; generated
+If tezos is compiled, you may want to typecheck with:
+  tezos-client typecheck script ../tests/test3_err.liq.techel
 
-Running test tests/test3_err.liq.techel
+Running test ../tests/test3_err.liq.techel
 
 Running test `Test3_err`
 
 running test script...
+   timestamp: 1970-01-01 00:00:00 +00:00
 
 applying operation CREATE[uid:0] (@address[1], &quot;tz1YLtLqD1fWHthSVHPD116oYvsd4PTAHUoc&quot;, None, true, true, 0utz) 
                        {
@@ -807,11 +889,13 @@ applying operation CREATE[uid:0] (@address[1], &quot;tz1YLtLqD1fWHthSVHPD116oYvs
                            parameter unit ;
                            code ...;
                        }
+   timestamp: 1970-01-01 00:00:00 +00:00
    live contracts: none
 =&gt; live contracts: &lt;anonymous&gt; (0utz) address[2]
                    &lt;anonymous&gt; (0utz) address[1]
 
 running test script...
+   timestamp: 1970-01-01 00:00:00 +00:00
 
 applying operation CREATE[uid:2] (@address[3], &quot;tz1YLtLqD1fWHthSVHPD116oYvsd4PTAHUoc&quot;, None, true, true, 15000000utz) 
                        {
@@ -819,6 +903,7 @@ applying operation CREATE[uid:2] (@address[3], &quot;tz1YLtLqD1fWHthSVHPD116oYvs
                            parameter unit ;
                            code ...;
                        }
+   timestamp: 1970-01-01 00:00:00 +00:00
    live contracts: &lt;anonymous&gt; (0utz) address[2]
                    &lt;anonymous&gt; (0utz) address[1]
 =&gt; live contracts: &lt;anonymous&gt; (0utz) address[2]
@@ -826,18 +911,22 @@ applying operation CREATE[uid:2] (@address[3], &quot;tz1YLtLqD1fWHthSVHPD116oYvs
                    &lt;anonymous&gt; (0utz) address[1]
 
 running test script...
+   timestamp: 1970-01-01 00:00:00 +00:00
 
 applying operation MUST_FAIL[uid:4] _ (TRANSFER[uid:3] address[0]@Test3_err -&gt; address[2] 0utz (Right (Right (Left (&quot;root&quot;, (&quot;lucy&quot;, (address[3], address[3])))))))
+   timestamp: 1970-01-01 00:00:00 +00:00
    live contracts: &lt;anonymous&gt; (0utz) address[2]
                    &lt;anonymous&gt; (15000000utz) address[3]
                    &lt;anonymous&gt; (0utz) address[1]
 
 running TRANSFER[uid:3] address[0]@Test3_err -&gt; address[2] 0utz (Right (Right (Left (&quot;root&quot;, (&quot;lucy&quot;, (address[3], address[3]))))))
+   timestamp: 1970-01-01 00:00:00 +00:00
 =&gt; live contracts: &lt;anonymous&gt; (0utz) address[2]
                    &lt;anonymous&gt; (15000000utz) address[3]
                    &lt;anonymous&gt; (0utz) address[1]
 
 applying operation TRANSFER[uid:5] address[1] -&gt; address[2] 0utz (Right (Right (Left (&quot;root&quot;, (&quot;lucy&quot;, (address[3], address[3]))))))
+   timestamp: 1970-01-01 00:00:00 +00:00
    live contracts: &lt;anonymous&gt; (0utz) address[2]
                    &lt;anonymous&gt; (15000000utz) address[3]
                    &lt;anonymous&gt; (0utz) address[1]
@@ -847,48 +936,55 @@ while running operation TRANSFER[uid:3] address[0]@Test3_err -&gt; address[2] 0u
 failed with value &quot;illegal access to admin account&quot; : string
 
 running TRANSFER[uid:5] address[1] -&gt; address[2] 0utz (Right (Right (Left (&quot;root&quot;, (&quot;lucy&quot;, (address[3], address[3]))))))
+   timestamp: 1970-01-01 00:00:00 +00:00
 =&gt; live contracts: &lt;anonymous&gt; (0utz) address[2]
                    &lt;anonymous&gt; (15000000utz) address[3]
                    &lt;anonymous&gt; (0utz) address[1]
 
-
 running test script...
+   timestamp: 1970-01-01 00:00:00 +00:00
 
 applying operation TRANSFER[uid:6] address[3] -&gt; address[2] 10000000utz (Right (Right (Right (Left &quot;lucy&quot;))))
+   timestamp: 1970-01-01 00:00:00 +00:00
    live contracts: &lt;anonymous&gt; (0utz) address[2]
                    &lt;anonymous&gt; (15000000utz) address[3]
                    &lt;anonymous&gt; (0utz) address[1]
 
 running TRANSFER[uid:6] address[3] -&gt; address[2] 10000000utz (Right (Right (Right (Left &quot;lucy&quot;))))
+   timestamp: 1970-01-01 00:00:00 +00:00
 =&gt; live contracts: &lt;anonymous&gt; (10000000utz) address[2]
                    &lt;anonymous&gt; (5000000utz) address[3]
                    &lt;anonymous&gt; (0utz) address[1]
 
-
 running test script...
+   timestamp: 1970-01-01 00:00:00 +00:00
 
 applying operation TRANSFER[uid:7] address[3] -&gt; address[2] 0utz (Right (Right (Right (Right (Right &quot;lucy&quot;)))))
+   timestamp: 1970-01-01 00:00:00 +00:00
    live contracts: &lt;anonymous&gt; (10000000utz) address[2]
                    &lt;anonymous&gt; (5000000utz) address[3]
                    &lt;anonymous&gt; (0utz) address[1]
 
 running TRANSFER[uid:7] address[3] -&gt; address[2] 0utz (Right (Right (Right (Right (Right &quot;lucy&quot;)))))
+   timestamp: 1970-01-01 00:00:00 +00:00
 =&gt; live contracts: &lt;anonymous&gt; (10000000utz) address[2]
                    &lt;anonymous&gt; (5000000utz) address[3]
                    &lt;anonymous&gt; (0utz) address[1]
 
 applying operation TRANSFER[uid:8] address[2] -&gt; address[3] 10000000utz Unit
+   timestamp: 1970-01-01 00:00:00 +00:00
    live contracts: &lt;anonymous&gt; (10000000utz) address[2]
                    &lt;anonymous&gt; (5000000utz) address[3]
                    &lt;anonymous&gt; (0utz) address[1]
 
 running TRANSFER[uid:8] address[2] -&gt; address[3] 10000000utz Unit
+   timestamp: 1970-01-01 00:00:00 +00:00
 =&gt; live contracts: &lt;anonymous&gt; (0utz) address[2]
                    &lt;anonymous&gt; (15000000utz) address[3]
                    &lt;anonymous&gt; (0utz) address[1]
 
-
 running test script...
+   timestamp: 1970-01-01 00:00:00 +00:00
 
 Test `Test3_err` failed:
     Tezos protocol error
@@ -932,9 +1028,12 @@ set -e
 
 test_file=&quot;$1&quot;
 
+this_script_dir=&quot;$( cd &quot;$( dirname &quot;${BASH_SOURCE[0]}&quot; )&quot; &gt;/dev/null 2&gt;&amp;1 &amp;&amp; pwd )&quot;
+techel_lib=&quot;$this_script_dir/tests/techel.liq&quot;
+
 # List of all the contracts.
 contracts=&quot;&quot;
-for file in `find contracts -iname &quot;*.liq&quot;` ; do
+for file in `find &quot;$this_script_dir/contracts&quot; -iname &quot;*.liq&quot;` ; do
     contracts=&quot;$contracts $file&quot;
 done
 
@@ -943,7 +1042,7 @@ target=&quot;$test_file.techel&quot;
 
 echo &quot;Compiling $test_file...&quot;
 echo
-liquidity --no-annot --no-simplify --no-peephole tests/techel.liq$contracts -o $target $test_file
+liquidity --no-annot --no-simplify --no-peephole $techel_lib $contracts -o $target $test_file
 echo
 
 # Running techelson on the target.
@@ -1064,6 +1163,7 @@ external print_stack :
 external step :
     unit -&gt; unit
     = &quot;STEP&quot;
+
 </code></pre>
 <a class="header" href="#teststest1liq" id="teststest1liq"><h3>tests/test1.liq</h3></a>
 <pre><code class="language-ocaml">let nothing : operation list * unit = [], ()

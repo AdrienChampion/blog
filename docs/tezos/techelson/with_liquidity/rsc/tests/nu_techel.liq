@@ -22,3 +22,9 @@ external print_stack :
 external step :
     unit -> unit
     = "STEP"
+
+let do_with_source (a : address) (stuff : unit -> 'a) : 'a =
+    start_set_source a;
+    let res = stuff () in
+    end_set_source ();
+    res

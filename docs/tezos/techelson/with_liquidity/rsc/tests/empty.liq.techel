@@ -3,9 +3,75 @@ storage unit;
 code { DUP ;
        DIP { CDR } ;
        CAR ;
+       LAMBDA
+         (pair (pair (map string address) (map string (pair address (pair mutez (contract unit)))))
+               (pair string address))
+         unit
+         { RENAME ;
+           DUP ;
+           CAR ;
+           DUUP ;
+           CDAR ;
+           DUUUP ;
+           CDDR ;
+           DUUUP ;
+           CAR ;
+           DUUUP ;
+           GET ;
+           IF_NONE
+             { PUSH string "only admins can perform administrative tasks" ; FAILWITH }
+             { DUUP ;
+               DUUP ;
+               COMPARE ;
+               NEQ ;
+               IF { PUSH string "illegal access to admin account" ; FAILWITH } { UNIT } ;
+               DIP { DROP } } ;
+           DIP { DROP } ;
+           DIP { DROP } ;
+           DIP { DROP } ;
+           DIP { DROP } } ;
+       LAMBDA
+         (pair (pair (map string address) (map string (pair address (pair mutez (contract unit)))))
+               (pair string address))
+         (pair mutez (contract unit))
+         { RENAME ;
+           DUP ;
+           CAR ;
+           DUUP ;
+           CDAR ;
+           DUUUP ;
+           CDDR ;
+           DUUUP ;
+           CDR ;
+           DUUUP ;
+           GET ;
+           IF_NONE
+             { PUSH string "unknown user" ; FAILWITH }
+             { DUP ;
+               CAR ;
+               DUUP ;
+               CDAR ;
+               DUUUP ;
+               CDDR ;
+               DUUUP ;
+               DUUUUUUP ;
+               COMPARE ;
+               NEQ ;
+               IF { PUSH string "illegal access to account" ; FAILWITH }
+                  { DUP ; DUUUP ; PAIR } ;
+               DIP { DROP } ;
+               DIP { DROP } ;
+               DIP { DROP } ;
+               DIP { DROP } } ;
+           DIP { DROP } ;
+           DIP { DROP } ;
+           DIP { DROP } ;
+           DIP { DROP } } ;
        UNIT ;
        NIL operation ;
        PAIR ;
        DUP ;
+       DIP { DROP } ;
+       DIP { DROP } ;
        DIP { DROP } ;
        DIP { DROP ; DROP } };

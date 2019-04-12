@@ -1,10 +1,18 @@
-$ ./test.sh tests/empty.liq
-Compiling tests/empty.liq...
+$ ./../test.sh ../tests/empty.liq
+Compiling ../tests/empty.liq...
 
+Module Techel
+Contract Multi
+Main contract Empty
+File "../tests/empty.liq.techel" generated
+If tezos is compiled, you may want to typecheck with:
+  tezos-client typecheck script ../tests/empty.liq.techel
 
-Running test tests/empty.liq.techel
+Running test ../tests/empty.liq.techel
 
 Running test `Empty`
 
 running test script...
+   timestamp: 1970-01-01 00:00:00 +00:00
+
 Done running test `Empty`

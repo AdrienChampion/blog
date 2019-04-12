@@ -264,7 +264,7 @@ let%entry test (_param : unit) (_storage : unit) =
 </code></pre>
 <p>Let's run this test. It will fail though, as it should. So we will call it <a href="listing.html#teststest1_errliq" title="Test1_err test file">tests/test1_err.liq</a>.
 The relevant part of the output is</p>
-<pre><code>$ ./test.sh tests/test1_err.liq
+<pre><code>$ ./../test.sh ../tests/test1_err.liq
 [....]
 Test `Test1_err` failed:
     Error
@@ -294,15 +294,22 @@ The result is <a href="listing.html#teststest2liq" title="Test2 test file">tests
     (* let's really add a client now *)
 </code></pre>
 <p>The test is now successful:</p>
-<pre><code>$ ./test.sh tests/test1.liq
-Compiling tests/test1.liq...
+<pre><code>$ ./../test.sh ../tests/test1.liq
+Compiling ../tests/test1.liq...
 
+Module Techel
+Contract Multi
+Main contract Test1
+File &quot;../tests/test1.liq.techel&quot; generated
+If tezos is compiled, you may want to typecheck with:
+  tezos-client typecheck script ../tests/test1.liq.techel
 
-Running test tests/test1.liq.techel
+Running test ../tests/test1.liq.techel
 
 Running test `Test1`
 
 running test script...
+   timestamp: 1970-01-01 00:00:00 +00:00
 
 applying operation CREATE[uid:0] (@address[1], &quot;tz1YLtLqD1fWHthSVHPD116oYvsd4PTAHUoc&quot;, None, true, true, 0utz) 
                        {
@@ -310,11 +317,13 @@ applying operation CREATE[uid:0] (@address[1], &quot;tz1YLtLqD1fWHthSVHPD116oYvs
                            parameter unit ;
                            code ...;
                        }
+   timestamp: 1970-01-01 00:00:00 +00:00
    live contracts: none
 =&gt; live contracts: &lt;anonymous&gt; (0utz) address[2]
                    &lt;anonymous&gt; (0utz) address[1]
 
 running test script...
+   timestamp: 1970-01-01 00:00:00 +00:00
 
 applying operation CREATE[uid:2] (@address[3], &quot;tz1YLtLqD1fWHthSVHPD116oYvsd4PTAHUoc&quot;, None, true, true, 15000000utz) 
                        {
@@ -322,6 +331,7 @@ applying operation CREATE[uid:2] (@address[3], &quot;tz1YLtLqD1fWHthSVHPD116oYvs
                            parameter unit ;
                            code ...;
                        }
+   timestamp: 1970-01-01 00:00:00 +00:00
    live contracts: &lt;anonymous&gt; (0utz) address[2]
                    &lt;anonymous&gt; (0utz) address[1]
 =&gt; live contracts: &lt;anonymous&gt; (0utz) address[2]
@@ -329,23 +339,27 @@ applying operation CREATE[uid:2] (@address[3], &quot;tz1YLtLqD1fWHthSVHPD116oYvs
                    &lt;anonymous&gt; (0utz) address[1]
 
 running test script...
+   timestamp: 1970-01-01 00:00:00 +00:00
 
 applying operation MUST_FAIL[uid:4] _ (TRANSFER[uid:3] address[0]@Test1 -&gt; address[2] 0utz (Right (Right (Left (&quot;root&quot;, (&quot;lucy&quot;, (address[3], address[3])))))))
+   timestamp: 1970-01-01 00:00:00 +00:00
    live contracts: &lt;anonymous&gt; (0utz) address[2]
                    &lt;anonymous&gt; (15000000utz) address[3]
                    &lt;anonymous&gt; (0utz) address[1]
 
 running TRANSFER[uid:3] address[0]@Test1 -&gt; address[2] 0utz (Right (Right (Left (&quot;root&quot;, (&quot;lucy&quot;, (address[3], address[3]))))))
+   timestamp: 1970-01-01 00:00:00 +00:00
 =&gt; live contracts: &lt;anonymous&gt; (0utz) address[2]
                    &lt;anonymous&gt; (15000000utz) address[3]
                    &lt;anonymous&gt; (0utz) address[1]
-
 failure confirmed on test operation
   MUST_FAIL[uid:4] _ (TRANSFER[uid:3] address[0]@Test1 -&gt; address[2] 0utz (Right (Right (Left (&quot;root&quot;, (&quot;lucy&quot;, (address[3], address[3])))))))
 while running operation TRANSFER[uid:3] address[0]@Test1 -&gt; address[2] 0utz (Right (Right (Left (&quot;root&quot;, (&quot;lucy&quot;, (address[3], address[3]))))))
 failed with value &quot;illegal access to admin account&quot; : string
 
 running test script...
+   timestamp: 1970-01-01 00:00:00 +00:00
+
 Done running test `Test1`
 
 </code></pre>
@@ -381,15 +395,22 @@ account, which will trigger Multi to send her all of her money, at which point s
     );
 </code></pre>
 <p>which is successful:</p>
-<pre><code>$ ./test.sh tests/test3.liq
-Compiling tests/test3.liq...
+<pre><code>$ ./../test.sh ./../tests/test3.liq
+Compiling ./../tests/test3.liq...
 
+Module Techel
+Contract Multi
+Main contract Test3
+File &quot;./../tests/test3.liq.techel&quot; generated
+If tezos is compiled, you may want to typecheck with:
+  tezos-client typecheck script ./../tests/test3.liq.techel
 
-Running test tests/test3.liq.techel
+Running test ./../tests/test3.liq.techel
 
 Running test `Test3`
 
 running test script...
+   timestamp: 1970-01-01 00:00:00 +00:00
 
 applying operation CREATE[uid:0] (@address[1], &quot;tz1YLtLqD1fWHthSVHPD116oYvsd4PTAHUoc&quot;, None, true, true, 0utz) 
                        {
@@ -397,11 +418,13 @@ applying operation CREATE[uid:0] (@address[1], &quot;tz1YLtLqD1fWHthSVHPD116oYvs
                            parameter unit ;
                            code ...;
                        }
+   timestamp: 1970-01-01 00:00:00 +00:00
    live contracts: none
 =&gt; live contracts: &lt;anonymous&gt; (0utz) address[2]
                    &lt;anonymous&gt; (0utz) address[1]
 
 running test script...
+   timestamp: 1970-01-01 00:00:00 +00:00
 
 applying operation CREATE[uid:2] (@address[3], &quot;tz1YLtLqD1fWHthSVHPD116oYvsd4PTAHUoc&quot;, None, true, true, 15000000utz) 
                        {
@@ -409,6 +432,7 @@ applying operation CREATE[uid:2] (@address[3], &quot;tz1YLtLqD1fWHthSVHPD116oYvs
                            parameter unit ;
                            code ...;
                        }
+   timestamp: 1970-01-01 00:00:00 +00:00
    live contracts: &lt;anonymous&gt; (0utz) address[2]
                    &lt;anonymous&gt; (0utz) address[1]
 =&gt; live contracts: &lt;anonymous&gt; (0utz) address[2]
@@ -416,18 +440,22 @@ applying operation CREATE[uid:2] (@address[3], &quot;tz1YLtLqD1fWHthSVHPD116oYvs
                    &lt;anonymous&gt; (0utz) address[1]
 
 running test script...
+   timestamp: 1970-01-01 00:00:00 +00:00
 
 applying operation MUST_FAIL[uid:4] _ (TRANSFER[uid:3] address[0]@Test3 -&gt; address[2] 0utz (Right (Right (Left (&quot;root&quot;, (&quot;lucy&quot;, (address[3], address[3])))))))
+   timestamp: 1970-01-01 00:00:00 +00:00
    live contracts: &lt;anonymous&gt; (0utz) address[2]
                    &lt;anonymous&gt; (15000000utz) address[3]
                    &lt;anonymous&gt; (0utz) address[1]
 
 running TRANSFER[uid:3] address[0]@Test3 -&gt; address[2] 0utz (Right (Right (Left (&quot;root&quot;, (&quot;lucy&quot;, (address[3], address[3]))))))
+   timestamp: 1970-01-01 00:00:00 +00:00
 =&gt; live contracts: &lt;anonymous&gt; (0utz) address[2]
                    &lt;anonymous&gt; (15000000utz) address[3]
                    &lt;anonymous&gt; (0utz) address[1]
 
 applying operation TRANSFER[uid:5] address[1] -&gt; address[2] 0utz (Right (Right (Left (&quot;root&quot;, (&quot;lucy&quot;, (address[3], address[3]))))))
+   timestamp: 1970-01-01 00:00:00 +00:00
    live contracts: &lt;anonymous&gt; (0utz) address[2]
                    &lt;anonymous&gt; (15000000utz) address[3]
                    &lt;anonymous&gt; (0utz) address[1]
@@ -437,48 +465,56 @@ while running operation TRANSFER[uid:3] address[0]@Test3 -&gt; address[2] 0utz (
 failed with value &quot;illegal access to admin account&quot; : string
 
 running TRANSFER[uid:5] address[1] -&gt; address[2] 0utz (Right (Right (Left (&quot;root&quot;, (&quot;lucy&quot;, (address[3], address[3]))))))
+   timestamp: 1970-01-01 00:00:00 +00:00
 =&gt; live contracts: &lt;anonymous&gt; (0utz) address[2]
                    &lt;anonymous&gt; (15000000utz) address[3]
                    &lt;anonymous&gt; (0utz) address[1]
 
-
 running test script...
+   timestamp: 1970-01-01 00:00:00 +00:00
 
 applying operation TRANSFER[uid:6] address[3] -&gt; address[2] 10000000utz (Right (Right (Right (Left &quot;lucy&quot;))))
+   timestamp: 1970-01-01 00:00:00 +00:00
    live contracts: &lt;anonymous&gt; (0utz) address[2]
                    &lt;anonymous&gt; (15000000utz) address[3]
                    &lt;anonymous&gt; (0utz) address[1]
 
 running TRANSFER[uid:6] address[3] -&gt; address[2] 10000000utz (Right (Right (Right (Left &quot;lucy&quot;))))
+   timestamp: 1970-01-01 00:00:00 +00:00
 =&gt; live contracts: &lt;anonymous&gt; (10000000utz) address[2]
                    &lt;anonymous&gt; (5000000utz) address[3]
                    &lt;anonymous&gt; (0utz) address[1]
 
-
 running test script...
+   timestamp: 1970-01-01 00:00:00 +00:00
 
 applying operation TRANSFER[uid:7] address[3] -&gt; address[2] 0utz (Right (Right (Right (Right (Right &quot;lucy&quot;)))))
+   timestamp: 1970-01-01 00:00:00 +00:00
    live contracts: &lt;anonymous&gt; (10000000utz) address[2]
                    &lt;anonymous&gt; (5000000utz) address[3]
                    &lt;anonymous&gt; (0utz) address[1]
 
 running TRANSFER[uid:7] address[3] -&gt; address[2] 0utz (Right (Right (Right (Right (Right &quot;lucy&quot;)))))
+   timestamp: 1970-01-01 00:00:00 +00:00
 =&gt; live contracts: &lt;anonymous&gt; (10000000utz) address[2]
                    &lt;anonymous&gt; (5000000utz) address[3]
                    &lt;anonymous&gt; (0utz) address[1]
 
 applying operation TRANSFER[uid:8] address[2] -&gt; address[3] 10000000utz Unit
+   timestamp: 1970-01-01 00:00:00 +00:00
    live contracts: &lt;anonymous&gt; (10000000utz) address[2]
                    &lt;anonymous&gt; (5000000utz) address[3]
                    &lt;anonymous&gt; (0utz) address[1]
 
 running TRANSFER[uid:8] address[2] -&gt; address[3] 10000000utz Unit
+   timestamp: 1970-01-01 00:00:00 +00:00
 =&gt; live contracts: &lt;anonymous&gt; (0utz) address[2]
                    &lt;anonymous&gt; (15000000utz) address[3]
                    &lt;anonymous&gt; (0utz) address[1]
 
-
 running test script...
+   timestamp: 1970-01-01 00:00:00 +00:00
+
 Done running test `Test3`
 
 </code></pre>
@@ -491,15 +527,22 @@ balance is <code>2tz</code> (it's not) in <a href="listing.html#teststest3_errli
     );
 </code></pre>
 <p>This fails:</p>
-<pre><code>$ ./test.sh tests/test3_err.liq
-Compiling tests/test3_err.liq...
+<pre><code>$ ./../test.sh ../tests/test3_err.liq
+Compiling ../tests/test3_err.liq...
 
+Module Techel
+Contract Multi
+Main contract Test3_err
+File &quot;../tests/test3_err.liq.techel&quot; generated
+If tezos is compiled, you may want to typecheck with:
+  tezos-client typecheck script ../tests/test3_err.liq.techel
 
-Running test tests/test3_err.liq.techel
+Running test ../tests/test3_err.liq.techel
 
 Running test `Test3_err`
 
 running test script...
+   timestamp: 1970-01-01 00:00:00 +00:00
 
 applying operation CREATE[uid:0] (@address[1], &quot;tz1YLtLqD1fWHthSVHPD116oYvsd4PTAHUoc&quot;, None, true, true, 0utz) 
                        {
@@ -507,11 +550,13 @@ applying operation CREATE[uid:0] (@address[1], &quot;tz1YLtLqD1fWHthSVHPD116oYvs
                            parameter unit ;
                            code ...;
                        }
+   timestamp: 1970-01-01 00:00:00 +00:00
    live contracts: none
 =&gt; live contracts: &lt;anonymous&gt; (0utz) address[2]
                    &lt;anonymous&gt; (0utz) address[1]
 
 running test script...
+   timestamp: 1970-01-01 00:00:00 +00:00
 
 applying operation CREATE[uid:2] (@address[3], &quot;tz1YLtLqD1fWHthSVHPD116oYvsd4PTAHUoc&quot;, None, true, true, 15000000utz) 
                        {
@@ -519,6 +564,7 @@ applying operation CREATE[uid:2] (@address[3], &quot;tz1YLtLqD1fWHthSVHPD116oYvs
                            parameter unit ;
                            code ...;
                        }
+   timestamp: 1970-01-01 00:00:00 +00:00
    live contracts: &lt;anonymous&gt; (0utz) address[2]
                    &lt;anonymous&gt; (0utz) address[1]
 =&gt; live contracts: &lt;anonymous&gt; (0utz) address[2]
@@ -526,18 +572,22 @@ applying operation CREATE[uid:2] (@address[3], &quot;tz1YLtLqD1fWHthSVHPD116oYvs
                    &lt;anonymous&gt; (0utz) address[1]
 
 running test script...
+   timestamp: 1970-01-01 00:00:00 +00:00
 
 applying operation MUST_FAIL[uid:4] _ (TRANSFER[uid:3] address[0]@Test3_err -&gt; address[2] 0utz (Right (Right (Left (&quot;root&quot;, (&quot;lucy&quot;, (address[3], address[3])))))))
+   timestamp: 1970-01-01 00:00:00 +00:00
    live contracts: &lt;anonymous&gt; (0utz) address[2]
                    &lt;anonymous&gt; (15000000utz) address[3]
                    &lt;anonymous&gt; (0utz) address[1]
 
 running TRANSFER[uid:3] address[0]@Test3_err -&gt; address[2] 0utz (Right (Right (Left (&quot;root&quot;, (&quot;lucy&quot;, (address[3], address[3]))))))
+   timestamp: 1970-01-01 00:00:00 +00:00
 =&gt; live contracts: &lt;anonymous&gt; (0utz) address[2]
                    &lt;anonymous&gt; (15000000utz) address[3]
                    &lt;anonymous&gt; (0utz) address[1]
 
 applying operation TRANSFER[uid:5] address[1] -&gt; address[2] 0utz (Right (Right (Left (&quot;root&quot;, (&quot;lucy&quot;, (address[3], address[3]))))))
+   timestamp: 1970-01-01 00:00:00 +00:00
    live contracts: &lt;anonymous&gt; (0utz) address[2]
                    &lt;anonymous&gt; (15000000utz) address[3]
                    &lt;anonymous&gt; (0utz) address[1]
@@ -547,48 +597,55 @@ while running operation TRANSFER[uid:3] address[0]@Test3_err -&gt; address[2] 0u
 failed with value &quot;illegal access to admin account&quot; : string
 
 running TRANSFER[uid:5] address[1] -&gt; address[2] 0utz (Right (Right (Left (&quot;root&quot;, (&quot;lucy&quot;, (address[3], address[3]))))))
+   timestamp: 1970-01-01 00:00:00 +00:00
 =&gt; live contracts: &lt;anonymous&gt; (0utz) address[2]
                    &lt;anonymous&gt; (15000000utz) address[3]
                    &lt;anonymous&gt; (0utz) address[1]
 
-
 running test script...
+   timestamp: 1970-01-01 00:00:00 +00:00
 
 applying operation TRANSFER[uid:6] address[3] -&gt; address[2] 10000000utz (Right (Right (Right (Left &quot;lucy&quot;))))
+   timestamp: 1970-01-01 00:00:00 +00:00
    live contracts: &lt;anonymous&gt; (0utz) address[2]
                    &lt;anonymous&gt; (15000000utz) address[3]
                    &lt;anonymous&gt; (0utz) address[1]
 
 running TRANSFER[uid:6] address[3] -&gt; address[2] 10000000utz (Right (Right (Right (Left &quot;lucy&quot;))))
+   timestamp: 1970-01-01 00:00:00 +00:00
 =&gt; live contracts: &lt;anonymous&gt; (10000000utz) address[2]
                    &lt;anonymous&gt; (5000000utz) address[3]
                    &lt;anonymous&gt; (0utz) address[1]
 
-
 running test script...
+   timestamp: 1970-01-01 00:00:00 +00:00
 
 applying operation TRANSFER[uid:7] address[3] -&gt; address[2] 0utz (Right (Right (Right (Right (Right &quot;lucy&quot;)))))
+   timestamp: 1970-01-01 00:00:00 +00:00
    live contracts: &lt;anonymous&gt; (10000000utz) address[2]
                    &lt;anonymous&gt; (5000000utz) address[3]
                    &lt;anonymous&gt; (0utz) address[1]
 
 running TRANSFER[uid:7] address[3] -&gt; address[2] 0utz (Right (Right (Right (Right (Right &quot;lucy&quot;)))))
+   timestamp: 1970-01-01 00:00:00 +00:00
 =&gt; live contracts: &lt;anonymous&gt; (10000000utz) address[2]
                    &lt;anonymous&gt; (5000000utz) address[3]
                    &lt;anonymous&gt; (0utz) address[1]
 
 applying operation TRANSFER[uid:8] address[2] -&gt; address[3] 10000000utz Unit
+   timestamp: 1970-01-01 00:00:00 +00:00
    live contracts: &lt;anonymous&gt; (10000000utz) address[2]
                    &lt;anonymous&gt; (5000000utz) address[3]
                    &lt;anonymous&gt; (0utz) address[1]
 
 running TRANSFER[uid:8] address[2] -&gt; address[3] 10000000utz Unit
+   timestamp: 1970-01-01 00:00:00 +00:00
 =&gt; live contracts: &lt;anonymous&gt; (0utz) address[2]
                    &lt;anonymous&gt; (15000000utz) address[3]
                    &lt;anonymous&gt; (0utz) address[1]
 
-
 running test script...
+   timestamp: 1970-01-01 00:00:00 +00:00
 
 Test `Test3_err` failed:
     Tezos protocol error

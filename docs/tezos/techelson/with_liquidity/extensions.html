@@ -200,9 +200,12 @@ set -e
 
 test_file=&quot;$1&quot;
 
+this_script_dir=&quot;$( cd &quot;$( dirname &quot;${BASH_SOURCE[0]}&quot; )&quot; &gt;/dev/null 2&gt;&amp;1 &amp;&amp; pwd )&quot;
+techel_lib=&quot;$this_script_dir/tests/techel.liq&quot;
+
 # List of all the contracts.
 contracts=&quot;&quot;
-for file in `find contracts -iname &quot;*.liq&quot;` ; do
+for file in `find &quot;$this_script_dir/contracts&quot; -iname &quot;*.liq&quot;` ; do
     contracts=&quot;$contracts $file&quot;
 done
 
@@ -211,7 +214,7 @@ target=&quot;$test_file.techel&quot;
 
 echo &quot;Compiling $test_file...&quot;
 echo
-liquidity --no-annot --no-simplify --no-peephole tests/techel.liq$contracts -o $target $test_file
+liquidity --no-annot --no-simplify --no-peephole $techel_lib $contracts -o $target $test_file
 echo
 
 # Running techelson on the target.

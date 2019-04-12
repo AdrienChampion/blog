@@ -10,3 +10,4 @@ default-theme = "navy"
 [output.linkcheck]
 follow-web-links = true
 traverse-parent-directories = true
+exclude = [ "ocamlpro\\.com" ]

@@ -3,32 +3,90 @@ storage unit;
 code { DUP ;
        DIP { CDR } ;
        CAR ;
+       LAMBDA
+         (pair (pair (map string address) (map string (pair address (pair mutez (contract unit)))))
+               (pair string address))
+         unit
+         { RENAME ;
+           DUP ;
+           CAR ;
+           DUUP ;
+           CDAR ;
+           DUUUP ;
+           CDDR ;
+           DUUUP ;
+           CAR ;
+           DUUUP ;
+           GET ;
+           IF_NONE
+             { PUSH string "only admins can perform administrative tasks" ; FAILWITH }
+             { DUUP ;
+               DUUP ;
+               COMPARE ;
+               NEQ ;
+               IF { PUSH string "illegal access to admin account" ; FAILWITH } { UNIT } ;
+               DIP { DROP } } ;
+           DIP { DROP } ;
+           DIP { DROP } ;
+           DIP { DROP } ;
+           DIP { DROP } } ;
+       LAMBDA
+         (pair (pair (map string address) (map string (pair address (pair mutez (contract unit)))))
+               (pair string address))
+         (pair mutez (contract unit))
+         { RENAME ;
+           DUP ;
+           CAR ;
+           DUUP ;
+           CDAR ;
+           DUUUP ;
+           CDDR ;
+           DUUUP ;
+           CDR ;
+           DUUUP ;
+           GET ;
+           IF_NONE
+             { PUSH string "unknown user" ; FAILWITH }
+             { DUP ;
+               CAR ;
+               DUUP ;
+               CDAR ;
+               DUUUP ;
+               CDDR ;
+               DUUUP ;
+               DUUUUUUP ;
+               COMPARE ;
+               NEQ ;
+               IF { PUSH string "illegal access to account" ; FAILWITH }
+                  { DUP ; DUUUP ; PAIR } ;
+               DIP { DROP } ;
+               DIP { DROP } ;
+               DIP { DROP } ;
+               DIP { DROP } } ;
+           DIP { DROP } ;
+           DIP { DROP } ;
+           DIP { DROP } ;
+           DIP { DROP } } ;
        UNIT ;
        NIL operation ;
        PAIR ;
        LAMBDA
-         string
-         (pair (lambda
-                  (pair address string)
-                  (pair (map string address) (map string (pair address (pair mutez (contract unit))))))
-               string)
+         (pair string address)
+         (pair (map string address) (map string (pair address (pair mutez (contract unit)))))
          { RENAME ;
            DUP ;
-           LAMBDA
-             (pair address string)
-             (pair (map string address) (map string (pair address (pair mutez (contract unit)))))
-             { RENAME ;
-               PUSH (map string (pair address (pair mutez (contract unit)))) {} ;
-               PUSH (map string address) {} ;
-               DUUUP ;
-               CAR ;
-               DUUUUP ;
-               CDR ;
-               DIP { SOME } ;
-               UPDATE ;
-               PAIR ;
-               DIP { DROP } } ;
+           CAR ;
+           DUUP ;
+           CDR ;
+           PUSH (map string (pair address (pair mutez (contract unit)))) {} ;
+           PUSH (map string address) {} ;
+           DUUUP ;
+           DUUUUUP ;
+           DIP { SOME } ;
+           UPDATE ;
            PAIR ;
+           DIP { DROP } ;
+           DIP { DROP } ;
            DIP { DROP } } ;
        LAMBDA
          mutez
@@ -66,135 +124,59 @@ code { DUP ;
                       DIP { CDR } ;
                       CAR ;
                       LAMBDA
-                        (pair (map string address) (map string (pair address (pair mutez (contract unit)))))
-                        (pair (lambda
-                                 (pair string
-                                       (pair (map string address) (map string (pair address (pair mutez (contract unit))))))
-                                 (pair (lambda
-                                          (pair address
-                                                (pair string
-                                                      (pair (map string address) (map string (pair address (pair mutez (contract unit)))))))
-                                          unit)
-                                       (pair string
-                                             (pair (map string address) (map string (pair address (pair mutez (contract unit))))))))
-                              (pair (map string address) (map string (pair address (pair mutez (contract unit))))))
+                        (pair (pair (map string address) (map string (pair address (pair mutez (contract unit)))))
+                              (pair string address))
+                        unit
                         { RENAME ;
                           DUP ;
-                          LAMBDA
-                            (pair string
-                                  (pair (map string address) (map string (pair address (pair mutez (contract unit))))))
-                            (pair (lambda
-                                     (pair address
-                                           (pair string
-                                                 (pair (map string address) (map string (pair address (pair mutez (contract unit)))))))
-                                     unit)
-                                  (pair string
-                                        (pair (map string address) (map string (pair address (pair mutez (contract unit)))))))
-                            { RENAME ;
-                              DUP ;
-                              CDR ;
+                          CAR ;
+                          CAR ;
+                          DUUP ;
+                          CDAR ;
+                          GET ;
+                          IF_NONE
+                            { PUSH string "only admins can perform administrative tasks" ; FAILWITH }
+                            { DUUP ;
+                              CDDR ;
                               DUUP ;
-                              CAR ;
-                              PAIR ;
-                              LAMBDA
-                                (pair address
-                                      (pair string
-                                            (pair (map string address) (map string (pair address (pair mutez (contract unit)))))))
-                                unit
-                                { RENAME ;
-                                  DUP ;
-                                  CDDR ;
-                                  CAR ;
-                                  DUUP ;
-                                  CDAR ;
-                                  GET ;
-                                  IF_NONE
-                                    { PUSH string "only admins can perform administrative tasks" ; FAILWITH }
-                                    { DUUP ;
-                                      CAR ;
-                                      DUUP ;
-                                      COMPARE ;
-                                      NEQ ;
-                                      IF { PUSH string "illegal access to admin account" ; FAILWITH } { UNIT } ;
-                                      DIP { DROP } } ;
-                                  DIP { DROP } } ;
-                              PAIR ;
+                              COMPARE ;
+                              NEQ ;
+                              IF { PUSH string "illegal access to admin account" ; FAILWITH } { UNIT } ;
                               DIP { DROP } } ;
-                          PAIR ;
                           DIP { DROP } } ;
                       LAMBDA
-                        (pair (map string address) (map string (pair address (pair mutez (contract unit)))))
-                        (pair (lambda
-                                 (pair string
-                                       (pair (map string address) (map string (pair address (pair mutez (contract unit))))))
-                                 (pair (lambda
-                                          (pair address
-                                                (pair string
-                                                      (pair (map string address) (map string (pair address (pair mutez (contract unit)))))))
-                                          (pair mutez (contract unit)))
-                                       (pair string
-                                             (pair (map string address) (map string (pair address (pair mutez (contract unit))))))))
-                              (pair (map string address) (map string (pair address (pair mutez (contract unit))))))
+                        (pair (pair (map string address) (map string (pair address (pair mutez (contract unit)))))
+                              (pair string address))
+                        (pair mutez (contract unit))
                         { RENAME ;
                           DUP ;
-                          LAMBDA
-                            (pair string
-                                  (pair (map string address) (map string (pair address (pair mutez (contract unit))))))
-                            (pair (lambda
-                                     (pair address
-                                           (pair string
-                                                 (pair (map string address) (map string (pair address (pair mutez (contract unit)))))))
-                                     (pair mutez (contract unit)))
-                                  (pair string
-                                        (pair (map string address) (map string (pair address (pair mutez (contract unit)))))))
-                            { RENAME ;
-                              DUP ;
-                              CDR ;
-                              DUUP ;
+                          CAR ;
+                          CDR ;
+                          DUUP ;
+                          CDAR ;
+                          GET ;
+                          IF_NONE
+                            { PUSH string "unknown user" ; FAILWITH }
+                            { DUP ;
                               CAR ;
-                              PAIR ;
-                              LAMBDA
-                                (pair address
-                                      (pair string
-                                            (pair (map string address) (map string (pair address (pair mutez (contract unit)))))))
-                                (pair mutez (contract unit))
-                                { RENAME ;
-                                  DUP ;
-                                  CDDR ;
-                                  CDR ;
-                                  DUUP ;
-                                  CDAR ;
-                                  GET ;
-                                  IF_NONE
-                                    { PUSH string "unknown user" ; FAILWITH }
-                                    { DUP ;
-                                      CAR ;
-                                      DUUUP ;
-                                      CAR ;
-                                      COMPARE ;
-                                      NEQ ;
-                                      IF { PUSH string "illegal access to account" ; FAILWITH }
-                                         { DUP ; CDDR ; DUUP ; CDAR ; PAIR } ;
-                                      DIP { DROP } } ;
-                                  DIP { DROP } } ;
-                              PAIR ;
+                              DUUUP ;
+                              CDDR ;
+                              COMPARE ;
+                              NEQ ;
+                              IF { PUSH string "illegal access to account" ; FAILWITH }
+                                 { DUP ; CDDR ; DUUP ; CDAR ; PAIR } ;
                               DIP { DROP } } ;
-                          PAIR ;
                           DIP { DROP } } ;
                       DUUUP ;
                       IF_LEFT
                         { RENAME ;
                           DUUUUUP ;
                           DUUUUP ;
-                          DUUP ;
-                          EXEC ;
-                          DUUUP ;
-                          CAR ;
-                          DIP { DUP ; CAR ; SWAP ; CDR } ;
-                          PAIR ;
-                          EXEC ;
                           SENDER ;
-                          DIP { DUP ; CAR ; SWAP ; CDR } ;
+                          DUUUUP ;
+                          CAR ;
+                          PAIR ;
+                          DUUUP ;
                           PAIR ;
                           EXEC ;
                           DROP ;
@@ -217,15 +199,11 @@ code { DUP ;
                             { RENAME ;
                               DUUUUUP ;
                               DUUUUP ;
-                              DUUP ;
-                              EXEC ;
-                              DUUUP ;
-                              CAR ;
-                              DIP { DUP ; CAR ; SWAP ; CDR } ;
-                              PAIR ;
-                              EXEC ;
                               SENDER ;
-                              DIP { DUP ; CAR ; SWAP ; CDR } ;
+                              DUUUUP ;
+                              CAR ;
+                              PAIR ;
+                              DUUUP ;
                               PAIR ;
                               EXEC ;
                               DROP ;
@@ -248,15 +226,11 @@ code { DUP ;
                                   DUUP ;
                                   CDAR ;
                                   DUUUUUP ;
-                                  DUUUP ;
-                                  EXEC ;
-                                  DUUUUP ;
-                                  CAR ;
-                                  DIP { DUP ; CAR ; SWAP ; CDR } ;
-                                  PAIR ;
-                                  EXEC ;
                                   SENDER ;
-                                  DIP { DUP ; CAR ; SWAP ; CDR } ;
+                                  DUUUUUP ;
+                                  CAR ;
+                                  PAIR ;
+                                  DUUUUP ;
                                   PAIR ;
                                   EXEC ;
                                   DROP ;
@@ -292,14 +266,10 @@ code { DUP ;
                                       DUUUUUP ;
                                       SENDER ;
                                       DUUUUP ;
-                                      DUUUP ;
-                                      EXEC ;
-                                      DUUUUP ;
-                                      DIP { DUP ; CAR ; SWAP ; CDR } ;
-                                      PAIR ;
-                                      EXEC ;
                                       DUUP ;
-                                      DIP { DUP ; CAR ; SWAP ; CDR } ;
+                                      DUUUUUP ;
+                                      PAIR ;
+                                      DUUUUP ;
                                       PAIR ;
                                       EXEC ;
                                       DUUUP ;
@@ -335,14 +305,10 @@ code { DUP ;
                                           CDR ;
                                           SENDER ;
                                           DUUUUUUP ;
-                                          DUUUUUP ;
-                                          EXEC ;
-                                          DUUUUP ;
-                                          DIP { DUP ; CAR ; SWAP ; CDR } ;
-                                          PAIR ;
-                                          EXEC ;
                                           DUUP ;
-                                          DIP { DUP ; CAR ; SWAP ; CDR } ;
+                                          DUUUUUP ;
+                                          PAIR ;
+                                          DUUUUUUP ;
                                           PAIR ;
                                           EXEC ;
                                           DUP ;
@@ -381,14 +347,10 @@ code { DUP ;
                                         { RENAME ;
                                           DUUUUUP ;
                                           DUUUP ;
-                                          DUUP ;
-                                          EXEC ;
-                                          DUUUP ;
-                                          DIP { DUP ; CAR ; SWAP ; CDR } ;
-                                          PAIR ;
-                                          EXEC ;
                                           SENDER ;
-                                          DIP { DUP ; CAR ; SWAP ; CDR } ;
+                                          DUUUUP ;
+                                          PAIR ;
+                                          DUUUP ;
                                           PAIR ;
                                           EXEC ;
                                           DUUP ;
@@ -426,10 +388,8 @@ code { DUP ;
        DUUP ;
        CDR ;
        DUUUUUUP ;
-       PUSH string "root" ;
-       EXEC ;
        DUUP ;
-       DIP { DUP ; CAR ; SWAP ; CDR } ;
+       PUSH string "root" ;
        PAIR ;
        EXEC ;
        DUUUUUP ;
@@ -516,6 +476,8 @@ code { DUP ;
        UNIT ;
        DROP ;
        DUUUUUUUUUUUUUUUUUUP ;
+       DIP { DROP } ;
+       DIP { DROP } ;
        DIP { DROP } ;
        DIP { DROP } ;
        DIP { DROP } ;
