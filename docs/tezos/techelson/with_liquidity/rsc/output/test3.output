@@ -45,7 +45,8 @@ applying operation CREATE[uid:2] (@address[3], "tz1YLtLqD1fWHthSVHPD116oYvsd4PTA
 running test script...
    timestamp: 1970-01-01 00:00:00 +00:00
 
-applying operation MUST_FAIL[uid:4] _ (TRANSFER[uid:3] address[0]@Test3 -> address[2] 0utz (Right (Right (Left ("root", ("lucy", (address[3], address[3])))))))
+applying operation MUST_FAIL[uid:4] "illegal access to admin account" : 
+string (TRANSFER[uid:3] address[0]@Test3 -> address[2] 0utz (Right (Right (Left ("root", ("lucy", (address[3], address[3])))))))
    timestamp: 1970-01-01 00:00:00 +00:00
    live contracts: <anonymous> (0utz) address[2]
                    <anonymous> (15000000utz) address[3]
@@ -63,7 +64,7 @@ applying operation TRANSFER[uid:5] address[1] -> address[2] 0utz (Right (Right (
                    <anonymous> (15000000utz) address[3]
                    <anonymous> (0utz) address[1]
 failure confirmed on test operation
-  MUST_FAIL[uid:4] _ (TRANSFER[uid:3] address[0]@Test3 -> address[2] 0utz (Right (Right (Left ("root", ("lucy", (address[3], address[3])))))))
+  MUST_FAIL[uid:4] "illegal access to admin account" : string (TRANSFER[uid:3] address[0]@Test3 -> address[2] 0utz (Right (Right (Left ("root", ("lucy", (address[3], address[3])))))))
 while running operation TRANSFER[uid:3] address[0]@Test3 -> address[2] 0utz (Right (Right (Left ("root", ("lucy", (address[3], address[3]))))))
 failed with value "illegal access to admin account" : string
 

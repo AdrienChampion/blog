@@ -278,20 +278,42 @@ root when we create the operation.</p>
 <p>But this test is not worthless. It shows that an outsider cannot add new clients even by using the
 name of an existing outsider. What we should do is say that this transfer must fail. This is what
 <a href="listing.html#teststest1liq" title="Test1 test file">tests/test1.liq</a> does. Only the <code>apply_operations</code> changes:</p>
-<pre><code class="language-ocaml">    let must_fail = Techel.must_fail bad_add_client in
+<pre><code class="language-ocaml">    let must_fail = Techel.must_fail None bad_add_client in
     Techel.apply_operations [ must_fail ];
+</code></pre>
+<p>Extension <code>must_fail None op</code> produces an operation that succeeds iff <code>op</code> fails. Techelson notifies you that the failure was confirmed in its <a href="rsc/output/test1.output" title="Output on Test1">output</a>:</p>
+<pre><code>failure confirmed on test operation
+  MUST_FAIL[uid:4] _ (TRANSFER[uid:3] address[0]@Test1 -&gt; address[2] 0utz (Right (Right (Left (&quot;root&quot;, (&quot;lucy&quot;, (address[3], address[3])))))))
+while running operation TRANSFER[uid:3] address[0]@Test1 -&gt; address[2] 0utz (Right (Right (Left (&quot;root&quot;, (&quot;lucy&quot;, (address[3], address[3]))))))
+failed with value &quot;illegal access to admin account&quot; : string
+</code></pre>
+<p>We can do better than this: we can ask Techelson to verify the error message is the one we expect.
+This is exactly what the first argument of <code>must_fail</code> does. <code>must_fail (Some msg) op</code> succeeds iff
+<code>op</code> fails with <strong>exactly</strong> the string <code>msg</code>.</p>
+<p>Test <a href="listing.html#teststest1_betterliq" title="Test1_better test file">tests/test1_better.liq</a> only changes in the error message:</p>
+<pre><code class="language-ocaml">    let error_message = Some &quot;illegal access to admin account&quot; in
+    let must_fail = Techel.must_fail error_message bad_add_client in
+    Techel.apply_operations [ must_fail ];
+</code></pre>
+<p>Techelson confirms the failure and its error message (see the
+<a href="rsc/output/test1_better.output" title="Output on Test1_better">output</a>):</p>
+<pre><code>failure confirmed on test operation
+  MUST_FAIL[uid:4] &quot;illegal access to admin account&quot; : string (TRANSFER[uid:3] address[0]@Test1_better -&gt; address[2] 0utz (Right (Right (Left (&quot;root&quot;, (&quot;lucy&quot;, (address[3], address[3])))))))
+while running operation TRANSFER[uid:3] address[0]@Test1_better -&gt; address[2] 0utz (Right (Right (Left (&quot;root&quot;, (&quot;lucy&quot;, (address[3], address[3]))))))
+failed with value &quot;illegal access to admin account&quot; : string
 </code></pre>
 <a class="header" href="#testing-multi" id="testing-multi"><h3>Testing Multi</h3></a>
 <p>Let's now make the transfer work by pretending to be <code>root</code>. The current solution for this is not
 very satisfactory, but it will do the job until techelson is more tightly integrated in Liquidity.
 The result is <a href="listing.html#teststest2liq" title="Test2 test file">tests/test2.liq</a>, where we add:</p>
-<pre><code class="language-ocaml">    let bad_add_client =
-        Contract.call ~dest:main_instance ~amount:0tz ~entry:add_client ~parameter:(
-            &quot;root&quot;, &quot;lucy&quot;, client, client_instance
-        )
-    in
-    let must_fail = Techel.must_fail bad_add_client in
-    (* let's really add a client now *)
+<pre><code class="language-ocaml">    Techel.start_set_source root ;
+        (* all operations created in here will appear to have been created by `root` *)
+        let add_client =
+            Contract.call ~dest:main_instance ~amount:0tz ~entry:add_client ~parameter:(
+                &quot;root&quot;, &quot;lucy&quot;, client, client_instance
+            )
+        in
+    Techel.end_set_source () ;
 </code></pre>
 <p>The test is now successful:</p>
 <pre><code>$ ./../test.sh ../tests/test1.liq
@@ -368,8 +390,7 @@ which should leave her with <code>5tz</code> (remember she was created with <cod
 account, which will trigger Multi to send her all of her money, at which point she should have
 <code>15tz</code>.</p>
 <p>The additional code, in <a href="listing.html#teststest3liq" title="Test3 test file">tests/test3.liq</a>, is</p>
-<pre><code class="language-ocaml">    (* lucy deposits `10tz` *)
-    Techel.start_set_source client ;
+<pre><code class="language-ocaml">    Techel.start_set_source client ;
         let deposit_money =
             Contract.call ~dest:main_instance ~amount:10tz ~entry:deposit ~parameter:&quot;lucy&quot;
         in
@@ -442,7 +463,8 @@ applying operation CREATE[uid:2] (@address[3], &quot;tz1YLtLqD1fWHthSVHPD116oYvs
 running test script...
    timestamp: 1970-01-01 00:00:00 +00:00
 
-applying operation MUST_FAIL[uid:4] _ (TRANSFER[uid:3] address[0]@Test3 -&gt; address[2] 0utz (Right (Right (Left (&quot;root&quot;, (&quot;lucy&quot;, (address[3], address[3])))))))
+applying operation MUST_FAIL[uid:4] &quot;illegal access to admin account&quot; : 
+string (TRANSFER[uid:3] address[0]@Test3 -&gt; address[2] 0utz (Right (Right (Left (&quot;root&quot;, (&quot;lucy&quot;, (address[3], address[3])))))))
    timestamp: 1970-01-01 00:00:00 +00:00
    live contracts: &lt;anonymous&gt; (0utz) address[2]
                    &lt;anonymous&gt; (15000000utz) address[3]
@@ -460,7 +482,7 @@ applying operation TRANSFER[uid:5] address[1] -&gt; address[2] 0utz (Right (Righ
                    &lt;anonymous&gt; (15000000utz) address[3]
                    &lt;anonymous&gt; (0utz) address[1]
 failure confirmed on test operation
-  MUST_FAIL[uid:4] _ (TRANSFER[uid:3] address[0]@Test3 -&gt; address[2] 0utz (Right (Right (Left (&quot;root&quot;, (&quot;lucy&quot;, (address[3], address[3])))))))
+  MUST_FAIL[uid:4] &quot;illegal access to admin account&quot; : string (TRANSFER[uid:3] address[0]@Test3 -&gt; address[2] 0utz (Right (Right (Left (&quot;root&quot;, (&quot;lucy&quot;, (address[3], address[3])))))))
 while running operation TRANSFER[uid:3] address[0]@Test3 -&gt; address[2] 0utz (Right (Right (Left (&quot;root&quot;, (&quot;lucy&quot;, (address[3], address[3]))))))
 failed with value &quot;illegal access to admin account&quot; : string
 
@@ -574,7 +596,8 @@ applying operation CREATE[uid:2] (@address[3], &quot;tz1YLtLqD1fWHthSVHPD116oYvs
 running test script...
    timestamp: 1970-01-01 00:00:00 +00:00
 
-applying operation MUST_FAIL[uid:4] _ (TRANSFER[uid:3] address[0]@Test3_err -&gt; address[2] 0utz (Right (Right (Left (&quot;root&quot;, (&quot;lucy&quot;, (address[3], address[3])))))))
+applying operation MUST_FAIL[uid:4] &quot;illegal access to admin account&quot; : 
+string (TRANSFER[uid:3] address[0]@Test3_err -&gt; address[2] 0utz (Right (Right (Left (&quot;root&quot;, (&quot;lucy&quot;, (address[3], address[3])))))))
    timestamp: 1970-01-01 00:00:00 +00:00
    live contracts: &lt;anonymous&gt; (0utz) address[2]
                    &lt;anonymous&gt; (15000000utz) address[3]
@@ -592,7 +615,7 @@ applying operation TRANSFER[uid:5] address[1] -&gt; address[2] 0utz (Right (Righ
                    &lt;anonymous&gt; (15000000utz) address[3]
                    &lt;anonymous&gt; (0utz) address[1]
 failure confirmed on test operation
-  MUST_FAIL[uid:4] _ (TRANSFER[uid:3] address[0]@Test3_err -&gt; address[2] 0utz (Right (Right (Left (&quot;root&quot;, (&quot;lucy&quot;, (address[3], address[3])))))))
+  MUST_FAIL[uid:4] &quot;illegal access to admin account&quot; : string (TRANSFER[uid:3] address[0]@Test3_err -&gt; address[2] 0utz (Right (Right (Left (&quot;root&quot;, (&quot;lucy&quot;, (address[3], address[3])))))))
 while running operation TRANSFER[uid:3] address[0]@Test3_err -&gt; address[2] 0utz (Right (Right (Left (&quot;root&quot;, (&quot;lucy&quot;, (address[3], address[3]))))))
 failed with value &quot;illegal access to admin account&quot; : string
 

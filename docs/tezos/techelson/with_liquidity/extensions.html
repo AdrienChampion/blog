@@ -159,8 +159,8 @@ external end_set_source :
     unit -&gt; unit
     = &quot;}&quot;
 external must_fail :
-    [%stack: operation] -&gt; [%stack: operation]
-    = &quot;{ NONE string ; MUST_FAIL string }&quot;
+    [%stack: string option] -&gt; [%stack: operation] -&gt; [%stack: operation]
+    = &quot;MUST_FAIL string&quot;
 </code></pre>
 <p>It is not crucial to understand these rules precisely, only the power they give us. And that power
 is the following functions. What they do precisely will become clear when we use them later on.</p>
@@ -176,7 +176,13 @@ that address</li>
 <li><code>apply_operations ops</code>: takes a list of operations and applies them right away</li>
 <li><code>start_set_source address</code> and <code>end_set_source ()</code>: a very, very dirty hack to define a <em>scope</em>
 where all operations created appear to have been created by whatever is at <code>address</code></li>
-<li><code>must_fail op</code>: tells techelson that the operation <code>op</code> must fail</li>
+<li><code>must_fail msg_opt op</code>: tells techelson that the operation <code>op</code> must fail; this succeeds iff <code>op</code>
+fails and
+<ul>
+<li><code>msg_opt</code> is <code>None</code>, or</li>
+<li><code>msg_opt</code> is <code>Some msg</code> and <code>op</code> failed <strong>precisely</strong> with string <code>msg</code>.</li>
+</ul>
+</li>
 </ul>
 <p>Thanks to Liquidity's file import mechanism, we can use these functions in any Liquidity file
 <code>test.liq</code> with <code>Techel.get_balance</code>, <code>Techel.get_storage</code> <em>etc.</em> by simply calling Liquidity as

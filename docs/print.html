@@ -154,7 +154,7 @@
 <ul>
 <li>April
 <ul>
-<li><a href="welcome/../tezos/techelson/with_liquidity/index.html">Using Techelson With Liquidity</a> <strong>updated</strong></li>
+<li><a href="welcome/../tezos/techelson/with_liquidity/index.html">Using Techelson With Liquidity</a> <strong>updated</strong> (<code>must_fail &lt;msg&gt; &lt;op&gt;</code>)</li>
 </ul>
 </li>
 <li>February
@@ -227,8 +227,8 @@ external end_set_source :
     unit -&gt; unit
     = &quot;}&quot;
 external must_fail :
-    [%stack: operation] -&gt; [%stack: operation]
-    = &quot;{ NONE string ; MUST_FAIL string }&quot;
+    [%stack: string option] -&gt; [%stack: operation] -&gt; [%stack: operation]
+    = &quot;MUST_FAIL string&quot;
 </code></pre>
 <p>It is not crucial to understand these rules precisely, only the power they give us. And that power
 is the following functions. What they do precisely will become clear when we use them later on.</p>
@@ -244,7 +244,13 @@ that address</li>
 <li><code>apply_operations ops</code>: takes a list of operations and applies them right away</li>
 <li><code>start_set_source address</code> and <code>end_set_source ()</code>: a very, very dirty hack to define a <em>scope</em>
 where all operations created appear to have been created by whatever is at <code>address</code></li>
-<li><code>must_fail op</code>: tells techelson that the operation <code>op</code> must fail</li>
+<li><code>must_fail msg_opt op</code>: tells techelson that the operation <code>op</code> must fail; this succeeds iff <code>op</code>
+fails and
+<ul>
+<li><code>msg_opt</code> is <code>None</code>, or</li>
+<li><code>msg_opt</code> is <code>Some msg</code> and <code>op</code> failed <strong>precisely</strong> with string <code>msg</code>.</li>
+</ul>
+</li>
 </ul>
 <p>Thanks to Liquidity's file import mechanism, we can use these functions in any Liquidity file
 <code>test.liq</code> with <code>Techel.get_balance</code>, <code>Techel.get_storage</code> <em>etc.</em> by simply calling Liquidity as
@@ -617,20 +623,42 @@ root when we create the operation.</p>
 <p>But this test is not worthless. It shows that an outsider cannot add new clients even by using the
 name of an existing outsider. What we should do is say that this transfer must fail. This is what
 <a href="tezos/techelson/with_liquidity/listing.html#teststest1liq" title="Test1 test file">tests/test1.liq</a> does. Only the <code>apply_operations</code> changes:</p>
-<pre><code class="language-ocaml">    let must_fail = Techel.must_fail bad_add_client in
+<pre><code class="language-ocaml">    let must_fail = Techel.must_fail None bad_add_client in
     Techel.apply_operations [ must_fail ];
+</code></pre>
+<p>Extension <code>must_fail None op</code> produces an operation that succeeds iff <code>op</code> fails. Techelson notifies you that the failure was confirmed in its <a href="rsc/output/test1.output" title="Output on Test1">output</a>:</p>
+<pre><code>failure confirmed on test operation
+  MUST_FAIL[uid:4] _ (TRANSFER[uid:3] address[0]@Test1 -&gt; address[2] 0utz (Right (Right (Left (&quot;root&quot;, (&quot;lucy&quot;, (address[3], address[3])))))))
+while running operation TRANSFER[uid:3] address[0]@Test1 -&gt; address[2] 0utz (Right (Right (Left (&quot;root&quot;, (&quot;lucy&quot;, (address[3], address[3]))))))
+failed with value &quot;illegal access to admin account&quot; : string
+</code></pre>
+<p>We can do better than this: we can ask Techelson to verify the error message is the one we expect.
+This is exactly what the first argument of <code>must_fail</code> does. <code>must_fail (Some msg) op</code> succeeds iff
+<code>op</code> fails with <strong>exactly</strong> the string <code>msg</code>.</p>
+<p>Test <a href="tezos/techelson/with_liquidity/listing.html#teststest1_betterliq" title="Test1_better test file">tests/test1_better.liq</a> only changes in the error message:</p>
+<pre><code class="language-ocaml">    let error_message = Some &quot;illegal access to admin account&quot; in
+    let must_fail = Techel.must_fail error_message bad_add_client in
+    Techel.apply_operations [ must_fail ];
+</code></pre>
+<p>Techelson confirms the failure and its error message (see the
+<a href="rsc/output/test1_better.output" title="Output on Test1_better">output</a>):</p>
+<pre><code>failure confirmed on test operation
+  MUST_FAIL[uid:4] &quot;illegal access to admin account&quot; : string (TRANSFER[uid:3] address[0]@Test1_better -&gt; address[2] 0utz (Right (Right (Left (&quot;root&quot;, (&quot;lucy&quot;, (address[3], address[3])))))))
+while running operation TRANSFER[uid:3] address[0]@Test1_better -&gt; address[2] 0utz (Right (Right (Left (&quot;root&quot;, (&quot;lucy&quot;, (address[3], address[3]))))))
+failed with value &quot;illegal access to admin account&quot; : string
 </code></pre>
 <a class="header" href="#testing-multi" id="testing-multi"><h3>Testing Multi</h3></a>
 <p>Let's now make the transfer work by pretending to be <code>root</code>. The current solution for this is not
 very satisfactory, but it will do the job until techelson is more tightly integrated in Liquidity.
 The result is <a href="tezos/techelson/with_liquidity/listing.html#teststest2liq" title="Test2 test file">tests/test2.liq</a>, where we add:</p>
-<pre><code class="language-ocaml">    let bad_add_client =
-        Contract.call ~dest:main_instance ~amount:0tz ~entry:add_client ~parameter:(
-            &quot;root&quot;, &quot;lucy&quot;, client, client_instance
-        )
-    in
-    let must_fail = Techel.must_fail bad_add_client in
-    (* let's really add a client now *)
+<pre><code class="language-ocaml">    Techel.start_set_source root ;
+        (* all operations created in here will appear to have been created by `root` *)
+        let add_client =
+            Contract.call ~dest:main_instance ~amount:0tz ~entry:add_client ~parameter:(
+                &quot;root&quot;, &quot;lucy&quot;, client, client_instance
+            )
+        in
+    Techel.end_set_source () ;
 </code></pre>
 <p>The test is now successful:</p>
 <pre><code>$ ./../test.sh ../tests/test1.liq
@@ -707,8 +735,7 @@ which should leave her with <code>5tz</code> (remember she was created with <cod
 account, which will trigger Multi to send her all of her money, at which point she should have
 <code>15tz</code>.</p>
 <p>The additional code, in <a href="tezos/techelson/with_liquidity/listing.html#teststest3liq" title="Test3 test file">tests/test3.liq</a>, is</p>
-<pre><code class="language-ocaml">    (* lucy deposits `10tz` *)
-    Techel.start_set_source client ;
+<pre><code class="language-ocaml">    Techel.start_set_source client ;
         let deposit_money =
             Contract.call ~dest:main_instance ~amount:10tz ~entry:deposit ~parameter:&quot;lucy&quot;
         in
@@ -781,7 +808,8 @@ applying operation CREATE[uid:2] (@address[3], &quot;tz1YLtLqD1fWHthSVHPD116oYvs
 running test script...
    timestamp: 1970-01-01 00:00:00 +00:00
 
-applying operation MUST_FAIL[uid:4] _ (TRANSFER[uid:3] address[0]@Test3 -&gt; address[2] 0utz (Right (Right (Left (&quot;root&quot;, (&quot;lucy&quot;, (address[3], address[3])))))))
+applying operation MUST_FAIL[uid:4] &quot;illegal access to admin account&quot; : 
+string (TRANSFER[uid:3] address[0]@Test3 -&gt; address[2] 0utz (Right (Right (Left (&quot;root&quot;, (&quot;lucy&quot;, (address[3], address[3])))))))
    timestamp: 1970-01-01 00:00:00 +00:00
    live contracts: &lt;anonymous&gt; (0utz) address[2]
                    &lt;anonymous&gt; (15000000utz) address[3]
@@ -799,7 +827,7 @@ applying operation TRANSFER[uid:5] address[1] -&gt; address[2] 0utz (Right (Righ
                    &lt;anonymous&gt; (15000000utz) address[3]
                    &lt;anonymous&gt; (0utz) address[1]
 failure confirmed on test operation
-  MUST_FAIL[uid:4] _ (TRANSFER[uid:3] address[0]@Test3 -&gt; address[2] 0utz (Right (Right (Left (&quot;root&quot;, (&quot;lucy&quot;, (address[3], address[3])))))))
+  MUST_FAIL[uid:4] &quot;illegal access to admin account&quot; : string (TRANSFER[uid:3] address[0]@Test3 -&gt; address[2] 0utz (Right (Right (Left (&quot;root&quot;, (&quot;lucy&quot;, (address[3], address[3])))))))
 while running operation TRANSFER[uid:3] address[0]@Test3 -&gt; address[2] 0utz (Right (Right (Left (&quot;root&quot;, (&quot;lucy&quot;, (address[3], address[3]))))))
 failed with value &quot;illegal access to admin account&quot; : string
 
@@ -913,7 +941,8 @@ applying operation CREATE[uid:2] (@address[3], &quot;tz1YLtLqD1fWHthSVHPD116oYvs
 running test script...
    timestamp: 1970-01-01 00:00:00 +00:00
 
-applying operation MUST_FAIL[uid:4] _ (TRANSFER[uid:3] address[0]@Test3_err -&gt; address[2] 0utz (Right (Right (Left (&quot;root&quot;, (&quot;lucy&quot;, (address[3], address[3])))))))
+applying operation MUST_FAIL[uid:4] &quot;illegal access to admin account&quot; : 
+string (TRANSFER[uid:3] address[0]@Test3_err -&gt; address[2] 0utz (Right (Right (Left (&quot;root&quot;, (&quot;lucy&quot;, (address[3], address[3])))))))
    timestamp: 1970-01-01 00:00:00 +00:00
    live contracts: &lt;anonymous&gt; (0utz) address[2]
                    &lt;anonymous&gt; (15000000utz) address[3]
@@ -931,7 +960,7 @@ applying operation TRANSFER[uid:5] address[1] -&gt; address[2] 0utz (Right (Righ
                    &lt;anonymous&gt; (15000000utz) address[3]
                    &lt;anonymous&gt; (0utz) address[1]
 failure confirmed on test operation
-  MUST_FAIL[uid:4] _ (TRANSFER[uid:3] address[0]@Test3_err -&gt; address[2] 0utz (Right (Right (Left (&quot;root&quot;, (&quot;lucy&quot;, (address[3], address[3])))))))
+  MUST_FAIL[uid:4] &quot;illegal access to admin account&quot; : string (TRANSFER[uid:3] address[0]@Test3_err -&gt; address[2] 0utz (Right (Right (Left (&quot;root&quot;, (&quot;lucy&quot;, (address[3], address[3])))))))
 while running operation TRANSFER[uid:3] address[0]@Test3_err -&gt; address[2] 0utz (Right (Right (Left (&quot;root&quot;, (&quot;lucy&quot;, (address[3], address[3]))))))
 failed with value &quot;illegal access to admin account&quot; : string
 
@@ -1014,6 +1043,7 @@ its future integration in the Liquidity ecosystem. The process will be much more
 <li><a href="#testsemptyliq">empty.liq</a></li>
 <li><a href="#teststechelliq">techel.liq</a></li>
 <li><a href="#teststest1liq">test1.liq</a></li>
+<li><a href="#teststest1_betterliq">test1_better.liq</a></li>
 <li><a href="#teststest1_errliq">test1_err.liq</a></li>
 <li><a href="#teststest2liq">test2.liq</a></li>
 <li><a href="#teststest3liq">test3.liq</a></li>
@@ -1155,8 +1185,8 @@ external end_set_source :
     unit -&gt; unit
     = &quot;}&quot;
 external must_fail :
-    [%stack: operation] -&gt; [%stack: operation]
-    = &quot;{ NONE string ; MUST_FAIL string }&quot;
+    [%stack: string option] -&gt; [%stack: operation] -&gt; [%stack: operation]
+    = &quot;MUST_FAIL string&quot;
 external print_stack :
     unit -&gt; unit
     = &quot;PRINT_STACK&quot;
@@ -1249,7 +1279,98 @@ let%entry test (_param : unit) (_storage : unit) =
             &quot;root&quot;, &quot;lucy&quot;, client, client_instance
         )
     in
-    let must_fail = Techel.must_fail bad_add_client in
+    let must_fail = Techel.must_fail None bad_add_client in
+    Techel.apply_operations [ must_fail ];
+
+    nothing
+
+</code></pre>
+<a class="header" href="#teststest1_betterliq" id="teststest1_betterliq"><h3>tests/test1_better.liq</h3></a>
+<pre><code class="language-ocaml">let nothing : operation list * unit = [], ()
+
+(* Creates a storage for Multi with one administrator. *)
+let one_admin (root : string) (address : address) : Multi.storage = {
+    Multi.admins =
+        Map.add root address (Map : (string, address) map) ;
+    Multi.users =
+        (Map : (string, (address * tez * UnitContract.instance)) map) ;
+}
+
+(* Deploys an account with an arbitrary manager. *)
+let deploy_account_op (amount: tez) : operation * address =
+    let delegate : key_hash option = None in
+    Account.create
+        ~manager:tz1YLtLqD1fWHthSVHPD116oYvsd4PTAHUoc
+        ~delegate
+        ~delegatable:true
+        ~amount
+
+(* Deploys an instance of multi with an arbitrary manager. *)
+let deploy_contract_op (storage : Multi.storage) : operation * address =
+    let delegate : key_hash option = None in
+    Contract.create
+        ~manager:tz1YLtLqD1fWHthSVHPD116oYvsd4PTAHUoc
+        ~delegate
+        ~delegatable:true
+        ~spendable:false
+        ~amount:0tz
+        ~storage
+        ~code:(contract Multi)
+
+(* Storage of the test is irrelevant. *)
+type storage = unit
+
+(* Actual test. *)
+let%entry test (_param : unit) (_storage : unit) =
+    let root_op, root = deploy_account_op 0tz in
+    let storage = one_admin &quot;root&quot; root in
+    let main_op, main = deploy_contract_op storage in
+    (* ask techelson to apply these operations. *)
+    Techel.apply_operations [ root_op ; main_op ];
+    (* root and main are live now *)
+
+    (* let's check root is an admin, and that the address is correct *)
+    let storage =
+        match Techel.get_storage [%type: Multi.storage] main with
+        | Some storage -&gt; storage
+        | None -&gt; failwith &quot;can't retrieve contract's storage&quot;
+    in
+    (
+        match Map.find &quot;root&quot; storage.Multi.admins with
+        | None -&gt; failwith &quot;no root in storage&quot;
+        | Some address -&gt; (
+            if address &lt;&gt; root then (
+                failwith &quot;wrong address for root&quot;
+            )
+        )
+    );
+
+    let client_op, client = deploy_account_op 15tz in
+    (* deploy the client *)
+    Techel.apply_operations [ client_op ];
+    (* client is live now *)
+
+    (* retrieve client instance for registration *)
+    let client_instance =
+        match (Contract.at client : UnitContract.instance option) with
+        | None -&gt; failwith &quot;could not retrieve main contract&quot;
+        | Some instance -&gt; instance
+    in
+    (* retrieve multi's instance to call it *)
+    let main_instance =
+        match Multi.at main with
+        | None -&gt; failwith &quot;could not retrieve main contract&quot;
+        | Some instance -&gt; instance
+    in
+
+    (* let's add a client *)
+    let bad_add_client =
+        Contract.call ~dest:main_instance ~amount:0tz ~entry:add_client ~parameter:(
+            &quot;root&quot;, &quot;lucy&quot;, client, client_instance
+        )
+    in
+    let error_message = Some &quot;illegal access to admin account&quot; in
+    let must_fail = Techel.must_fail error_message bad_add_client in
     Techel.apply_operations [ must_fail ];
 
     nothing
@@ -1428,7 +1549,8 @@ let%entry test (_param : unit) (_storage : unit) =
             &quot;root&quot;, &quot;lucy&quot;, client, client_instance
         )
     in
-    let must_fail = Techel.must_fail bad_add_client in
+    let error_message = Some &quot;illegal access to admin account&quot; in
+    let must_fail = Techel.must_fail error_message bad_add_client in
     (* let's really add a client now *)
     Techel.start_set_source root ;
         (* all operations created in here will appear to have been created by `root` *)
@@ -1528,7 +1650,8 @@ let%entry test (_param : unit) (_storage : unit) =
             &quot;root&quot;, &quot;lucy&quot;, client, client_instance
         )
     in
-    let must_fail = Techel.must_fail bad_add_client in
+    let error_message = Some &quot;illegal access to admin account&quot; in
+    let must_fail = Techel.must_fail error_message bad_add_client in
     (* let's really add a client now *)
     Techel.start_set_source root ;
         (* all operations created in here will appear to have been created by `root` *)
@@ -1654,15 +1777,16 @@ let%entry test (_param : unit) (_storage : unit) =
             &quot;root&quot;, &quot;lucy&quot;, client, client_instance
         )
     in
-    let must_fail = Techel.must_fail bad_add_client in
+    let error_message = Some &quot;illegal access to admin account&quot; in
+    let must_fail = Techel.must_fail error_message bad_add_client in
     (* let's really add a client now *)
     Techel.start_set_source root ;
-        (* all operations created in here will appear to have been created by `root` *)
-        let add_client =
-            Contract.call ~dest:main_instance ~amount:0tz ~entry:add_client ~parameter:(
-                &quot;root&quot;, &quot;lucy&quot;, client, client_instance
-            )
-        in
+    (* all operations created in here will appear to have been created by `root` *)
+    let add_client =
+        Contract.call ~dest:main_instance ~amount:0tz ~entry:add_client ~parameter:(
+            &quot;root&quot;, &quot;lucy&quot;, client, client_instance
+        )
+    in
     Techel.end_set_source () ;
 
     Techel.apply_operations [ must_fail ; add_client ];
