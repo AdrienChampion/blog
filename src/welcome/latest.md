@@ -2,7 +2,7 @@
 
 - 2019
     - April
-        - [Using Techelson With Liquidity] **updated**
+        - [Using Techelson With Liquidity] **updated** (`must_fail <msg> <op>`)
     - February
         - [Using Techelson With Liquidity]
 

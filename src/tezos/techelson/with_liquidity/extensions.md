@@ -18,7 +18,10 @@ is the following functions. What they do precisely will become clear when we use
 - `apply_operations ops`: takes a list of operations and applies them right away
 - `start_set_source address` and `end_set_source ()`: a very, very dirty hack to define a *scope*
     where all operations created appear to have been created by whatever is at `address`
-- `must_fail op`: tells techelson that the operation `op` must fail
+- `must_fail msg_opt op`: tells techelson that the operation `op` must fail; this succeeds iff `op`
+    fails and
+    - `msg_opt` is `None`, or
+    - `msg_opt` is `Some msg` and `op` failed **precisely** with string `msg`.
 
 Thanks to Liquidity's file import mechanism, we can use these functions in any Liquidity file
 `test.liq` with `Techel.get_balance`, `Techel.get_storage` *etc.* by simply calling Liquidity as

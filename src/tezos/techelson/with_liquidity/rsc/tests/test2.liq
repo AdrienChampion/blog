@@ -81,7 +81,8 @@ let%entry test (_param : unit) (_storage : unit) =
             "root", "lucy", client, client_instance
         )
     in
-    let must_fail = Techel.must_fail bad_add_client in
+    let error_message = Some "illegal access to admin account" in
+    let must_fail = Techel.must_fail error_message bad_add_client in
     (* let's really add a client now *)
     Techel.start_set_source root ;
         (* all operations created in here will appear to have been created by `root` *)

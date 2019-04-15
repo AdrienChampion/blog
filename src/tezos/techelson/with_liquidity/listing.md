@@ -10,6 +10,7 @@ Including all files mentioned in this post, the layout should look like this
     - [empty.liq](#testsemptyliq)
     - [techel.liq](#teststechelliq)
     - [test1.liq](#teststest1liq)
+    - [test1_better.liq](#teststest1_betterliq)
     - [test1_err.liq](#teststest1_errliq)
     - [test2.liq](#teststest2liq)
     - [test3.liq](#teststest3liq)
@@ -51,6 +52,12 @@ Including all files mentioned in this post, the layout should look like this
 
 ```ocaml
 {{#include rsc/tests/test1.liq}}
+```
+
+### tests/test1_better.liq
+
+```ocaml
+{{#include rsc/tests/test1_better.liq}}
 ```
 
 ### tests/test1_err.liq

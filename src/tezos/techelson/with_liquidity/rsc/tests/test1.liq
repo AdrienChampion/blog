@@ -81,7 +81,7 @@ let%entry test (_param : unit) (_storage : unit) =
             "root", "lucy", client, client_instance
         )
     in
-    let must_fail = Techel.must_fail bad_add_client in
+    let must_fail = Techel.must_fail None bad_add_client in
     Techel.apply_operations [ must_fail ];
 
     nothing

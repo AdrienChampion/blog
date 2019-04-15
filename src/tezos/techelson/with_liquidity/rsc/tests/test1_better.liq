@@ -75,7 +75,7 @@ let%entry test (_param : unit) (_storage : unit) =
         | Some instance -> instance
     in
 
-    (* let's add a client and fail *)
+    (* let's add a client *)
     let bad_add_client =
         Contract.call ~dest:main_instance ~amount:0tz ~entry:add_client ~parameter:(
             "root", "lucy", client, client_instance
@@ -83,42 +83,6 @@ let%entry test (_param : unit) (_storage : unit) =
     in
     let error_message = Some "illegal access to admin account" in
     let must_fail = Techel.must_fail error_message bad_add_client in
-    (* let's really add a client now *)
-    Techel.start_set_source root ;
-        (* all operations created in here will appear to have been created by `root` *)
-        let add_client =
-            Contract.call ~dest:main_instance ~amount:0tz ~entry:add_client ~parameter:(
-                "root", "lucy", client, client_instance
-            )
-        in
-    Techel.end_set_source () ;
-
-    Techel.apply_operations [ must_fail ; add_client ];
-
-    (* lucy deposits `10tz` *)
-    Techel.start_set_source client ;
-        let deposit_money =
-            Contract.call ~dest:main_instance ~amount:10tz ~entry:deposit ~parameter:"lucy"
-        in
-    Techel.end_set_source () ;
-    Techel.apply_operations [ deposit_money ];
-    let balance_lucy = Techel.get_balance client in
-    if balance_lucy <> 5tz then (
-        failwith "lucy should have 5tz now"
-    );
-
-    (* lucy walks out of the whole thing *)
-    Techel.start_set_source client ;
-        let drain =
-            Contract.call ~dest:main_instance ~amount:0tz ~entry:drain ~parameter:"lucy"
-        in
-    Techel.end_set_source () ;
-    Techel.apply_operations [ drain ] ;
-
-    (* lucy should have her money back *)
-    let balance_lucy = Techel.get_balance client in
-    if balance_lucy <> 15tz then (
-        failwith "lucy should have 15tz now"
-    );
+    Techel.apply_operations [ must_fail ];
 
     nothing

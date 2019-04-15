@@ -65,6 +65,29 @@ name of an existing outsider. What we should do is say that this transfer must f
 {{#include rsc/tests/test1.liq:84:85:}}
 ```
 
+Extension `must_fail None op` produces an operation that succeeds iff `op` fails. Techelson notifies you that the failure was confirmed in its [output][output/test1.output]:
+
+```
+{{#include rsc/output/test1.output:59:62:}}
+```
+
+We can do better than this: we can ask Techelson to verify the error message is the one we expect.
+This is exactly what the first argument of `must_fail` does. `must_fail (Some msg) op` succeeds iff
+`op` fails with **exactly** the string `msg`.
+
+Test [tests/test1_better.liq] only changes in the error message:
+
+```ocaml
+{{#include rsc/tests/test1_better.liq:84:86:}}
+```
+
+Techelson confirms the failure and its error message (see the
+[output][output/test1_better.output]):
+
+```
+{{#include rsc/output/test1_better.output:60:63}}
+```
+
 ### Testing Multi
 
 Let's now make the transfer work by pretending to be `root`. The current solution for this is not
@@ -72,7 +95,7 @@ very satisfactory, but it will do the job until techelson is more tightly integr
 The result is [tests/test2.liq], where we add:
 
 ```ocaml
-{{#include rsc/tests/test2.liq:79:85:}}
+{{#include rsc/tests/test2.liq:87:94:}}
 ```
 
 The test is now successful:
@@ -89,7 +112,7 @@ account, which will trigger Multi to send her all of her money, at which point s
 The additional code, in [tests/test3.liq], is
 
 ```ocaml
-{{#include rsc/tests/test3.liq:97:121:}}
+{{#include rsc/tests/test3.liq:99:122:}}
 ```
 
 which is successful:
@@ -102,7 +125,7 @@ Last, let's again make sure we're actually testing something by checking that, a
 balance is `2tz` (it's not) in [tests/test3_err.liq]:
 
 ```ocaml
-{{#include rsc/tests/test3_err.liq:117:121:}}
+{{#include rsc/tests/test3_err.liq:118:122:}}
 ```
 
 This fails:
@@ -115,6 +138,9 @@ This fails:
 [contracts/multi.liq]: listing.md#contractsmultiliq (Multi contract file)
 [tests/test1_err.liq]: listing.md#teststest1_errliq (Test1_err test file)
 [tests/test1.liq]: listing.md#teststest1liq (Test1 test file)
+[tests/test1_better.liq]: listing.md#teststest1_betterliq (Test1_better test file)
 [tests/test2.liq]: listing.md#teststest2liq (Test2 test file)
 [tests/test3.liq]: listing.md#teststest3liq (Test3 test file)
 [tests/test3_err.liq]: listing.md#teststest3_errliq (Test3_err test file)
+[output/test1.output]: rsc/output/test1.output (Output on Test1)
+[output/test1_better.output]: rsc/output/test1_better.output (Output on Test1_better)
